@@ -2,13 +2,18 @@
 
 React component library for Oncehub
 
-## Getting started
+## Usage
 
 ```sh
 npm install @oncehub/ui-react
 ```
 
-## Features
+## Development
+
+1. Storybook is [automatically deployed](https://github.com/scheduleonce/once-ui-react/actions/workflows/deploy-storybook.yml) to Github Pages when pushing to main
+2. Package is automatically pushed to npm when [publishing a new package](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) on Github
+
+## Tools
 
 - ⚛️ [React 18](https://reactjs.org/)
 - 📚 [Storybook 7](https://storybook.js.org/) - Components preview
