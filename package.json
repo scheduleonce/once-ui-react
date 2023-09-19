@@ -1,0 +1,93 @@
+{
+  "name": "@oncehub/ui-react",
+  "private": false,
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scheduleonce/once-ui-react"
+  },
+  "main": "./dist/vite-component-library-template.umd.js",
+  "module": "./dist/vite-component-library-template.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/vite-component-library-template.es.js",
+      "require": "./dist/vite-component-library-template.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "build:lib": "tsc && vite build",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --fix",
+    "prettier": "prettier --write \"src/**/*.{ts,tsx,js,mdx}\"",
+    "test": "vitest",
+    "test:cov": "vitest run --coverage",
+    "prepare": "husky install",
+    "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies\""
+  },
+  "dependencies": {
+    "@oncehub/relative-luminance": "^2.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.20",
+    "@storybook/addon-essentials": "^7.4.2",
+    "@storybook/addon-interactions": "^7.4.2",
+    "@storybook/addon-links": "^7.4.2",
+    "@storybook/addon-styling": "^1.3.7",
+    "@storybook/blocks": "^7.4.2",
+    "@storybook/react": "^7.4.2",
+    "@storybook/react-vite": "^7.4.2",
+    "@storybook/testing-library": "^0.2.1",
+    "@testing-library/react": "14.0.0",
+    "@types/node": "^20.6.2",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "5.60.0",
+    "@vitejs/plugin-react": "4.0.4",
+    "@vitest/coverage-v8": "^0.34.4",
+    "autoprefixer": "^10.4.15",
+    "babel-loader": "9.1.3",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-config-standard-with-typescript": "37.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.1.0",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-storybook": "0.6.13",
+    "husky": "8.0.3",
+    "jsdom": "22.1.0",
+    "json": "11.0.0",
+    "lint-staged": "13.2.3",
+    "postcss": "^8.4.30",
+    "prettier": "^3.0.3",
+    "prop-types": "15.8.1",
+    "sass": "^1.67.0",
+    "storybook": "^7.4.2",
+    "tailwindcss": "3.3.3",
+    "typescript": "^5.2.2",
+    "vite": "4.4.9",
+    "vite-plugin-dts": "^3.5.3",
+    "vitest": "^0.34.4"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,css,md}": [
+      "prettier -w"
+    ]
+  }
+}

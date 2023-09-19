@@ -1,0 +1,63 @@
+.checkboxLayout {
+	@apply tw-inline-flex tw-items-center tw-whitespace-nowrap tw-align-middle;
+	.checkboxLabel {
+		@apply tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
+		& > span {
+			@apply tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
+		}
+		.checkboxInnerContainer {
+			@apply tw-relative tw-inline-block tw-h-4 tw-w-4 tw-shrink-0 tw-cursor-pointer tw-whitespace-nowrap tw-border-0 tw-align-middle tw-leading-[0] tw-shadow-none tw-outline-0;
+			.checkboxInput {
+				@apply tw-absolute tw-bottom-0 tw-left-0 tw-h-0 tw-w-0 tw-appearance-none tw-border-0 tw-p-0 tw-opacity-0 tw-outline-0;
+				&:checked + .checkboxFrame {
+					@apply tw-border-[#006bb1] tw-bg-[#006bb1];
+					.checkboxCheckMark {
+						@apply tw-opacity-100;
+						.checkboxCheckMarkPath {
+							@apply tw-animate-[180ms_linear_0ms_checkboxUncheckedChecked];
+							stroke-dashoffset: 0;
+						}
+					}
+				}
+			}
+			.checkboxFrame {
+				@apply tw-absolute tw-inset-0 tw-box-border tw-rounded-[3px] tw-border tw-border-solid tw-border-[#9c9c9c] tw-bg-transparent;
+				.checkboxCheckMark {
+					@apply tw-absolute tw-inset-0 tw-w-full;
+					.checkboxCheckMarkPath {
+						@apply tw-stroke-[3px];
+						stroke-dashoffset: 23;
+						stroke-dasharray: 23;
+					}
+				}
+			}
+			&:focus-visible {
+				.checkboxFrame {
+					@apply tw-outline tw-outline-2 tw--outline-offset-1 tw-outline-[#006bb1];
+				}
+			}
+		}
+	}
+	&.checkboxDisabled {
+		@apply tw-pointer-events-none tw-cursor-default;
+		.checkboxLabel {
+			.checkboxInnerContainer {
+				.checkboxFrame {
+					@apply tw-border-[#e4e4e4] tw-bg-[#f9f9f9];
+				}
+			}
+		}
+	}
+}
+@keyframes checkboxUncheckedChecked {
+	0%,
+	50% {
+		stroke-dashoffset: 23;
+	}
+	50% {
+		animation-timing-function: cubic-bezier(0, 0, 0.2, 0.1);
+	}
+	100% {
+		stroke-dashoffset: 0;
+	}
+}
