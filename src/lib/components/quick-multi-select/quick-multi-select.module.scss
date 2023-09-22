@@ -1,0 +1,21 @@
+.multiSelectContainer {
+	position: relative;
+	.quickOptionsWrap {
+		@apply tw--mr-3 tw-flex tw-flex-row tw-flex-wrap tw-gap-3;
+		li {
+			@apply tw-relative tw-box-border tw-inline-flex tw-min-w-[80px] tw-cursor-pointer tw-list-none tw-items-center tw-break-all tw-rounded-[4px] tw-border tw-border-solid tw-border-[#006bb1] tw-bg-white tw-px-[14px] tw-py-[8px] tw-text-center tw-text-base tw-leading-6 tw-text-[#006bb1];
+			&:hover,
+			&:focus-visible,
+			&.selected {
+				@apply tw-outline tw-outline-2 -tw-outline-offset-2 tw-outline-[#006bb1];
+			}
+			&:hover,
+			&:focus-visible {
+				@apply tw-underline;
+			}
+			&.disabled {
+				@apply tw-cursor-default tw-border-[#e4e4e4] tw-text-[#333333] tw-no-underline tw-outline-0 #{!important};
+			}
+		}
+	}
+}
