@@ -25,9 +25,9 @@ const SelectOptions: FC<Props> = ({ children, setQuery }) => {
 
 export default SelectOptions;
 
-type OptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
-export type Ref = HTMLLIElement;
-export const SelectOption = forwardRef<Ref, OptionProps>((props, ref) => (
+type SelectOptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
+export type SelectOptionRef = HTMLLIElement;
+export const SelectOption = forwardRef<SelectOptionRef, SelectOptionProps>((props, ref) => (
   <Listbox.Option ref={ref} className={props.className} value={props.value} disabled={props.disable}>
     {props.children}
   </Listbox.Option>
