@@ -1,0 +1,58 @@
+.singleSelectWrapper {
+	position: relative;
+	.quickOption {
+		@apply -tw-mr-3 tw-flex tw-flex-row tw-flex-wrap tw-gap-3;
+		li {
+			@apply tw-relative tw-box-border tw-inline-flex tw-min-h-[44px] tw-min-w-[80px] tw-cursor-pointer tw-list-none tw-items-center tw-break-all tw-rounded-[4px] tw-border tw-border-solid tw-border-[#006bb1] tw-bg-white tw-px-6 tw-py-[9px] tw-text-center tw-text-base tw-leading-6 tw-text-[#006bb1];
+			&:hover,
+			&:focus-visible,
+			&.selected {
+				@apply tw-outline tw-outline-2 -tw-outline-offset-2 tw-outline-[#006bb1];
+			}
+			&:hover,
+			&:focus-visible {
+				@apply tw-underline;
+			}
+			.triangle {
+				@apply tw-absolute tw-right-0 tw-top-0 tw-inline-block tw-h-0 tw-w-0 tw-border-[11px] tw-border-solid tw-border-b-transparent tw-border-l-transparent tw-border-r-[#006bb1] tw-border-t-[#006bb1];
+				.loader {
+					@apply tw-absolute tw-left-[0px] tw-top-[-10px] tw-h-[10px] tw-w-[10px] tw-animate-spin tw-rounded-[50%] tw-border-2 tw-border-solid tw-border-[#ffffff] tw-border-r-[#006bb1];
+				}
+				.checkmarkWrap {
+					@apply tw-absolute tw-left-[-1px] tw-top-[-9px];
+					.checkmark {
+						@apply tw-block tw-animate-[fill_0.4s_ease-in-out_0.4s_forwards,scale_0.3s_ease-in-out_0.9s_both] tw-rounded-[50%] tw-shadow-[inset_0px_0px_0px_transparent];
+						stroke-miterlimit: 10;
+						.checkmarkCheck {
+							@apply tw-origin-[50%_50%] tw-animate-[stroke_0.8s_cubic-bezier(0.5,0,0.45,1)_0.2s_forwards];
+							stroke-dasharray: 48;
+							stroke-dashoffset: 48;
+						}
+					}
+				}
+			}
+			&.disabled {
+				@apply tw-pointer-events-none tw-cursor-default tw-border-[#e4e4e4] tw-text-[#333333] tw-no-underline tw-outline-0 #{!important};
+			}
+		}
+	}
+}
+@keyframes scale {
+	0%,
+	100% {
+		transform: none;
+	}
+	50% {
+		transform: scale3d(1.1, 1.1, 1);
+	}
+}
+@keyframes fill {
+	100% {
+		box-shadow: inset 0px 0px 0px 30px transparent;
+	}
+}
+@keyframes stroke {
+	100% {
+		stroke-dashoffset: 0;
+	}
+}
