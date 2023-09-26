@@ -7,6 +7,7 @@ interface CheckboxProps extends ComponentPropsWithRef<'input'> {
   children?: ReactNode;
   /** A color scheme to use for the button, defaults to `#006bb1` */
   themeColor?: string;
+  checkboxSize?: string;
 }
 const generateRandomId = () => `checkbox_${Math.random().toString(36).substring(2, 11)}`;
 /** Checkbox component */
@@ -15,12 +16,14 @@ const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
     {
       children,
       themeColor = '',
+      checkboxSize = 'medium',
       id = generateRandomId(),
       checked = false,
       disabled = false,
       className = '',
       onChange,
       style = {},
+      tabIndex,
       ...rest
     }: CheckboxProps,
     ref,
@@ -45,16 +48,20 @@ const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
         }
         const backgroundColor = disabled ? '#f9f9f9' : isChecked ? themeColor : '#ffffff';
         borderColor = disabled ? '#e4e4e4' : themeColor == '#ffffff' || themeColor == '#fff' ? '#333333' : themeColor;
-        checkboxStyleObj = {
-          backgroundColor: backgroundColor,
-          borderColor: borderColor,
-          outlineColor: borderColor,
-        };
+        if (isChecked) {
+          checkboxStyleObj = {
+            backgroundColor: backgroundColor,
+            borderColor: borderColor,
+            outlineColor: borderColor,
+          };
+        }
       }
     }
 
     const checkboxDisabled = disabled ? styles.checkboxDisabled : '';
-    const checkboxClasses = [styles.checkboxLayout, checkboxDisabled, className].filter(Boolean).join(' ');
+    const checkboxClasses = [styles.checkboxLayout, styles[checkboxSize], checkboxDisabled, className]
+      .filter(Boolean)
+      .join(' ');
 
     const toggleCheckbox = (event: any) => {
       if (event.key != 'Enter') {
@@ -66,24 +73,38 @@ const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
 
     return (
       <>
-        <div className={checkboxClasses}>
+        <div className={checkboxClasses} data-testid="checkbox">
           <label className={styles.checkboxLabel} htmlFor={id} onClick={(event) => toggleCheckbox(event)}>
             <div
               className={styles.checkboxInnerContainer}
-              tabIndex={disabled ? -1 : 0}
+              tabIndex={tabIndex || disabled ? -1 : 0}
               onKeyPress={(event) => toggleCheckbox(event)}
+              data-testid="checkbox-inner-container"
             >
               <input
                 className={styles.checkboxInput}
+                onChange={(event) => toggleCheckbox(event)}
                 type="checkbox"
                 checked={isChecked}
+                disabled={disabled}
                 id={id}
                 ref={ref}
                 {...rest}
                 tabIndex={-1}
+                data-testid="checkbox-input"
               />
-              <div className={styles.checkboxFrame} style={{ ...checkboxStyleObj, ...style }}>
-                <svg version="1.1" focusable="false" className={styles.checkboxCheckMark} viewBox="0 0 24 24">
+              <div
+                className={styles.checkboxFrame}
+                style={{ ...checkboxStyleObj, ...style }}
+                data-testid="checkbox-frame"
+              >
+                <svg
+                  version="1.1"
+                  focusable="false"
+                  className={styles.checkboxCheckMark}
+                  viewBox="0 0 24 24"
+                  data-testid="check-mark-svg"
+                >
                   <path
                     className={styles.checkboxCheckMarkPath}
                     fill="none"
@@ -93,7 +114,7 @@ const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
                 </svg>
               </div>
             </div>
-            {children && <span>{children}</span>}
+            {children && <span data-testid="checkbox-label">{children}</span>}
           </label>
         </div>
       </>

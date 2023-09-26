@@ -32,3 +32,5 @@ export const SelectOption = forwardRef<SelectOptionRef, SelectOptionProps>((prop
     {props.children}
   </Listbox.Option>
 ));
+
+SelectOption.displayName = 'SelectOption';

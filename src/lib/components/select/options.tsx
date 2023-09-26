@@ -32,3 +32,5 @@ export const Option = forwardRef<Ref, OptionProps>((props, ref) => (
     {props.children}
   </Combobox.Option>
 ));
+
+Option.displayName = 'Option';

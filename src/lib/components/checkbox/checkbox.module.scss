@@ -1,12 +1,12 @@
 .checkboxLayout {
 	@apply tw-inline-flex tw-items-center tw-whitespace-nowrap tw-align-middle;
 	.checkboxLabel {
-		@apply tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
+		@apply tw-flex tw-cursor-pointer tw-items-baseline tw-gap-2 tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
 		& > span {
-			@apply tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
+			@apply tw-whitespace-normal tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
 		}
 		.checkboxInnerContainer {
-			@apply tw-relative tw-inline-block tw-h-4 tw-w-4 tw-shrink-0 tw-cursor-pointer tw-whitespace-nowrap tw-border-0 tw-align-middle tw-leading-[0] tw-shadow-none tw-outline-0;
+			@apply tw-relative tw-top-[2px] tw-inline-block tw-h-4 tw-w-4 tw-shrink-0 tw-cursor-pointer tw-whitespace-nowrap tw-border-0 tw-align-middle tw-leading-[0] tw-shadow-none tw-outline-0;
 			.checkboxInput {
 				@apply tw-absolute tw-bottom-0 tw-left-0 tw-h-0 tw-w-0 tw-appearance-none tw-border-0 tw-p-0 tw-opacity-0 tw-outline-0;
 				&:checked + .checkboxFrame {
@@ -18,6 +18,9 @@
 							stroke-dashoffset: 0;
 						}
 					}
+				}
+				&:disabled + .checkboxFrame {
+					@apply tw-border-[#e4e4e4] tw-bg-[#f9f9f9];
 				}
 			}
 			.checkboxFrame {
@@ -45,6 +48,26 @@
 				.checkboxFrame {
 					@apply tw-border-[#e4e4e4] tw-bg-[#f9f9f9];
 				}
+			}
+		}
+	}
+	&.medium {
+		.checkboxLabel {
+			& > span {
+				@apply tw-text-sm;
+			}
+			.checkboxInnerContainer {
+				@apply tw-h-4 tw-w-4;
+			}
+		}
+	}
+	&.large {
+		.checkboxLabel {
+			& > span {
+				@apply tw-text-base;
+			}
+			.checkboxInnerContainer {
+				@apply tw-top-[4px] tw-h-5 tw-w-5;
 			}
 		}
 	}
