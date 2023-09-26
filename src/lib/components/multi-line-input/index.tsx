@@ -1,1 +1,1 @@
-export { default } from './multi-line-input.tsx';
+export { default } from './multi-line-input';

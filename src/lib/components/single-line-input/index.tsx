@@ -1,1 +1,1 @@
-export { default } from './single-line-input.tsx';
+export { default } from './single-line-input';

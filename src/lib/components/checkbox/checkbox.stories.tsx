@@ -25,6 +25,14 @@ const meta: Meta<typeof Checkbox> = {
         type: { summary: 'boolean' },
       },
     },
+    checkboxSize: {
+      options: ['small', 'medium', 'large'],
+      control: { type: 'radio' },
+      table: {
+        defaultValue: { summary: 'medium' },
+        type: { summary: 'union' },
+      },
+    },
     themeColor: {
       control: { type: 'color', presetColors: ['#006bb1'] },
     },
@@ -54,5 +62,6 @@ type Story = StoryObj<typeof Checkbox>;
 export const Primary: Story = {
   args: {
     children: 'Checkbox',
+    checkboxSize: 'medium',
   },
 };
