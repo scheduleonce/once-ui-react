@@ -16,6 +16,7 @@ jobs:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
+      - run: npm run build:lib
       # scoped packages are private by default so need to add public flag
       - run: npm publish --access public
         env:
