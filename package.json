@@ -6,14 +6,14 @@
     "type": "git",
     "url": "https://github.com/scheduleonce/once-ui-react"
   },
-  "main": "./dist/once-ui-react.umd.js",
-  "module": "./dist/once-ui-react.es.js",
+  "main": "./dist/ui-react.umd.js",
+  "module": "./dist/ui-react.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/once-ui-react.es.js",
-      "require": "./dist/once-ui-react.umd.js"
+      "import": "./dist/ui-react.es.js",
+      "require": "./dist/ui-react.umd.js"
     },
     "./dist/style.css": "./dist/style.css"
   },
