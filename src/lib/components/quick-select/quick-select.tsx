@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useState } from 'react';
+import { CSSProperties, FC, useState } from 'react';
 import styles from './quick-select.module.scss';
 import luminance from '@oncehub/relative-luminance';
 import { Option } from './quick-select.type';

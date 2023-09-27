@@ -1,4 +1,4 @@
-import React, { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef } from 'react';
+import { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef } from 'react';
 import styles from './button.module.scss';
 import luminance from '@oncehub/relative-luminance';
 interface ButtonProps extends ComponentPropsWithRef<'button'> {

@@ -1,4 +1,4 @@
-import React, { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef, useState } from 'react';
+import { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef, useState } from 'react';
 import styles from './checkbox.module.scss';
 import luminance from '@oncehub/relative-luminance';
 
