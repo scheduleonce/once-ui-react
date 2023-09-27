@@ -10,8 +10,8 @@ npm install @oncehub/ui-react
 
 ## Development
 
-1. Storybook is [automatically deployed](https://github.com/scheduleonce/once-ui-react/actions/workflows/deploy-storybook.yml) to Github Pages when pushing to main
-2. Package is automatically pushed to npm when [publishing a new package](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) on Github
+1. Storybook is [automatically deployed](.github/workflows/deploy-storybook.yml) to Github Pages when pushing to main.
+2. Package is automatically pushed to npm when [creating a new release](.github/workflows/npm-publish.yml) on Github. Check out the release section in the repo. Read more about releases [here](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
 
 ## Tools
 
