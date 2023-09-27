@@ -1,1 +1,1 @@
-export { default } from './quick-multi-select';
+export { default as QuickMultiSelect } from './quick-multi-select';

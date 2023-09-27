@@ -1,1 +1,1 @@
-export { default } from './single-line-input';
+export { default as SingleLineInput } from './single-line-input';

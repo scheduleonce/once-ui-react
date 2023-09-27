@@ -1,1 +1,1 @@
-export { default } from './scrollbar';
+export { default as Scrollbar } from './scrollbar';
