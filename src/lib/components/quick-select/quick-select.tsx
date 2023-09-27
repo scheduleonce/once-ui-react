@@ -13,7 +13,7 @@ interface Props {
   showLoader?: boolean;
 }
 
-const QuickSelect: FC<Props> = ({
+export const QuickSelect: FC<Props> = ({
   options,
   onSelect,
   selected,
@@ -106,5 +106,3 @@ const QuickSelect: FC<Props> = ({
     </div>
   );
 };
-
-export default QuickSelect;

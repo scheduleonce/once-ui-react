@@ -1,1 +1,1 @@
-export { default as MultiLineInput } from './multi-line-input';
+export * from './multi-line-input';

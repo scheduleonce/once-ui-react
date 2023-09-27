@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-import Scrollbar from './scrollbar';
+import { Scrollbar } from './scrollbar';
 
 const meta: Meta<typeof Scrollbar> = {
   title: 'Basic/Scrollbar',

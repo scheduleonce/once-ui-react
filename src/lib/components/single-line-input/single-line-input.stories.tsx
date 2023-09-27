@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import SingleLineInput from './single-line-input';
+import { SingleLineInput } from './single-line-input';
 
 const meta: Meta<typeof SingleLineInput> = {
   title: 'Basic/SingleLineInput',

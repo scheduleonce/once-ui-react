@@ -4,7 +4,8 @@ import styles from './scrollbar.module.scss';
 interface ScrollbarProps extends ComponentPropsWithRef<'div'> {
   children: any;
 }
-const Scrollbar: FC<ScrollbarProps> = forwardRef<HTMLDivElement, ComponentPropsWithRef<'div'> & ScrollbarProps>(
+
+export const Scrollbar: FC<ScrollbarProps> = forwardRef<HTMLDivElement, ComponentPropsWithRef<'div'> & ScrollbarProps>(
   ({ children, className = '', style = {}, ...rest }: ScrollbarProps, ref) => {
     const scrollbarClass = [styles.scrollbarContainer, className].filter(Boolean).join(' ');
     return (
@@ -18,4 +19,3 @@ const Scrollbar: FC<ScrollbarProps> = forwardRef<HTMLDivElement, ComponentPropsW
 );
 
 Scrollbar.displayName = 'Scrollbar';
-export default Scrollbar;
