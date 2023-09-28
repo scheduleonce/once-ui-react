@@ -1,5 +1,5 @@
 import React, { CSSProperties, useRef, useState } from 'react';
-import Checkbox from '../checkbox/checkbox';
+import { Checkbox } from '../checkbox/checkbox';
 import styles from './quick-multi-select.module.scss';
 import { Option } from './quick-multi-select.type';
 import luminance from '@oncehub/relative-luminance';
@@ -14,7 +14,7 @@ interface Props {
   className?: string;
   style?: CSSProperties;
 }
-const QuickMultiSelect: React.FC<Props> = ({
+export const QuickMultiSelect: React.FC<Props> = ({
   options,
   checkedValue,
   onSelectionChange,
@@ -128,5 +128,3 @@ const QuickMultiSelect: React.FC<Props> = ({
     </div>
   );
 };
-
-export default QuickMultiSelect;

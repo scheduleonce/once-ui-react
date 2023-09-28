@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, CSSProperties } from 'react';
 import { Option } from './multi-select.type';
-import Checkbox from '../checkbox/checkbox';
-import Button from '../button/button';
+import { Checkbox } from '../checkbox/checkbox';
+import { Button } from '../button/button';
 import styles from './multi-select.module.scss';
 import luminance from '@oncehub/relative-luminance';
 
@@ -16,7 +16,7 @@ interface Props {
   style?: CSSProperties;
 }
 
-const MultiSelect: React.FC<Props> = ({
+export const MultiSelect: React.FC<Props> = ({
   options,
   checkedValue,
   onSelectionChange,
@@ -271,5 +271,3 @@ const MultiSelect: React.FC<Props> = ({
     </div>
   );
 };
-
-export default MultiSelect;

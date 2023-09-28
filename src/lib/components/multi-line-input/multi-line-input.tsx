@@ -7,7 +7,7 @@ interface MultiLineInputProps extends ComponentPropsWithRef<'textarea'> {
   onSubmit?: () => void; // Submit form function in the parent component
 }
 
-const MultiLineInput: FC<MultiLineInputProps> = React.memo(
+export const MultiLineInput: FC<MultiLineInputProps> = React.memo(
   forwardRef<HTMLTextAreaElement, MultiLineInputProps>(
     (
       { themeColor = '', onSubmit, style = {}, className = '', onInput, onFocus, onBlur, ...rest }: MultiLineInputProps,
@@ -68,5 +68,3 @@ const MultiLineInput: FC<MultiLineInputProps> = React.memo(
     },
   ),
 );
-
-export default MultiLineInput;

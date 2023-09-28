@@ -5,7 +5,7 @@ interface Props {
   setQuery: (query: any) => void;
 }
 
-const SelectOptions: FC<Props> = ({ children, setQuery }) => {
+export const SelectOptions: FC<Props> = ({ children, setQuery }) => {
   return (
     <>
       <Transition
@@ -22,8 +22,6 @@ const SelectOptions: FC<Props> = ({ children, setQuery }) => {
     </>
   );
 };
-
-export default SelectOptions;
 
 type SelectOptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
 export type SelectOptionRef = HTMLLIElement;

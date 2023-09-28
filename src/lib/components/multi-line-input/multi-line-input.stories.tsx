@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import MultiLineInput from './multi-line-input';
+import { MultiLineInput } from './multi-line-input';
 
 const meta: Meta<typeof MultiLineInput> = {
   title: 'Basic/MultiLineInput',

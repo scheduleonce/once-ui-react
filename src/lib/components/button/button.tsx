@@ -1,4 +1,4 @@
-import React, { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef } from 'react';
+import { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef } from 'react';
 import styles from './button.module.scss';
 import luminance from '@oncehub/relative-luminance';
 interface ButtonProps extends ComponentPropsWithRef<'button'> {
@@ -15,7 +15,7 @@ interface ButtonProps extends ComponentPropsWithRef<'button'> {
 }
 
 /** Primary UI component for user interaction */
-const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPropsWithRef<'button'> & ButtonProps>(
+export const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPropsWithRef<'button'> & ButtonProps>(
   (
     {
       themeColor = '',
@@ -65,4 +65,3 @@ const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPropsWith
 );
 
 Button.displayName = 'Button';
-export default Button;

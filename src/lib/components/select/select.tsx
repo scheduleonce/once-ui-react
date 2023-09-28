@@ -10,7 +10,7 @@ interface Props {
   themeColor?: string;
 }
 
-const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) => {
+export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) => {
   const [isFocused, setIsFocused] = useState(false);
   let borderColor = '#333333';
   const onSelection = (option: IOption) => {
@@ -67,5 +67,3 @@ const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) => {
     </>
   );
 };
-
-export default Select;

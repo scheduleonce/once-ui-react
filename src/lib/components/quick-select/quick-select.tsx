@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useState } from 'react';
+import { CSSProperties, FC, useState } from 'react';
 import styles from './quick-select.module.scss';
 import luminance from '@oncehub/relative-luminance';
 import { Option } from './quick-select.type';
@@ -13,7 +13,7 @@ interface Props {
   showLoader?: boolean;
 }
 
-const QuickSelect: FC<Props> = ({
+export const QuickSelect: FC<Props> = ({
   options,
   onSelect,
   selected,
@@ -106,5 +106,3 @@ const QuickSelect: FC<Props> = ({
     </div>
   );
 };
-
-export default QuickSelect;

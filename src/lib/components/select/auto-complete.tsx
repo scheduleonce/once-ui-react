@@ -14,7 +14,7 @@ interface Props {
   themeColor?: string;
 }
 
-const AutoComplete: FC<Props> = ({
+export const AutoComplete: FC<Props> = ({
   children,
   selected,
   onSelect,
@@ -104,5 +104,3 @@ const AutoComplete: FC<Props> = ({
     </Combobox>
   );
 };
-
-export default AutoComplete;

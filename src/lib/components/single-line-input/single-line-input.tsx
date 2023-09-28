@@ -5,7 +5,7 @@ interface SingleLineInputProps extends ComponentPropsWithRef<'input'> {
   themeColor?: string; // Made themeColor optional
 }
 
-const SingleLineInput: FC<SingleLineInputProps> = React.memo(
+export const SingleLineInput: FC<SingleLineInputProps> = React.memo(
   forwardRef<HTMLInputElement, SingleLineInputProps>(
     ({ themeColor = '', style = {}, className = '', onFocus, onBlur, ...rest }: SingleLineInputProps, ref) => {
       const [isFocused, setIsFocused] = useState(false);
@@ -41,5 +41,3 @@ const SingleLineInput: FC<SingleLineInputProps> = React.memo(
     },
   ),
 );
-
-export default SingleLineInput;

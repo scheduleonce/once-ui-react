@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-import Select from './select';
-import SelectOptions from './select-options';
-import SelectOption from './select-options';
+import { Select } from './select';
+import { SelectOption, SelectOptions } from './select-options';
 import { IOption } from './select.types';
 
 const meta: Meta<typeof Select> = {
@@ -59,7 +58,7 @@ const children = () => {
     <SelectOptions setQuery={() => {}}>
       {options.map((option) => (
         <SelectOption
-          disable="false"
+          disable={false}
           key={option.value}
           className={({ active }: { active: boolean }) =>
             `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
@@ -69,13 +68,11 @@ const children = () => {
           value={option}
         >
           {({ selected, active }: { selected: boolean; active: boolean }) => (
-            <>
-              <div className="tw-flex tw-items-center">
-                <span className={`tw-block tw-truncate ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>
-                  {option.label}
-                </span>
-              </div>
-            </>
+            <div className="tw-flex tw-items-center">
+              <span className={`tw-block tw-truncate ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>
+                {option.label}
+              </span>
+            </div>
           )}
         </SelectOption>
       ))}

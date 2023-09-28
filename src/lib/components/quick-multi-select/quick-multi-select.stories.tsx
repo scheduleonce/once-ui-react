@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import QuickMultiSelect from './quick-multi-select';
+import { QuickMultiSelect } from './quick-multi-select';
 import { Option } from './quick-multi-select.type';
 
 const meta: Meta<typeof QuickMultiSelect> = {

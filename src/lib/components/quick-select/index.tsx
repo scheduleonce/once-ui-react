@@ -1,1 +1,1 @@
-export { default as QuickSelect } from './quick-select';
+export * from './quick-select';

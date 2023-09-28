@@ -1,4 +1,4 @@
-import React, { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef, useState } from 'react';
+import { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef, useState } from 'react';
 import styles from './checkbox.module.scss';
 import luminance from '@oncehub/relative-luminance';
 
@@ -11,7 +11,7 @@ interface CheckboxProps extends ComponentPropsWithRef<'input'> {
 }
 const generateRandomId = () => `checkbox_${Math.random().toString(36).substring(2, 11)}`;
 /** Checkbox component */
-const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
+export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
       children,
@@ -123,4 +123,3 @@ const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
 );
 
 Checkbox.displayName = 'Checkbox';
-export default Checkbox;

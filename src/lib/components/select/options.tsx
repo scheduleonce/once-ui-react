@@ -5,7 +5,7 @@ interface Props {
   setQuery: (query: any) => void;
 }
 
-const Options: FC<Props> = ({ children, setQuery }) => {
+export const Options: FC<Props> = ({ children, setQuery }) => {
   return (
     <>
       <Transition
@@ -22,8 +22,6 @@ const Options: FC<Props> = ({ children, setQuery }) => {
     </>
   );
 };
-
-export default Options;
 
 type OptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
 export type Ref = HTMLLIElement;
