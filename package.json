@@ -13,9 +13,9 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/ui-react.es.js",
-      "require": "./dist/ui-react.umd.js"
-    },
-    "./dist/style.css": "./dist/style.css"
+      "require": "./dist/ui-react.umd.js",
+      "styles": "./dist/style.css"
+    }
   },
   "engines": {
     "node": "18"
