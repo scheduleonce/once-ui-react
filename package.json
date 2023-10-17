@@ -6,6 +6,10 @@
     "type": "git",
     "url": "https://github.com/scheduleonce/once-ui-react"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "main": "./dist/ui-react.umd.js",
   "module": "./dist/ui-react.es.js",
   "types": "./dist/index.d.ts",
@@ -86,9 +90,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
-  "files": [
-    "dist"
-  ],
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,css,md}": [
       "prettier -w"
