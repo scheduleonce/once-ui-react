@@ -36,16 +36,11 @@
     "prepare": "husky install",
     "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies\""
   },
-  "dependencies": {
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@oncehub/relative-luminance": "^2.1.0",
-    "react": "18.2.0",
-    "react-device-detect": "^2.2.3",
-    "react-dom": "18.2.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.23.2",
     "@storybook/addon-essentials": "^7.5.0",
     "@storybook/addon-interactions": "^7.5.0",
     "@storybook/addon-links": "^7.5.0",
@@ -55,8 +50,8 @@
     "@storybook/react-vite": "^7.5.0",
     "@storybook/testing-library": "^0.2.2",
     "@testing-library/react": "14.0.0",
-    "@types/node": "^20.8.7",
-    "@types/react": "^18.2.29",
+    "@types/node": "^20.8.9",
+    "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.13",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@vitejs/plugin-react": "^4.1.0",
@@ -78,21 +73,24 @@
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "prop-types": "15.8.1",
-    "sass": "^1.69.4",
+    "react": "^18.2.0",
+    "react-device-detect": "^2.2.3",
+    "react-dom": "^18.2.0",
+    "sass": "^1.69.5",
     "storybook": "^7.5.0",
-    "tailwindcss": "3.3.3",
+    "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
-    "vite-plugin-dts": "^3.6.0",
+    "vite-plugin-dts": "^3.6.2",
     "vitest": "^0.34.6"
-  },
-  "peerDependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,css,md}": [
       "prettier -w"
     ]
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
