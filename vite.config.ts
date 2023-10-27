@@ -44,6 +44,8 @@ const app = async (): Promise<UserConfigExport> => {
           },
         },
       },
+      target: 'esnext',
+      sourcemap: true,
     },
     test: {
       globals: true,
