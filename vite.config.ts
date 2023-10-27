@@ -3,6 +3,7 @@ import path from 'node:path';
 import { defineConfig } from 'vitest/config';
 import dts from 'vite-plugin-dts';
 import tailwindcss from 'tailwindcss';
+import { peerDependencies } from './package.json';
 import { UserConfigExport } from 'vite';
 import { name } from './package.json';
 
@@ -34,7 +35,7 @@ const app = async (): Promise<UserConfigExport> => {
         fileName: (format) => `${formattedName}.${format}.js`,
       },
       rollupOptions: {
-        external: ['react', 'react/jsx-runtime', 'react-dom', 'tailwindcss'],
+        external: [...Object.keys(peerDependencies)],
         output: {
           globals: {
             react: 'React',
