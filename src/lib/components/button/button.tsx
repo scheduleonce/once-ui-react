@@ -1,6 +1,7 @@
 import { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef } from 'react';
 import styles from './button.module.scss';
 import luminance from '@oncehub/relative-luminance';
+import { ColorsService } from '../colors.service';
 interface ButtonProps extends ComponentPropsWithRef<'button'> {
   /** The content of the button */
   children: ReactNode;
@@ -32,6 +33,7 @@ export const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPr
     let buttonStyleObj: CSSProperties = {};
     if (themeColor) {
       const theme = luminance(themeColor);
+      themeColor = ColorsService.convert3HexTo6(themeColor);
       if (theme === 'dark' || theme === 'light') {
         const backgroundColor = variant === 'primary' ? themeColor : '#ffffff';
         const color =
@@ -42,7 +44,7 @@ export const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPr
             : theme === 'light'
             ? '#333333'
             : themeColor;
-        const borderColor = themeColor === '#ffffff' ? '#333333' : themeColor;
+        const borderColor = themeColor === '#ffffff' ? '#c8c8c8' : themeColor;
         buttonStyleObj = {
           backgroundColor: backgroundColor,
           color: color,

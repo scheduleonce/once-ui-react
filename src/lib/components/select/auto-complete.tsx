@@ -1,8 +1,9 @@
-import { FC, useRef, useEffect, CSSProperties } from 'react';
+import { FC, useRef, useEffect, CSSProperties, useState } from 'react';
 import { Combobox } from '@headlessui/react';
 import { IOption } from './select.types';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
+import { ColorsService } from '../colors.service';
 
 interface Props {
   children: any;
@@ -25,6 +26,7 @@ export const AutoComplete: FC<Props> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const inputButton = useRef<HTMLButtonElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
   let OptionStyleObj: CSSProperties = {};
 
   useEffect(() => {
@@ -55,15 +57,21 @@ export const AutoComplete: FC<Props> = ({
   const handlingCursorPosition = () => {
     const input = inputRef.current;
     if (input) {
-      input.focus();
       input.setSelectionRange(input.value.length, input.value.length);
     }
   };
 
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   if (themeColor) {
     const theme = luminance(themeColor);
-    themeColor = themeColor.length === 4 ? themeColor.replace(/^#(.)(.)(.)$/, '#$1$1$2$2$3$3') : themeColor;
-    const borderColor = themeColor === '#ffffff' ? '#333333' : themeColor;
+    themeColor = ColorsService.convert3HexTo6(themeColor);
+    const borderColor = themeColor === '#ffffff' ? '#c8c8c8' : isFocused ? themeColor : '#333333';
     if (theme === 'dark' || theme === 'light') {
       OptionStyleObj = {
         borderBottomColor: borderColor,
@@ -82,11 +90,15 @@ export const AutoComplete: FC<Props> = ({
           <Combobox.Input
             ref={inputRef}
             data-testid={'select-input'}
-            className="tw-h-full tw-w-full tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-py-2 tw-pl-3 tw-pr-10 tw-text-base tw-leading-5 tw-shadow-none focus:tw-border-b-2 focus:tw-border-b-[#006bb1] focus:tw-outline-none focus:tw-ring-[0px] focus-visible:tw-ring-[0px]"
+            className="tw-h-full tw-w-full tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-pb-2 tw-pl-[10px] tw-pr-10 tw-pt-2 tw-text-base tw-leading-5 tw-placeholder-[#666666] tw-shadow-none focus:tw-border-b-2 focus:tw-border-b-[#006bb1] focus:tw-pb-[7px] focus:tw-outline-none focus:tw-ring-[0px] focus-visible:tw-ring-[0px]"
             displayValue={displayInputValue}
             onChange={(event) => setQuery(event.target.value)}
             onClick={handleInputClick}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             style={{ ...OptionStyleObj }}
+            placeholder="Select your option"
+            autoComplete="off"
           />
           <Combobox.Button
             className="tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-pr-2"

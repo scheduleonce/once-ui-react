@@ -4,11 +4,12 @@ import { Checkbox } from '../checkbox/checkbox';
 import { Button } from '../button/button';
 import styles from './multi-select.module.scss';
 import luminance from '@oncehub/relative-luminance';
+import { ColorsService } from '../colors.service';
 
 interface Props {
   options: Option[];
-  checkedValue: number[];
-  onSelectionChange: (val: number[]) => void;
+  checkedValue: string[];
+  onSelectionChange: (val: string[]) => void;
   minOptions?: number;
   maxOptions?: number;
   themeColor?: string;
@@ -27,11 +28,12 @@ export const MultiSelect: React.FC<Props> = ({
   style = {},
 }) => {
   const [filteredOptions, setFilteredOptions] = useState(options);
-  const [selectedOptions, setSelectedOptions] = useState<number[]>(checkedValue);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(checkedValue);
   const [searchTerm, setSearchTerm] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const checkboxRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const checkboxRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const optionsListRef = useRef<HTMLUListElement | null>(null);
   const [focusedIndex, setFocusedIndex] = useState(-1); // -1 means no focus
@@ -69,7 +71,7 @@ export const MultiSelect: React.FC<Props> = ({
     setFilteredOptions(filtered);
   }, [options, searchTerm]);
 
-  const handleCheckboxClick = (id: number) => {
+  const handleCheckboxClick = (id: string) => {
     const isSelected = selectedOptions.includes(id);
     const newSelectedValues = isSelected ? selectedOptions.filter((val) => val !== id) : [...selectedOptions, id];
     const isWithinLimit = maxOptions === undefined || newSelectedValues.length <= maxOptions;
@@ -79,6 +81,7 @@ export const MultiSelect: React.FC<Props> = ({
       onSelectionChange(newSelectedValues);
     }
   };
+
   /* istanbul ignore next */
   const selectedText = selectedOptions
     .map((id) => {
@@ -88,7 +91,7 @@ export const MultiSelect: React.FC<Props> = ({
     .filter((text) => text !== '')
     .join(', ');
 
-  const handleLiClick = (id: number) => {
+  const handleLiClick = (id: string) => {
     const clickedOption = options.find((option) => option.id === id);
 
     if (
@@ -144,10 +147,17 @@ export const MultiSelect: React.FC<Props> = ({
     }
   };
 
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   if (themeColor) {
     const theme = luminance(themeColor);
-    themeColor = themeColor.length === 4 ? themeColor.replace(/^#(.)(.)(.)$/, '#$1$1$2$2$3$3') : themeColor;
-    const borderColor = themeColor === '#ffffff' ? '#333333' : themeColor;
+    themeColor = ColorsService.convert3HexTo6(themeColor);
+    const borderColor = themeColor === '#ffffff' ? '#c8c8c8' : isFocused || dropdownOpen ? themeColor : '#333333';
     if (theme === 'dark' || theme === 'light') {
       multiSelectStyleObj = {
         borderBottomColor: borderColor,
@@ -164,6 +174,8 @@ export const MultiSelect: React.FC<Props> = ({
             className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''}`}
             value={selectedText}
             readOnly
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             onClick={() => toggleDropDown(!dropdownOpen)}
             onKeyPress={(event) => {
               if (event.key === ' ' || event.code === 'Space') {
@@ -172,7 +184,7 @@ export const MultiSelect: React.FC<Props> = ({
               }
             }}
             data-testid={'selected-input'}
-            placeholder="Please select"
+            placeholder="Select your option"
             style={{ ...multiSelectStyleObj, ...style }}
           />
           <span
@@ -213,6 +225,7 @@ export const MultiSelect: React.FC<Props> = ({
               )}
               <ul ref={optionsListRef}>
                 {filteredOptions.map((option, index) => (
+                  // eslint-disable-next-line jsx-a11y/role-supports-aria-props
                   <li
                     key={option.id}
                     className={`${styles.optionsList} ${index === focusedIndex ? styles.focused : ''}`}
@@ -244,7 +257,9 @@ export const MultiSelect: React.FC<Props> = ({
                           !selectedOptions.includes(option.id))
                       }
                     >
-                      {option.text}
+                      <span className="tw-block tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap">
+                        {option.text}
+                      </span>
                     </Checkbox>
                   </li>
                 ))}

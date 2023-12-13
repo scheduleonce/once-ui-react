@@ -3,6 +3,7 @@ import { Listbox } from '@headlessui/react';
 import { IOption } from './select.types';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
+import { ColorsService } from '../colors.service';
 interface Props {
   children: any;
   selected: IOption | null;
@@ -24,10 +25,10 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
   };
 
   if (themeColor) {
-    themeColor = themeColor.length === 4 ? themeColor.replace(/^#(.)(.)(.)$/, '#$1$1$2$2$3$3') : themeColor;
+    themeColor = ColorsService.convert3HexTo6(themeColor);
     const theme = luminance(themeColor);
     if (theme === 'dark' || theme === 'light') {
-      borderColor = themeColor === '#ffffff' ? '#006bb1' : themeColor;
+      borderColor = themeColor === '#ffffff' ? '#c8c8c8' : themeColor;
     }
   }
 
@@ -43,7 +44,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
                 onBlur={handleBlur}
                 style={{ borderBottomColor: themeColor && (isFocused || open) ? borderColor : '' }}
                 className={
-                  `tw-relative tw-h-10 tw-w-full tw-cursor-pointer tw-border-b tw-border-t tw-border-t-transparent tw-bg-white tw-py-1.5 tw-pl-3 tw-pr-10 tw-text-left tw-text-[#333333] focus:tw-border-b-2 focus:tw-border-t-2 focus:tw-border-b-[#006bb1] focus:tw-py-[5px] focus:tw-outline-none focus:tw-ring-0 sm:tw-text-sm sm:tw-leading-6` +
+                  `tw-relative tw-h-10 tw-w-full tw-cursor-pointer tw-border-b tw-border-t tw-border-t-transparent tw-bg-white tw-py-1.5 tw-pl-[10px] tw-pr-10 tw-text-left tw-text-[#333333] focus:tw-border-b-2 focus:tw-border-t-2 focus:tw-border-b-[#006bb1] focus:tw-py-[5px] focus:tw-outline-none focus:tw-ring-0 sm:tw-text-sm sm:tw-leading-6` +
                   (open ? ' tw-border-b-2 tw-border-t-2 tw-border-b-[#006bb1]' : ' tw-border-b-[#333333]')
                 }
               >

@@ -43,8 +43,8 @@ import React, { useState } from 'react';
 import MultiSelect from '@/once-ui/multi-select/multi-select';
 
 const options = [
-	{ id: 1, text: 'Option 1', order: 1 },
-	{ id: 2, text: 'Option 2', order: 2 },
+	{ id: '1', text: 'Option 1', order: 1 },
+	{ id: '2', text: 'Option 2', order: 2 },
 	// Add more options here
 ];
 

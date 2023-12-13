@@ -1,6 +1,7 @@
 import React, { FC, forwardRef, ComponentPropsWithRef, useState, useEffect } from 'react';
 import styles from './multi-line-input.module.scss';
 import { isMobile } from 'react-device-detect';
+import { ColorsService } from '../colors.service';
 
 interface MultiLineInputProps extends ComponentPropsWithRef<'textarea'> {
   themeColor?: string; // Made themeColor optional
@@ -15,6 +16,7 @@ export const MultiLineInput: FC<MultiLineInputProps> = React.memo(
     ) => {
       const [isMobileDevice, setIsMobileDevice] = useState(true);
       const [isFocused, setIsFocused] = useState(false);
+      themeColor = ColorsService.convert3HexTo6(themeColor);
 
       useEffect(() => {
         setIsMobileDevice(isMobile);
@@ -47,7 +49,7 @@ export const MultiLineInput: FC<MultiLineInputProps> = React.memo(
       };
 
       inputStyleObj = {
-        borderBottomColor: isFocused && themeColor != '#ffffff' ? themeColor : '',
+        borderBottomColor: isFocused ? (themeColor !== '#ffffff' ? themeColor : '#c8c8c8') : '',
       };
 
       return (

@@ -2,11 +2,12 @@ import { CSSProperties, FC, useState } from 'react';
 import styles from './quick-select.module.scss';
 import luminance from '@oncehub/relative-luminance';
 import { Option } from './quick-select.type';
+import { ColorsService } from '../colors.service';
 
 interface Props {
   options: Option[];
-  onSelect: (option: Option) => void;
-  selected: Option | null;
+  onSelect: (option: Option | undefined) => void;
+  selected?: Option;
   themeColor?: string;
   className?: string;
   style?: CSSProperties;
@@ -26,23 +27,26 @@ export const QuickSelect: FC<Props> = ({
   let quickOptionStyleObj: CSSProperties = {};
   let quickOptionTriangleStyleObj: CSSProperties = {};
   let checkmarkColor: string = '#ffffff';
-
   const selectOption = (option: any) => {
-    if (selectedOption?.id === option.id) return;
+    if (selectedOption?.id === option?.id) {
+      setSelected(undefined);
+      onSelect(undefined);
+      return;
+    }
     onSelect(option);
     setSelected(option);
   };
 
   if (themeColor) {
     const theme = luminance(themeColor);
-    themeColor = themeColor.length === 4 ? themeColor.replace(/^#(.)(.)(.)$/, '#$1$1$2$2$3$3') : themeColor;
+    themeColor = ColorsService.convert3HexTo6(themeColor);
     const borderColor = themeColor === '#ffffff' ? '#333333' : themeColor;
     if (theme === 'dark' || theme === 'light') {
       checkmarkColor = themeColor === '#ffffff' || theme === 'dark' ? '#ffffff' : '#333333';
       quickOptionStyleObj = {
         outlineColor: borderColor,
         borderColor: borderColor,
-        color: '#333333',
+        color: themeColor === '#ffffff' || theme === 'light' ? '#333333' : themeColor,
       };
       quickOptionTriangleStyleObj = {
         borderRightColor: borderColor,

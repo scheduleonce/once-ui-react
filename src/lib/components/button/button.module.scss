@@ -1,14 +1,14 @@
 .button {
-	@apply tw-box-border tw-flex tw-cursor-pointer tw-items-center tw-justify-center tw-text-center tw-shadow-none hover:tw-underline focus:tw-underline disabled:tw-cursor-default disabled:hover:tw-no-underline;
+	@apply tw-box-border tw-flex tw-cursor-pointer tw-items-center tw-justify-center tw-border tw-border-solid tw-text-center tw-shadow-none hover:tw-underline focus:tw-underline disabled:tw-cursor-default disabled:hover:tw-no-underline;
 }
 .primary {
-	@apply tw-border-0 tw-border-none tw-bg-[#006bb1] tw-font-medium tw-text-white tw-outline-[#006bb1] focus:tw-outline-2 focus:tw-outline-offset-[3px];
+	@apply tw-border-transparent tw-bg-[#006bb1] tw-font-medium tw-text-white tw-outline-[#006bb1] focus:tw-outline-2 focus:tw-outline-offset-[3px];
 	&:disabled {
 		@apply tw-border-[#c8c8c8] tw-bg-[#c8c8c8] tw-text-white #{!important};
 	}
 }
 .secondary {
-	@apply tw-border tw-border-solid tw-border-[#006bb1] tw-bg-white tw-font-normal tw-text-[#006bb1] hover:tw-border-transparent hover:tw-outline hover:tw-outline-2 hover:tw-outline-offset-[-2px] hover:tw-outline-[#006bb1] focus:tw-border-transparent focus:tw-outline focus:tw-outline-2 focus:tw-outline-offset-[-2px] focus:tw-outline-[#006bb1];
+	@apply tw-border-[#006bb1] tw-bg-white tw-font-normal tw-text-[#006bb1] hover:tw-border-transparent hover:tw-outline hover:tw-outline-2 hover:tw-outline-offset-[-2px] hover:tw-outline-[#006bb1] focus:tw-border-transparent focus:tw-outline focus:tw-outline-2 focus:tw-outline-offset-[-2px] focus:tw-outline-[#006bb1];
 	&:disabled {
 		@apply tw-border-[#c8c8c8] tw-text-[#c8c8c8] hover:tw-outline-0 focus:tw-outline-0 #{!important};
 	}

@@ -63,10 +63,10 @@ import React, { useState } from 'react';
 import QuickSelect from '@/once-ui/quick-select/quick-select';
 
 const options: Option[] = [
-  { id: 31, text: "Kaushal", order: 1 },
-  { id: 32, text: "Amit", order: 2 },
-  { id: 33, text: "Shubham", order: 3 },
-  { id: 34, text: "Shaurabh", order: 4, disabled : true },
+  { id: '31', text: "Kaushal", order: 1 },
+  { id: '32', text: "Amit", order: 2 },
+  { id: '33', text: "Shubham", order: 3 },
+  { id: '34', text: "Shaurabh", order: 4, disabled : true },
 ];
 
 function App() {

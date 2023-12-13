@@ -74,9 +74,9 @@ export default meta;
 type Story = StoryObj<typeof QuickSelect>;
 
 const options: Option[] = [
-  { id: 1, text: 'Option 1', order: 1 },
-  { id: 2, text: 'Option 2', order: 2 },
-  { id: 3, text: 'Option 3', order: 3, disabled: true },
+  { id: '1', text: 'Option 1', order: 1 },
+  { id: '2', text: 'Option 2', order: 2 },
+  { id: '3', text: 'Option 3', order: 3, disabled: true },
   // Add more options here
 ];
 const handleSelectionChange = () => {};

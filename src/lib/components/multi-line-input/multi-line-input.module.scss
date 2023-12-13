@@ -1,7 +1,7 @@
 .textInputWrapper {
 	@apply tw-w-full;
 	.textInput {
-		@apply tw-h-[40px] tw-max-h-[225px] tw-w-full tw-resize-none tw-border-0 tw-border-b tw-border-[#333333] tw-pt-3 tw-text-base tw-text-[#333333] tw-outline-none;
+		@apply tw-block tw-h-[40px] tw-max-h-[225px] tw-w-full tw-resize-none tw-border-0 tw-border-b tw-border-[#333333] tw-px-[10px] tw-pt-3 tw-text-base tw-text-[#333333] tw-outline-none;
 		&:focus {
 			@apply tw-border-b-2 tw-border-[#006bb1];
 		}

@@ -3,11 +3,12 @@ import { Checkbox } from '../checkbox/checkbox';
 import styles from './quick-multi-select.module.scss';
 import { Option } from './quick-multi-select.type';
 import luminance from '@oncehub/relative-luminance';
+import { ColorsService } from '../colors.service';
 
 interface Props {
   options: Option[];
-  checkedValue: number[];
-  onSelectionChange: (val: number[]) => void;
+  checkedValue: string[];
+  onSelectionChange: (val: string[]) => void;
   minOptions?: number;
   maxOptions?: number;
   themeColor?: string;
@@ -24,11 +25,12 @@ export const QuickMultiSelect: React.FC<Props> = ({
   className = '',
   style = {},
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState<number[]>(checkedValue);
-  const checkboxRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(checkedValue);
+  const checkboxRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   let quickMultiSelectStyleObj: CSSProperties = {};
+  let theme: string;
 
-  const handleCheckboxClick = (id: number) => {
+  const handleCheckboxClick = (id: string) => {
     const isSelected = selectedOptions.includes(id);
     const newSelectedValues = isSelected ? selectedOptions.filter((val) => val !== id) : [...selectedOptions, id];
     const isWithinLimit = maxOptions === undefined || newSelectedValues.length <= maxOptions;
@@ -39,9 +41,8 @@ export const QuickMultiSelect: React.FC<Props> = ({
     }
   };
 
-  const handleLiClick = (id: number) => {
+  const handleLiClick = (id: string) => {
     const clickedOption = options.find((option) => option.id === id);
-
     if (
       clickedOption &&
       !clickedOption.disabled &&
@@ -53,14 +54,14 @@ export const QuickMultiSelect: React.FC<Props> = ({
   };
 
   if (themeColor) {
-    const theme = luminance(themeColor);
-    themeColor = themeColor.length === 4 ? themeColor.replace(/^#(.)(.)(.)$/, '#$1$1$2$2$3$3') : themeColor;
+    theme = luminance(themeColor);
+    themeColor = ColorsService.convert3HexTo6(themeColor);
     const borderColor = themeColor === '#ffffff' ? '#333333' : themeColor;
     if (theme === 'dark' || theme === 'light') {
       quickMultiSelectStyleObj = {
         outlineColor: borderColor,
         borderColor: borderColor,
-        color: '#333333',
+        color: themeColor === '#ffffff' || theme === 'light' ? '#333333' : themeColor,
       };
     }
   }
@@ -77,7 +78,7 @@ export const QuickMultiSelect: React.FC<Props> = ({
               (maxOptions !== undefined && selectedOptions.length >= maxOptions && !selectedOptions.includes(option.id))
                 ? styles.disabled
                 : ''
-            }`}
+            } ${selectedOptions.includes(option.id) ? styles.selected : ''}`}
             tabIndex={option.disabled ? -1 : 0}
             onClick={() => handleLiClick(option.id)}
             onKeyPress={(event) => {
@@ -110,12 +111,14 @@ export const QuickMultiSelect: React.FC<Props> = ({
               <span
                 style={{
                   color:
-                    themeColor ||
+                    (themeColor && (themeColor === '#ffffff' || theme === 'light')) ||
                     option.disabled ||
                     (maxOptions !== undefined &&
                       selectedOptions.length >= maxOptions &&
                       !selectedOptions.includes(option.id))
                       ? '#333333'
+                      : themeColor && (themeColor !== '#ffffff' || theme !== 'light')
+                      ? themeColor
                       : '#006bb1',
                 }}
               >

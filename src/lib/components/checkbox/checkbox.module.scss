@@ -1,7 +1,7 @@
 .checkboxLayout {
-	@apply tw-inline-flex tw-items-center tw-whitespace-nowrap tw-align-middle;
+	@apply tw-inline-flex tw-w-full tw-items-center tw-whitespace-nowrap tw-align-middle;
 	.checkboxLabel {
-		@apply tw-flex tw-cursor-pointer tw-items-baseline tw-gap-2 tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
+		@apply tw-flex tw-w-full tw-cursor-pointer tw-items-baseline tw-gap-2 tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
 		& > span {
 			@apply tw-whitespace-normal tw-text-sm tw-leading-[22px] tw-tracking-[0] tw-text-[#333333];
 		}
@@ -54,7 +54,7 @@
 	&.medium {
 		.checkboxLabel {
 			& > span {
-				@apply tw-text-sm;
+				@apply tw-w-[calc(100%-24px)] tw-text-sm;
 			}
 			.checkboxInnerContainer {
 				@apply tw-h-4 tw-w-4;
@@ -64,7 +64,7 @@
 	&.large {
 		.checkboxLabel {
 			& > span {
-				@apply tw-text-base;
+				@apply tw-w-[calc(100%-28px)] tw-text-base;
 			}
 			.checkboxInnerContainer {
 				@apply tw-top-[4px] tw-h-5 tw-w-5;
