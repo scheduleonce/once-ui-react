@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "1.3.5-beta1.0",
+  "version": "1.3.5-beta2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/scheduleonce/once-ui-react"
@@ -18,7 +18,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/ui-react.es.js",
       "require": "./dist/ui-react.umd.js",
-      "styles": "./dist/style.css"
+      "styles": "./dist/index.css"
+    },
+    "./components/select": "./dist/components/select/*",
+    "./components/multi-select": {
+      "types": "./dist/components/multi-select/multi-select.type.d.ts"
     }
   },
   "engines": {
