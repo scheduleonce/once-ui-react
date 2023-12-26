@@ -7,3 +7,4 @@ export * from './quick-select';
 export * from './scrollbar';
 export * from './select';
 export * from './single-line-input';
+export * from './colors.service';
