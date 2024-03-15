@@ -114,6 +114,9 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
               </div>
             </div>
             {children && <span data-testid="checkbox-label">{children}</span>}
+            <div className={styles.visuallyHidden} aria-live="polite" aria-atomic="true">
+              {isChecked ? 'Checked' : 'Unchecked'}
+            </div>
           </label>
         </div>
       </>

@@ -1,4 +1,4 @@
-import React, { CSSProperties, useRef, useState } from 'react';
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import { Checkbox } from '../checkbox/checkbox';
 import styles from './quick-multi-select.module.scss';
 import { Option } from './quick-multi-select.type';
@@ -9,47 +9,40 @@ interface Props {
   options: Option[];
   checkedValue: string[];
   onSelectionChange: (val: string[]) => void;
-  minOptions?: number;
   maxOptions?: number;
   themeColor?: string;
   className?: string;
   style?: CSSProperties;
+  id?: string;
 }
 export const QuickMultiSelect: React.FC<Props> = ({
   options,
   checkedValue,
   onSelectionChange,
-  minOptions = 0,
   maxOptions,
   themeColor,
   className = '',
   style = {},
+  id = '',
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(checkedValue);
   const checkboxRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   let quickMultiSelectStyleObj: CSSProperties = {};
   let theme: string;
 
-  const handleCheckboxClick = (id: string) => {
+  const handleLiClick = (id: string): void => {
+    const clickedOption = options.find((option) => option.id === id);
+    if (!clickedOption || clickedOption.disabled) {
+      return;
+    }
+    const checkbox = checkboxRefs.current[id];
+    checkbox?.click();
     const isSelected = selectedOptions.includes(id);
     const newSelectedValues = isSelected ? selectedOptions.filter((val) => val !== id) : [...selectedOptions, id];
     const isWithinLimit = maxOptions === undefined || newSelectedValues.length <= maxOptions;
-
     if (isWithinLimit) {
       setSelectedOptions(newSelectedValues);
       onSelectionChange(newSelectedValues);
-    }
-  };
-
-  const handleLiClick = (id: string) => {
-    const clickedOption = options.find((option) => option.id === id);
-    if (
-      clickedOption &&
-      !clickedOption.disabled &&
-      (maxOptions === undefined || selectedOptions.length <= maxOptions)
-    ) {
-      const checkbox = checkboxRefs.current[id];
-      checkbox?.click();
     }
   };
 
@@ -67,13 +60,13 @@ export const QuickMultiSelect: React.FC<Props> = ({
   }
 
   return (
-    <div className={styles.multiSelectContainer}>
-      <ul className={styles.quickOptionsWrap}>
+    <div className={styles.multiSelectContainer} role="group">
+      <ul className={styles.quickOptionsWrap} id={id}>
         {options.map((option) => (
           <li
             style={{ ...quickMultiSelectStyleObj, ...style }}
             key={option.id}
-            className={`${className} ${styles.quickOption}  ${
+            className={`${className} ${
               option.disabled ||
               (maxOptions !== undefined && selectedOptions.length >= maxOptions && !selectedOptions.includes(option.id))
                 ? styles.disabled
@@ -90,6 +83,7 @@ export const QuickMultiSelect: React.FC<Props> = ({
             data-testid={'option-box'}
           >
             <Checkbox
+              id={option.id}
               checkboxSize="large"
               tabIndex={-1}
               themeColor={themeColor}
@@ -97,10 +91,6 @@ export const QuickMultiSelect: React.FC<Props> = ({
                 checkboxRefs.current[option.id] = checkbox; // Store checkbox reference
               }}
               checked={selectedOptions.includes(option.id)}
-              onClick={(event) => {
-                event.stopPropagation();
-                handleCheckboxClick(option.id);
-              }}
               disabled={
                 option.disabled ||
                 (maxOptions !== undefined &&

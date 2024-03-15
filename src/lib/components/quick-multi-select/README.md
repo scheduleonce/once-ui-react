@@ -22,7 +22,7 @@ export interface Option {
 	id: number;
 	text: string;
 	order?: number;
-	disbled?: boolean;
+	disabled?: boolean;
 }
 ```
 
@@ -33,7 +33,6 @@ The `QuickMultiSelect` component accepts the following props:
 - `options (Array)`: An array of Option objects representing the available choices.
 - `checkedValue (Array)`: An array of numbers representing the initially selected options.
 - `onSelectionChange (Function)`: A callback function that is called when the selection changes. It receives an array of selected option values.
-- `minOptions?`: Minimum number of options that must be checked;
 - `maxOptions?`: Maximum number of option that can be checked;
 
 Example
@@ -45,11 +44,12 @@ import MultiSelect from '@/once-ui/multi-select/multi-select';
 const options = [
 	{ id: '1', text: 'Option 1', order: 1 },
 	{ id: '2', text: 'Option 2', order: 2 },
+	{ id: '3', text: 'Option 3', order: 3, disabled: true },
 	// Add more options here
 ];
 
 function App() {
-	const [selectedOptions, setSelectedOptions] = useState([]);
+	const [selectedOptions, setSelectedOptions] = useState(['2']);
 
 	const handleSelectionChange = (newSelection) => {
 		setSelectedOptions(newSelection);
@@ -61,7 +61,6 @@ function App() {
 			<QuickMultiSelect options={options}
 			checkedValue={selectedOptions}
 			onSelectionChange={handleSelectionChange}
-			minOptions= {0}
 			maxOptions= {}
 			/>
 		</div>

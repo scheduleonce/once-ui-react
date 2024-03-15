@@ -12,6 +12,7 @@ interface Props {
   className?: string;
   style?: CSSProperties;
   showLoader?: boolean;
+  id?: string;
 }
 
 export const QuickSelect: FC<Props> = ({
@@ -22,6 +23,7 @@ export const QuickSelect: FC<Props> = ({
   className = '',
   style = {},
   showLoader = false,
+  id = '',
 }: Props) => {
   const [selectedOption, setSelected] = useState(selected);
   let quickOptionStyleObj: CSSProperties = {};
@@ -58,7 +60,7 @@ export const QuickSelect: FC<Props> = ({
   return (
     <div className={styles.singleSelectWrapper}>
       <div className={styles.quickOption}>
-        <ul className={styles.quickOption}>
+        <ul className={styles.quickOption} role="radiogroup" id={id}>
           {options.map((option: Option) => (
             <li
               tabIndex={option.disabled ? -1 : 0}
@@ -75,9 +77,11 @@ export const QuickSelect: FC<Props> = ({
                 }
               }}
               data-testid={'checkbox-input'}
+              role="radio"
+              aria-checked={selectedOption?.id === option.id}
             >
               {option.text}
-              {selectedOption?.id === option.id && (
+              {selectedOption?.id === option.id && !option.disabled && (
                 <div className={styles.triangle} style={{ ...quickOptionTriangleStyleObj }}>
                   {showLoader && (
                     <div className={styles.loader} style={{ borderRightColor: themeColor ?? '#006bb1' }}></div>

@@ -48,14 +48,6 @@ const meta: Meta<typeof MultiSelect> = {
         type: { summary: 'string' },
       },
     },
-    minOptions: {
-      description: 'Minimum number of options that must be selected (default: 0)',
-      type: 'number',
-      table: {
-        defaultValue: { summary: '0' },
-        type: { summary: 'number' },
-      },
-    },
     maxOptions: {
       description: 'Maximum number of options that can be selected',
       type: 'number',
@@ -80,9 +72,8 @@ const handleSelectionChange = () => {};
 export const WithoutTheme: Story = {
   args: {
     options: options,
-    checkedValue: [],
+    checkedValue: ['2'],
     onSelectionChange: handleSelectionChange,
-    minOptions: 0,
     maxOptions: 5,
   },
 };

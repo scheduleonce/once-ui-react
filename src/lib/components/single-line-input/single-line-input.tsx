@@ -14,11 +14,11 @@ export const SingleLineInput: FC<SingleLineInputProps> = React.memo(
       const textInputClasses = [styles.textInput, className].filter(Boolean).join(' ');
       themeColor = ColorsService.convert3HexTo6(themeColor);
 
-      const handleFocus = () => {
+      const handleFocus = (): void => {
         setIsFocused(true);
       };
 
-      const handleBlur = () => {
+      const handleBlur = (): void => {
         setIsFocused(false);
       };
 

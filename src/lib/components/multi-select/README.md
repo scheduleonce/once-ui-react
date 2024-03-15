@@ -50,7 +50,7 @@ const options : Option[] = [
 ];
 
 function App() {
-	const [selectedOptions, setSelectedOptions] = useState([]);
+	const [selectedOptions, setSelectedOptions] = useState(['2']);
 
 	const handleSelectionChange = (newSelection) => {
 		setSelectedOptions(newSelection);
