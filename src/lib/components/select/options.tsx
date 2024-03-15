@@ -21,9 +21,9 @@ export const Options: FC<Props> = ({ children, setQuery }) => {
   );
 };
 
-type OptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
-export type Ref = HTMLLIElement;
-export const Option = forwardRef<Ref, OptionProps>((props, ref) => (
+type ComboboxOptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
+export type ComboboxRef = HTMLLIElement;
+export const Option = forwardRef<ComboboxRef, ComboboxOptionProps>((props, ref) => (
   <Combobox.Option ref={ref} className={props.className} value={props.value} disabled={props.disable}>
     {props.children}
   </Combobox.Option>
