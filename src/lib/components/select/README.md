@@ -94,16 +94,16 @@ const filteredOptions =
 
 return (
 	<>
-		<span>Drop down with search</span>
+		<h3>Drop down with search</h3>
 		<AutoComplete selected={selected} onSelect={onSelectDropDown} setQuery={setSearchQuery} disable={false}>
-			<Options setQuery={setSearchQuery}>
+			<AutoCompleteOptions setQuery={setSearchQuery}>
 				{filteredOptions.length === 0 && searchQuery !== '' ? (
 					<div className="tw-relative tw-cursor-default tw-select-none tw-px-4 tw-py-2 tw-text-[#333333]">
 						Nothing found.
 					</div>
 				) : (
 					filteredOptions.map((option) => (
-						<Option
+						<AutoCompleteOption
 							disable={false}
 							key={option.value}
 							className={({ active }: { active: boolean }) =>
@@ -129,10 +129,10 @@ return (
 									</div>
 								</>
 							)}
-						</Option>
+						</AutoCompleteOption>
 					))
 				)}
-			</Options>
+			</AutoCompleteOptions>
 		</AutoComplete>
 	</>
 );

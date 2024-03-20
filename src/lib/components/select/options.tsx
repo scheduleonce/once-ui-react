@@ -5,7 +5,7 @@ interface Props {
   setQuery: (query: any) => void;
 }
 
-export const Options: FC<Props> = ({ children, setQuery }) => {
+export const AutoCompleteOptions: FC<Props> = ({ children, setQuery }) => {
   return (
     <Transition
       as={Fragment}
@@ -23,10 +23,10 @@ export const Options: FC<Props> = ({ children, setQuery }) => {
 
 type ComboboxOptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
 export type ComboboxRef = HTMLLIElement;
-export const Option = forwardRef<ComboboxRef, ComboboxOptionProps>((props, ref) => (
+export const AutoCompleteOption = forwardRef<ComboboxRef, ComboboxOptionProps>((props, ref) => (
   <Combobox.Option ref={ref} className={props.className} value={props.value} disabled={props.disable}>
     {props.children}
   </Combobox.Option>
 ));
 
-Option.displayName = 'Option';
+AutoCompleteOption.displayName = 'AutoCompleteOption';
