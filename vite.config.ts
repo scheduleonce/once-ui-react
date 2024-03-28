@@ -7,6 +7,7 @@ import { peerDependencies } from './package.json';
 import { UserConfigExport } from 'vite';
 import { name } from './package.json';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 const app = async (): Promise<UserConfigExport> => {
   /**
@@ -23,6 +24,7 @@ const app = async (): Promise<UserConfigExport> => {
       dts({
         insertTypesEntry: true,
       }),
+      cssInjectedByJsPlugin(),
     ],
     css: {
       postcss: {
@@ -37,6 +39,7 @@ const app = async (): Promise<UserConfigExport> => {
         fileName: (format) => `${formattedName}.${format}.js`,
       },
       rollupOptions: {
+        manualChunks: undefined,
         external: ['react/jsx-runtime', 'tailwindcss', ...Object.keys(peerDependencies)],
         output: {
           globals: {
