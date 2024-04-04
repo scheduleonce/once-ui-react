@@ -4,13 +4,13 @@
 .primary {
 	@apply tw-border-transparent tw-bg-[#006bb1] tw-font-medium tw-text-white tw-outline-[#006bb1] focus:tw-outline-2 focus:tw-outline-offset-[3px];
 	&:disabled {
-		@apply tw-border-[#c8c8c8] tw-bg-[#c8c8c8] tw-text-white #{!important};
+		@apply tw-border-[#c8c8c8] tw-bg-[#c8c8c8] tw-text-white;
 	}
 }
 .secondary {
 	@apply tw-border-[#006bb1] tw-bg-white tw-font-normal tw-text-[#006bb1] hover:tw-border-transparent hover:tw-outline hover:tw-outline-2 hover:tw-outline-offset-[-2px] hover:tw-outline-[#006bb1] focus:tw-border-transparent focus:tw-outline focus:tw-outline-2 focus:tw-outline-offset-[-2px] focus:tw-outline-[#006bb1];
 	&:disabled {
-		@apply tw-border-[#c8c8c8] tw-text-[#c8c8c8] hover:tw-outline-0 focus:tw-outline-0 #{!important};
+		@apply tw-border-[#c8c8c8] tw-text-[#c8c8c8] hover:tw-outline-0 focus:tw-outline-0;
 	}
 }
 .small {

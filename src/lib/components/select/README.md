@@ -118,7 +118,7 @@ return (
 									<div className="tw-flex tw-items-center">
 										{option.avatar && (
 											<img
-												src={option.avatar.src}
+												src={option.avatar}
 												alt=""
 												className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0 tw-rounded-full"
 											/>

@@ -26,6 +26,7 @@ export const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPr
       children,
       className = '',
       style = {},
+      disabled,
       ...rest
     }: ButtonProps,
     ref,
@@ -34,7 +35,7 @@ export const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPr
     if (themeColor) {
       const theme = luminance(themeColor);
       themeColor = ColorsService.convert3HexTo6(themeColor);
-      if (theme === 'dark' || theme === 'light') {
+      if (!disabled && (theme === 'dark' || theme === 'light')) {
         const backgroundColor = variant === 'primary' ? themeColor : '#ffffff';
         const color =
           variant === 'primary'
@@ -57,11 +58,15 @@ export const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPr
       .filter(Boolean)
       .join(' ');
     return (
-      <>
-        <button ref={ref} style={{ ...buttonStyleObj, ...style }} className={`${buttonClasses}`} {...rest}>
-          {children}
-        </button>
-      </>
+      <button
+        disabled={disabled}
+        ref={ref}
+        style={{ ...buttonStyleObj, ...style }}
+        className={`${buttonClasses}`}
+        {...rest}
+      >
+        {children}
+      </button>
     );
   },
 );

@@ -124,14 +124,14 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
               }}
               style={{ borderBottomColor: themeColor && (isFocused || open) ? borderColor : '' }}
               className={
-                `tw-relative tw-h-10 tw-w-full tw-cursor-pointer tw-border-b tw-border-t tw-border-t-transparent tw-bg-white tw-py-1.5 tw-pl-[10px] tw-pr-8 tw-text-left tw-text-base tw-text-[#333333] focus:tw-border-b-2 focus:tw-border-t-2 focus:tw-border-b-[#006bb1] focus:tw-py-[5px] focus:tw-outline-none focus:tw-ring-0` +
+                `tw-border-x-0 tw-relative tw-h-10 tw-w-full tw-cursor-pointer tw-border-b tw-border-t tw-border-t-transparent tw-bg-white tw-py-1.5 tw-pl-[10px] tw-pr-8 tw-text-left tw-text-base tw-text-[#333333] focus:tw-border-b-2 focus:tw-border-t-2 focus:tw-border-b-[#006bb1] focus:tw-py-[5px] focus:tw-outline-none focus:tw-ring-0` +
                 (open ? ' tw-border-b-2 tw-border-t-2 tw-border-b-[#006bb1]' : ' tw-border-b-[#333333]')
               }
             >
               {selected && (
                 <span className="tw-flex tw-items-center">
                   {selected.avatar && (
-                    <img src={selected.avatar.src} alt="" className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0" />
+                    <img src={selected.avatar} alt="" className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0" />
                   )}
                   <span className="tw-block tw-truncate">{selected.label}</span>
                 </span>
