@@ -131,11 +131,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
               {selected && (
                 <span className="tw-flex tw-items-center">
                   {selected.avatar && (
-                    <img
-                      src={typeof selected.avatar === 'string' ? selected.avatar : selected.avatar.src}
-                      alt=""
-                      className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0"
-                    />
+                    <img src={selected.avatar} alt="" className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0" />
                   )}
                   <span className="tw-block tw-truncate">{selected.label}</span>
                 </span>
