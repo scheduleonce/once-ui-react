@@ -6,7 +6,7 @@ import tailwindcss from 'tailwindcss';
 import { peerDependencies } from './package.json';
 import { UserConfigExport } from 'vite';
 import { name } from './package.json';
-import { libInjectCss } from 'vite-plugin-lib-inject-css';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 const app = async (): Promise<UserConfigExport> => {
   /**
@@ -19,10 +19,10 @@ const app = async (): Promise<UserConfigExport> => {
   return defineConfig({
     plugins: [
       react(),
-      libInjectCss(),
       dts({
         insertTypesEntry: true,
       }),
+      cssInjectedByJsPlugin(),
     ],
     css: {
       postcss: {
@@ -37,7 +37,8 @@ const app = async (): Promise<UserConfigExport> => {
         fileName: (format) => `${formattedName}.${format}.js`,
       },
       rollupOptions: {
-        external: ['react/jsx-runtime', 'tailwindcss', ...Object.keys(peerDependencies)],
+        manualChunks: undefined,
+        external: [...Object.keys(peerDependencies)],
         output: {
           globals: {
             react: 'React',

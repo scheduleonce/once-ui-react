@@ -1,52 +1,56 @@
 .multiSelectContainer {
-	position: relative;
+	@apply tw-relative tw-w-full;
 	.listOptionsWrap {
-		@apply tw-relative;
+		@apply tw-relative tw-w-full;
 		.selectedValuesWrap {
-			@apply tw-relative tw-h-10;
+			@apply tw-relative tw-h-10 tw-w-full;
 			.selectedValues {
-				@apply tw-box-border tw-block tw-h-full tw-w-full tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-py-2 tw-pl-3 tw-pr-11 tw-text-base tw-leading-4 tw-text-[#333333] focus-within:tw-outline-none focus:tw-border-b-2 focus:tw-border-[#006BB1] focus-visible:tw-outline-none;
+				@apply tw-box-border tw-block tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-pb-2 tw-pl-[10px] tw-pr-11 tw-pt-2 tw-text-base tw-leading-4 tw-text-[#333333] tw-placeholder-[#666666] focus-within:tw-outline-none focus:tw-border-b-2 focus:tw-border-[#006BB1] focus:tw-pb-[7px] focus-visible:tw-outline-none;
 				&.focused {
-					@apply tw-border-b-2 tw-border-[#006BB1] tw-outline-none;
+					@apply tw-border-b-2 tw-border-[#006BB1] tw-pb-[7px] tw-outline-none;
 				}
 			}
 			.dropDownIcon {
 				@apply tw-absolute tw-right-2 tw-top-1/2 tw-flex tw-h-full tw-w-7 -tw-translate-y-1/2 tw-cursor-pointer tw-items-center tw-justify-center;
 			}
 		}
-		.optionsListContainer {
-			@apply tw-absolute tw-z-10 tw-mt-0 tw-max-h-[288px] tw-w-full tw-bg-white tw-pb-16 tw-text-sm tw-leading-[22px] tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none;
-			&.top {
-				transform: translateY(calc(-100% - 40px));
+	}
+}
+.optionsListContainer {
+	@apply tw-absolute tw-z-10 tw-mt-0 tw-max-h-[293px] tw-w-full tw-bg-white tw-pb-16 tw-text-sm tw-leading-[22px] tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none;
+	&.top {
+		transform: translateY(calc(-100% - 40px));
+	}
+	.optionsListWrap {
+		@apply tw-max-h-[225px] tw-overflow-auto tw-py-4;
+		.searchInputWrap {
+			@apply tw-mb-2 tw-h-10 tw-px-[10px];
+			.searchInput {
+				@apply tw-h-full tw-w-full tw-py-2 tw-pl-[10px] tw-outline tw-outline-1 tw-outline-offset-[-2px] tw-outline-[#C8C8C8];
 			}
-			.optionsListWrap {
-				@apply tw-max-h-[220px] tw-overflow-auto tw-py-4;
-				.searchInputWrap {
-					@apply tw-mb-2 tw-h-10 tw-px-4;
-					.searchInput {
-						@apply tw-h-full tw-w-full tw-py-2 tw-pl-3 tw-outline tw-outline-1 tw-outline-offset-[-2px] tw-outline-[#C8C8C8];
-					}
-				}
-				.optionsList {
-					@apply tw-h-[38px] tw-list-none tw-px-4 tw-py-2;
-					.optionsListCheckbox {
-						label {
-							& > span {
-								@apply tw-leading-[22px];
-							}
-						}
-					}
-					&:hover {
-						@apply tw-bg-[#EEEEEE];
-					}
-					&.focused {
-						@apply tw-bg-[#EEEEEE];
-					}
-				}
+		}
+		.optionsList {
+			@apply tw-flex tw-h-[38px] tw-list-none tw-items-center tw-gap-2 tw-px-[10px] tw-py-2;
+			span {
+				@apply tw-block tw-w-[calc(100%-22px)] tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-text-sm tw-leading-[22px];
 			}
-			.btnContainer {
-				@apply tw-absolute tw-inset-x-0 tw-flex tw-h-[64px] tw-w-full tw-items-center tw-justify-end tw-border-t tw-border-solid tw-border-t-[#C8C8C8] tw-px-[18px];
+			&:hover {
+				@apply tw-bg-[#EEEEEE];
+			}
+			&.focused {
+				@apply tw-bg-[#EEEEEE];
 			}
 		}
 	}
+	.btnContainer {
+		@apply tw-absolute tw-inset-x-0 tw-flex tw-h-[64px] tw-w-full tw-items-center tw-justify-end tw-border-t tw-border-solid tw-border-t-[#C8C8C8] tw-px-[18px];
+	}
+}
+
+.optionsListContainer ::-webkit-scrollbar {
+	width: 6px;
+}
+.optionsListContainer ::-webkit-scrollbar-thumb {
+	background-color: darkgrey;
+	border-radius: 6px;
 }

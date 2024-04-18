@@ -1,16 +1,14 @@
 import { CSSProperties, ComponentPropsWithRef, FC, ReactNode, forwardRef, useState } from 'react';
 import styles from './checkbox.module.scss';
 import luminance from '@oncehub/relative-luminance';
+import { ColorsService } from '../colors.service';
 
 interface CheckboxProps extends ComponentPropsWithRef<'input'> {
-  /** The label for the checkbox */
   children?: ReactNode;
-  /** A color scheme to use for the button, defaults to `#006bb1` */
   themeColor?: string;
   checkboxSize?: string;
 }
 const generateRandomId = () => `checkbox_${Math.random().toString(36).substring(2, 11)}`;
-/** Checkbox component */
 export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
@@ -34,6 +32,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
     let checkMarkColor = disabled ? '#9b9b9b' : '#ffffff';
     if (themeColor) {
       const theme = luminance(themeColor);
+      themeColor = ColorsService.convert3HexTo6(themeColor);
       if (theme === 'dark' || theme === 'light') {
         switch (theme) {
           case 'dark':
@@ -47,7 +46,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
             break;
         }
         const backgroundColor = disabled ? '#f9f9f9' : isChecked ? themeColor : '#ffffff';
-        borderColor = disabled ? '#e4e4e4' : themeColor == '#ffffff' || themeColor == '#fff' ? '#333333' : themeColor;
+        borderColor = disabled ? '#e4e4e4' : themeColor == '#ffffff' ? '#333333' : themeColor;
         if (isChecked) {
           checkboxStyleObj = {
             backgroundColor: backgroundColor,
@@ -115,6 +114,9 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
               </div>
             </div>
             {children && <span data-testid="checkbox-label">{children}</span>}
+            <div className={styles.visuallyHidden} aria-live="polite" aria-atomic="true">
+              {isChecked ? 'Checked' : 'Unchecked'}
+            </div>
           </label>
         </div>
       </>

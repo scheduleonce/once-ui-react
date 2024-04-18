@@ -14,7 +14,7 @@
 				@apply tw-underline;
 			}
 			&.disabled {
-				@apply tw-cursor-default tw-border-[#e4e4e4] tw-text-[#333333] tw-no-underline tw-outline-0 #{!important};
+				@apply tw-pointer-events-none tw-cursor-default tw-border-[#e4e4e4] tw-text-[#333333] tw-no-underline tw-outline-0 #{!important};
 			}
 		}
 	}
