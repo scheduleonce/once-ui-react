@@ -308,7 +308,7 @@ export const MultiSelect: React.FC<Props> = ({
         <div className={`${className} ${styles.selectedValuesWrap}`} ref={selectRef}>
           <div
             className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''} ${
-              selectedText.length === 0 ?? styles.placeholder
+              selectedOptions.length === 0 ? styles.placeholder : ''
             }`}
             onFocus={handleFocus}
             onBlur={handleBlur}
