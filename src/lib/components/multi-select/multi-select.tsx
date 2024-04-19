@@ -99,13 +99,16 @@ export const MultiSelect: React.FC<Props> = ({
   }, [options, searchTerm]);
 
   /* istanbul ignore next */
-  const selectedText = selectedOptions
-    .map((id) => {
-      const selectedOption = options.find((option) => option.id === id);
-      return selectedOption?.text !== null ? selectedOption?.text : '';
-    })
-    .filter((text) => text !== '')
-    .join(', ');
+  const selectedText =
+    selectedOptions.length > 0
+      ? selectedOptions
+          .map((id) => {
+            const selectedOption = options.find((option) => option.id === id);
+            return selectedOption?.text !== null ? selectedOption?.text : '';
+          })
+          .filter((text) => text !== '')
+          .join(', ')
+      : 'Select your option';
 
   const handleLiClick = (id: string) => {
     const clickedOption = options.find((option) => option.id === id);
@@ -304,7 +307,9 @@ export const MultiSelect: React.FC<Props> = ({
       <div className={styles.listOptionsWrap}>
         <div className={`${className} ${styles.selectedValuesWrap}`} ref={selectRef}>
           <div
-            className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''}`}
+            className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''} ${
+              selectedText.length === 0 ?? styles.placeholder
+            }`}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onClick={() => toggleDropDown(!dropdownOpen)}

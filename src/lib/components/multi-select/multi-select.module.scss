@@ -9,6 +9,9 @@
 				&.focused {
 					@apply tw-border-b-2 tw-border-[#006BB1] tw-pb-[7px] tw-outline-none;
 				}
+				&.placeholder {
+					@apply tw-text-[#999999];
+				}
 			}
 			.dropDownIcon {
 				@apply tw-absolute tw-right-2 tw-top-1/2 tw-flex tw-h-full tw-w-7 -tw-translate-y-1/2 tw-cursor-pointer tw-items-center tw-justify-center;
