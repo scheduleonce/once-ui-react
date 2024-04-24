@@ -1,5 +1,5 @@
 import { ComponentPropsWithRef, FC, forwardRef } from 'react';
-import styles from './scrollbar.module.scss';
+import styles from './scrollbar.module.css';
 
 interface ScrollbarProps extends ComponentPropsWithRef<'div'> {
   children: any;
