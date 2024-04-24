@@ -1,18 +1,22 @@
 .scrollbarContainer {
-  overflow-y: scroll;
-  scrollbar-color: #ccc transparent;
-  scrollbar-width: thin;
+  overflow-y: auto;
 }
 .scrollbarContainer::-webkit-scrollbar {
-  width: 12px;
-  scrollbar-width: thin;
+  width: 10px;
 }
 .scrollbarContainer::-webkit-scrollbar-track {
   display: none;
 }
 .scrollbarContainer::-webkit-scrollbar-thumb {
   background-color: #ccc !important;
-  scrollbar-color: #ccc;
-  border: 3px #fff solid;
+  border: 2px #fff solid;
   border-radius: 15px;
+}
+
+.scrollbarContainer {
+  /* Standardized Properties */
+  @supports not selector(: : -webkit-scrollbar) {
+    scrollbar-color: #ccc transparent;
+    scrollbar-width: thin;
+  }
 }
