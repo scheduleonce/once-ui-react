@@ -1,6 +1,7 @@
 .scrollbarContainer {
   overflow-y: auto;
 }
+
 .scrollbarContainer::-webkit-scrollbar {
   width: 10px;
 }
@@ -13,10 +14,10 @@
   border-radius: 15px;
 }
 
+/* Browsers without `::-webkit-scrollbar-*` support */
 .scrollbarContainer {
-  /* Standardized Properties */
-  @supports not selector(: : -webkit-scrollbar) {
-    scrollbar-color: #ccc transparent;
+  @supports not selector(::-webkit-scrollbar) {
     scrollbar-width: thin;
+    scrollbar-color: #ccc;
   }
 }
