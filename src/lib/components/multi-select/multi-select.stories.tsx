@@ -9,7 +9,7 @@ const meta: Meta<typeof MultiSelect> = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ height: '250px' }}>
+      <div style={{ height: '250px', width: '400px' }}>
         {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
         <Story />
       </div>
