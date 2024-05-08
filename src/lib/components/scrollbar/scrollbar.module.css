@@ -18,6 +18,6 @@
 .scrollbarContainer {
   @supports not selector(::-webkit-scrollbar) {
     scrollbar-width: thin;
-    scrollbar-color: #ccc;
+    scrollbar-color: #ccc #0000;
   }
 }
