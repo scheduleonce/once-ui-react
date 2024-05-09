@@ -1,0 +1,23 @@
+.scrollbarContainer {
+  overflow-y: auto;
+}
+
+.scrollbarContainer::-webkit-scrollbar {
+  width: 10px;
+}
+.scrollbarContainer::-webkit-scrollbar-track {
+  display: none;
+}
+.scrollbarContainer::-webkit-scrollbar-thumb {
+  background-color: #ccc !important;
+  border: 2px #fff solid;
+  border-radius: 15px;
+}
+
+/* Browsers without `::-webkit-scrollbar-*` support */
+.scrollbarContainer {
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #0000;
+  }
+}
