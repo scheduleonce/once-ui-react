@@ -74,7 +74,7 @@
 	&.large {
 		.checkboxLabel {
 			& > span {
-				@apply tw-w-[calc(100%-28px)] tw-text-base;
+				@apply tw-w-[calc(100%-27px)] tw-text-base;
 			}
 			.checkboxInnerContainer {
 				@apply tw-top-[4px] tw-h-5 tw-w-5;
