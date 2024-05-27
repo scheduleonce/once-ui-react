@@ -27,7 +27,7 @@
 	.optionsListWrap {
 		@apply tw-max-h-[225px] tw-overflow-auto tw-py-4;
 		.searchInputWrap {
-			@apply tw-mb-2 tw-h-10 tw-px-[10px];
+			@apply tw-mb-2 tw-h-10 tw-px-[10px] tw-box-border;
 			.searchInput {
 				@apply tw-h-full tw-w-full tw-py-2 tw-pl-[10px] tw-outline tw-outline-1 tw-outline-offset-[-2px] tw-outline-[#C8C8C8];
 			}
