@@ -29,7 +29,7 @@
 		.searchInputWrap {
 			@apply tw-mb-2 tw-h-10 tw-px-[10px];
 			.searchInput {
-				@apply tw-h-full tw-w-full tw-py-2 tw-pl-[10px] tw-outline tw-outline-1 tw-outline-offset-[-2px] tw-outline-[#C8C8C8];
+				@apply tw-h-full tw-w-full tw-py-2 tw-pl-[10px] tw-box-border tw-outline tw-outline-1 tw-outline-offset-[-2px] tw-outline-[#C8C8C8];
 			}
 		}
 		ul{
