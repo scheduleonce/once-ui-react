@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
 import { QuickSelect } from './quick-select';
-import { Option } from './quick-select.type';
+import { Option } from './../../Models/select.type';
 
 const meta: Meta<typeof QuickSelect> = {
   title: 'Basic/QuickSelect',

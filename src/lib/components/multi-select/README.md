@@ -19,10 +19,11 @@ Here's an example of how to define the `Option` interface:
 
 ```jsx
 export interface Option {
-	id: number;
-	text: string;
-	order?: number;
-	disabled?: boolean;
+    id: string;
+    text: string;
+    order: number;
+    avatar?: string;
+    disabled?: boolean;
 }
 ```
 

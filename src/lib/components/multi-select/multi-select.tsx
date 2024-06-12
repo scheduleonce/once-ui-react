@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, CSSProperties, KeyboardEvent } from 'react';
-import { Option } from './multi-select.type';
+import { Option } from './../../Models/select.type';
 import { Button } from '../button/button';
 import styles from './multi-select.module.scss';
 import luminance from '@oncehub/relative-luminance';

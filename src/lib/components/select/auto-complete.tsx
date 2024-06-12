@@ -1,6 +1,6 @@
 import { FC, useRef, useEffect, CSSProperties, useState } from 'react';
 import { Combobox } from '@headlessui/react';
-import { IOption } from './select.types';
+import { Option } from './../../Models/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
@@ -8,8 +8,8 @@ import { createPortal } from 'react-dom';
 
 interface Props {
   children: any;
-  selected: IOption | null;
-  onSelect: (obj: IOption) => void;
+  selected: Option | null;
+  onSelect: (obj: Option) => void;
   setQuery: (query: any) => void;
   disable?: boolean;
   clearSearch?: boolean;
@@ -38,7 +38,7 @@ export const AutoComplete: FC<Props> = ({
 
   useEffect(() => {
     if (inputRef.current && selected) {
-      inputRef.current.value = selected.label || '';
+      inputRef.current.value = selected.text || '';
     }
   }, [selected]);
 
@@ -104,7 +104,7 @@ export const AutoComplete: FC<Props> = ({
     };
   }, []);
 
-  const onSelection = (option: IOption) => {
+  const onSelection = (option: Option) => {
     onSelect(option);
     handlingCursorPosition();
   };
@@ -113,7 +113,7 @@ export const AutoComplete: FC<Props> = ({
     getDropdownPosition();
     setIsFocused(true);
     if (inputRef.current && selected) {
-      inputRef.current.value = selected.label || '';
+      inputRef.current.value = selected.text || '';
     }
     if (inputRef.current && inputButton.current) {
       if (clearSearch) {
@@ -124,9 +124,9 @@ export const AutoComplete: FC<Props> = ({
     }
   };
 
-  const displayInputValue = (option: IOption) => {
+  const displayInputValue = (option: Option) => {
     handlingCursorPosition();
-    return option?.label;
+    return option?.text;
   };
 
   const handlingCursorPosition = () => {

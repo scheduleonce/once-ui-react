@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-
 import { Select } from './select';
 import { SelectOption, SelectOptions } from './select-options';
-import { IOption } from './select.types';
+import { Option } from './../../Models/select.type';
 
 const meta: Meta<typeof Select> = {
   title: 'Basic/Select',
@@ -32,22 +31,22 @@ const meta: Meta<typeof Select> = {
 export default meta;
 type Story = StoryObj<typeof Select>;
 
-const options: IOption[] = [
+const options: Option[] = [
   {
-    value: '1',
-    label: 'Wade Cooper',
+    id: '1',
+    text: 'Wade Cooper',
   },
   {
-    value: '2',
-    label: 'Arlene Mccoy',
+    id: '2',
+    text: 'Arlene Mccoy',
   },
   {
-    value: '3',
-    label: 'Devon Webb',
+    id: '3',
+    text: 'Devon Webb',
   },
   {
-    value: '4',
-    label: 'Tom Cook',
+    id: '4',
+    text: 'Tom Cook',
   },
 ];
 
@@ -59,7 +58,7 @@ const children = () => {
       {options.map((option) => (
         <SelectOption
           disable={false}
-          key={option.value}
+          key={option.id}
           className={({ active }: { active: boolean }) =>
             `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
               active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
@@ -70,7 +69,7 @@ const children = () => {
           {({ selected, active }: { selected: boolean; active: boolean }) => (
             <div className="tw-flex tw-items-center">
               <span className={`tw-block tw-truncate ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>
-                {option.label}
+                {option.text}
               </span>
             </div>
           )}
