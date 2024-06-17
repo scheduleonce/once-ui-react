@@ -14,7 +14,7 @@ export const SelectOptions: FC<Props> = ({ children, setQuery }) => {
       leaveTo="tw-opacity-0"
       afterLeave={() => setQuery('')}
     >
-      <Listbox.Options className="tw-max-h-[200px] tw-w-full tw-overflow-auto tw-bg-white tw-pb-[10px] tw-pt-[10px] tw-text-base tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none sm:tw-text-sm [&::-webkit-scrollbar-thumb]:tw-rounded-md [&::-webkit-scrollbar-thumb]:tw-bg-[#a9a9a9] [&::-webkit-scrollbar]:tw-w-[6px]">
+      <Listbox.Options className="tw-max-h-[200px] tw-w-full tw-overflow-auto tw-bg-white tw-list-none tw-m-0 tw-px-0 tw-py-[10px] tw-text-base tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none sm:tw-text-sm [&::-webkit-scrollbar-thumb]:tw-rounded-md [&::-webkit-scrollbar-thumb]:tw-bg-[#a9a9a9] [&::-webkit-scrollbar]:tw-w-[6px]">
         {children}
       </Listbox.Options>
     </Transition>
