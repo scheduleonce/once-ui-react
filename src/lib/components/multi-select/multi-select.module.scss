@@ -38,7 +38,8 @@
 		.optionsList {
 			@apply tw-flex tw-list-none tw-items-start tw-gap-2 tw-px-[10px] tw-py-2 tw-box-border;
 			span {
-				@apply tw-block tw-w-[calc(100%-22px)] tw-text-sm tw-leading-[22px];
+				word-break: break-word;
+				@apply tw-block tw-w-[calc(100%-22px)] tw-text-sm tw-leading-[22px] tw-break-words;
 			}
 			&:hover {
 				@apply tw-bg-[#EEEEEE];
