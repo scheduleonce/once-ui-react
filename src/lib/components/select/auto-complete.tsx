@@ -31,7 +31,7 @@ export const AutoComplete: FC<Props> = ({
   const [isMounted, setIsMounted] = useState(false);
   const selectRef = useRef<HTMLDivElement | null>(null);
   const selectDropdownRef = useRef<HTMLDivElement | null>(null);
-  const [dropdownPosition, setdropdownPosition] = useState({ left: 0, top: 0 });
+  const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 });
   const windowHeight = useRef<number>(0);
   const pageScrollHeight = useRef<number>(0);
   let OptionStyleObj: CSSProperties = {};
@@ -85,7 +85,7 @@ export const AutoComplete: FC<Props> = ({
             topPosition = selectRect.y - selectDropdownHeight;
           }
 
-          setdropdownPosition({
+          setDropdownPosition({
             left: selectRect.left,
             top: topPosition ?? selectRect.top,
           });
