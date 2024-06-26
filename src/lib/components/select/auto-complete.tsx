@@ -1,6 +1,6 @@
 import { FC, useRef, useEffect, CSSProperties, useState } from 'react';
 import { Combobox } from '@headlessui/react';
-import { Option } from './../../Models/select.type';
+import { Option } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';

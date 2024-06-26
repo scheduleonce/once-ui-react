@@ -1,7 +1,7 @@
 import React, { CSSProperties, useRef, useState } from 'react';
 import { Checkbox } from '../checkbox/checkbox';
 import styles from './quick-multi-select.module.scss';
-import { Option } from './../../Models/select.type';
+import { Option } from '../../interfaces/select.type';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
 

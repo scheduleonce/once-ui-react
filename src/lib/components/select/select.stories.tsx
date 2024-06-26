@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Select } from './select';
 import { SelectOption, SelectOptions } from './select-options';
-import { Option } from './../../Models/select.type';
+import { Option } from '../../interfaces/select.type';
 
 const meta: Meta<typeof Select> = {
   title: 'Basic/Select',

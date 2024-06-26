@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { MultiSelect } from './multi-select';
-import { Option } from './../../Models/select.type';
+import { Option } from '../../interfaces/select.type';
 
 const meta: Meta<typeof MultiSelect> = {
   title: 'Basic/MultiSelect',

@@ -1,7 +1,7 @@
 import { CSSProperties, FC, useState } from 'react';
 import styles from './quick-select.module.scss';
 import luminance from '@oncehub/relative-luminance';
-import { Option } from './../../Models/select.type';
+import { Option } from '../../interfaces/select.type';
 import { ColorsService } from '../colors.service';
 
 interface Props {
