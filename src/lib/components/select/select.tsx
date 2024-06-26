@@ -66,14 +66,14 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
           const selectHeight = selectRect.height;
           const selectTopPosition = selectRect.top;
           const selectDropdownHeight = selectDropdownRect.height;
-          const noSpaceAvailableAbove = selectDropdownHeight > selectTopPosition + window.scrollY;
+          const noSpaceAvailableAbove = selectDropdownHeight >= selectTopPosition + window.scrollY;
           if (
-            (selectTopPosition < selectDropdownHeight &&
+            (selectDropdownHeight >= selectTopPosition &&
               (noSpaceAvailableAbove ||
-                (noSpaceAvailableAbove && remainingSpace < selectDropdownHeight) ||
-                remainingScroll > selectDropdownHeight ||
-                remainingSpace > selectDropdownHeight)) ||
-            (selectTopPosition > selectDropdownHeight && remainingSpace > selectDropdownHeight)
+                (noSpaceAvailableAbove && remainingSpace <= selectDropdownHeight) ||
+                remainingScroll >= selectDropdownHeight ||
+                remainingSpace >= selectDropdownHeight)) ||
+            (selectTopPosition >= selectDropdownHeight && remainingSpace >= selectDropdownHeight)
           ) {
             topPosition = selectRect.y + selectHeight;
           } else {
