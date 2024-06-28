@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { QuickSelect } from './quick-select';
-import { Option } from '../../interfaces/select.type';
+import { IOption } from '../../interfaces/select.type';
 
 const meta: Meta<typeof QuickSelect> = {
   title: 'Basic/QuickSelect',
@@ -16,7 +16,7 @@ const meta: Meta<typeof QuickSelect> = {
       },
     },
     options: {
-      description: 'An array of option objects, each containing an `id`, `text`, `order`, and `disabled`.',
+      description: 'An array of option objects, each containing an `value`, `label`, `order`, `avatar` and `disable`.',
       type: 'string',
       table: {
         defaultValue: { summary: '' },
@@ -72,10 +72,10 @@ const meta: Meta<typeof QuickSelect> = {
 export default meta;
 type Story = StoryObj<typeof QuickSelect>;
 
-const options: Option[] = [
-  { id: '1', text: 'Option 1', order: 1 },
-  { id: '2', text: 'Option 2', order: 2 },
-  { id: '3', text: 'Option 3', order: 3, disabled: true },
+const options: IOption[] = [
+  { value: '1', label: 'Option 1', order: 1 },
+  { value: '2', label: 'Option 2', order: 2 },
+  { value: '3', label: 'Option 3', order: 3, disable: true },
   // Add more options here
 ];
 const handleSelectionChange = () => {};

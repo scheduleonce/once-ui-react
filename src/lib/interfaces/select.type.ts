@@ -1,7 +1,7 @@
-export interface Option {
-  id: string;
-  text: string;
+export interface IOption {
+  value: string;
+  label: string;
   order?: number;
   avatar?: string;
-  disabled?: boolean;
+  disable?: boolean;
 }

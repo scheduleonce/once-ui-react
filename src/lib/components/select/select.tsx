@@ -1,14 +1,14 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { Listbox } from '@headlessui/react';
-import { Option } from '../../interfaces/select.type';
+import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
 import { createPortal } from 'react-dom';
 interface Props {
   children: any;
-  selected: Option | null;
-  onSelect: (obj: Option) => void;
+  selected: IOption | null;
+  onSelect: (obj: IOption) => void;
   themeColor?: string;
 }
 interface IDropdownPosition {
@@ -26,7 +26,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
   const pageScrollHeight = useRef<number>(0);
 
   let borderColor = '#333333';
-  const onSelection = (option: Option): void => {
+  const onSelection = (option: IOption): void => {
     onSelect(option);
   };
   const handleFocus = (): void => {
@@ -133,7 +133,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
                   {selected.avatar && (
                     <img src={selected.avatar} alt="" className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0" />
                   )}
-                  <span className="tw-block tw-truncate">{selected.text}</span>
+                  <span className="tw-block tw-truncate">{selected.label}</span>
                 </span>
               )}
               <span className="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-pr-2">

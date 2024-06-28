@@ -6,24 +6,25 @@ Import the `QuickSelect` component into your React application:
 import QuickSelect from '@/once-ui/quick-select/quick-select';
 ```
 
-## Option Interface
+## IOption Interface
 
-Before using the `QuickSelect` component, define an `Option` interface for representing the available choices. The `Option` interface should have the following properties:
+Before using the `QuickSelect` component, define an `IOption` interface for representing the available choices. The `IOption` interface should have the following properties:
 
-- `id (number)`: A unique identifier for the option.
-- `text (string)`: The text or label associated with the option.
+- `value (string)`: A unique identifier for the option.
+- `label (string)`: The text or label associated with the option.
 - `order (number, optional)`: An optional property that specifies the order of the option in a list or display.
 - `disabled (boolean, optional)`: An optional property that specifies whether the option is disabled or not.
+- `avatar (string, optional)`: An optional property that specifies the image path.
 
-Here's an example of how to define the `Option` interface:
+Here's an example of how to define the `IOption` interface:
 
 ```jsx
-export interface Option {
-    id: string;
-    text: string;
-    order: number;
-    avatar?: string;
-    disabled?: boolean;
+export interface IOption {
+  value: string;
+  label: string;
+  order?: number;
+  avatar?: string;
+  disable?: boolean;
 }
 ```
 
@@ -31,9 +32,9 @@ export interface Option {
 
 ```ts
 interface Props {
-  options: Option[];
-  onSelect: (option: Option) => void;
-  selected: Option | null;
+  options: IOption[];
+  onSelect: (option: IOption) => void;
+  selected: IOption | null;
   themeColor?: string;
   className?: string;
   style?: CSSProperties;
@@ -43,7 +44,7 @@ interface Props {
 
 The `QuickMultiSelect` component accepts the following props:
 
-1. `options` (Required): An array of option objects, each containing an `id`, `text`, `order`, and `disabled`.
+1. `options` (Required): An array of option objects, each containing an `value`, `label`, `order`, `avatar` and `disable`.
 
 2. `onSelect` (Required): A callback function that gets called when an option is selected. It takes the selected option as an argument.
 
@@ -63,18 +64,18 @@ Example
 import React, { useState } from 'react';
 import QuickSelect from '@/once-ui/quick-select/quick-select';
 
-const options: Option[] = [
-  { id: '31', text: "Kaushal", order: 1 },
-  { id: '32', text: "Amit", order: 2 },
-  { id: '33', text: "Shubham", order: 3 },
-  { id: '34', text: "Shaurabh", order: 4, disabled : true },
+const options: IOption[] = [
+  { value: '1', label: 'Option 1', order: 1 },
+  { value: '2', label: 'Option 2', order: 2 },
+  { value: '3', label: 'Option 3', order: 3, disable: true },
+  // Add more options
 ];
 
 function App() {
   const [selectedOption, setSelectedOption] =
     (useState < Option) | (null > null);
 
-  const handleSelect = (option: Option) => {
+  const handleSelect = (option: IOption) => {
     setSelectedOption(option);
   };
   return (

@@ -1,13 +1,13 @@
 import { CSSProperties, FC, useState } from 'react';
 import styles from './quick-select.module.scss';
 import luminance from '@oncehub/relative-luminance';
-import { Option } from '../../interfaces/select.type';
+import { IOption } from '../../interfaces/select.type';
 import { ColorsService } from '../colors.service';
 
 interface Props {
-  options: Option[];
-  onSelect: (option: Option | undefined) => void;
-  selected?: Option;
+  options: IOption[];
+  onSelect: (option: IOption | undefined) => void;
+  selected?: IOption;
   themeColor?: string;
   className?: string;
   style?: CSSProperties;
@@ -30,7 +30,7 @@ export const QuickSelect: FC<Props> = ({
   let quickOptionTriangleStyleObj: CSSProperties = {};
   let checkmarkColor: string = '#ffffff';
   const selectOption = (option: any) => {
-    if (selectedOption?.id === option?.id) {
+    if (selectedOption?.value === option?.value) {
       setSelected(undefined);
       onSelect(undefined);
       return;
@@ -61,14 +61,14 @@ export const QuickSelect: FC<Props> = ({
     <div className={styles.singleSelectWrapper}>
       <div className={styles.quickOption}>
         <ul className={styles.quickOption} role="radiogroup" id={id}>
-          {options.map((option: Option) => (
+          {options.map((option: IOption) => (
             <li
-              tabIndex={option.disabled ? -1 : 0}
-              className={`${className} ${selectedOption?.id === option.id ? styles.selected : ''} ${
-                option.disabled ? styles.disabled : ''
+              tabIndex={option.disable ? -1 : 0}
+              className={`${className} ${selectedOption?.value === option.value ? styles.selected : ''} ${
+                option.disable ? styles.disabled : ''
               }`}
               style={{ ...quickOptionStyleObj, ...style }}
-              key={option.id}
+              key={option.value}
               onClick={() => selectOption(option)}
               onKeyPress={(event) => {
                 if (event.key === ' ' || event.code === 'Space') {
@@ -78,10 +78,10 @@ export const QuickSelect: FC<Props> = ({
               }}
               data-testid={'checkbox-input'}
               role="radio"
-              aria-checked={selectedOption?.id === option.id}
+              aria-checked={selectedOption?.value === option.value}
             >
-              {option.text}
-              {selectedOption?.id === option.id && !option.disabled && (
+              {option.label}
+              {selectedOption?.value === option.value && !option.disable && (
                 <div className={styles.triangle} style={{ ...quickOptionTriangleStyleObj }}>
                   {showLoader && (
                     <div className={styles.loader} style={{ borderRightColor: themeColor ?? '#006bb1' }}></div>

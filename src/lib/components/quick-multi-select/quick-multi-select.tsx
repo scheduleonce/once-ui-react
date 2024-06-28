@@ -1,12 +1,12 @@
 import React, { CSSProperties, useRef, useState } from 'react';
 import { Checkbox } from '../checkbox/checkbox';
 import styles from './quick-multi-select.module.scss';
-import { Option } from '../../interfaces/select.type';
+import { IOption } from '../../interfaces/select.type';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
 
 interface Props {
-  options: Option[];
+  options: IOption[];
   checkedValue: string[];
   onSelectionChange: (val: string[]) => void;
   maxOptions?: number;
@@ -31,8 +31,8 @@ export const QuickMultiSelect: React.FC<Props> = ({
   let theme: string;
 
   const handleLiClick = (id: string): void => {
-    const clickedOption = options.find((option) => option.id === id);
-    if (!clickedOption || clickedOption.disabled) {
+    const clickedOption = options.find((option) => option.value === id);
+    if (!clickedOption || clickedOption.disable) {
       return;
     }
     const checkbox = checkboxRefs.current[id];
@@ -65,54 +65,56 @@ export const QuickMultiSelect: React.FC<Props> = ({
         {options.map((option) => (
           <li
             style={{ ...quickMultiSelectStyleObj, ...style }}
-            key={option.id}
+            key={option.value}
             className={`${className} ${
-              option.disabled ||
-              (maxOptions !== undefined && selectedOptions.length >= maxOptions && !selectedOptions.includes(option.id))
+              option.disable ||
+              (maxOptions !== undefined &&
+                selectedOptions.length >= maxOptions &&
+                !selectedOptions.includes(option.value))
                 ? styles.disabled
                 : ''
-            } ${selectedOptions.includes(option.id) ? styles.selected : ''}`}
-            tabIndex={option.disabled ? -1 : 0}
-            onClick={() => handleLiClick(option.id)}
+            } ${selectedOptions.includes(option.value) ? styles.selected : ''}`}
+            tabIndex={option.disable ? -1 : 0}
+            onClick={() => handleLiClick(option.value)}
             onKeyPress={(event) => {
               if (event.key === ' ' || event.code === 'Space') {
                 event.preventDefault();
-                handleLiClick(option.id);
+                handleLiClick(option.value);
               }
             }}
             data-testid={'option-box'}
           >
             <Checkbox
-              id={option.id}
+              id={option.value}
               checkboxSize="large"
               tabIndex={-1}
               themeColor={themeColor}
               ref={(checkbox) => {
-                checkboxRefs.current[option.id] = checkbox; // Store checkbox reference
+                checkboxRefs.current[option.value] = checkbox; // Store checkbox reference
               }}
-              checked={selectedOptions.includes(option.id)}
+              checked={selectedOptions.includes(option.value)}
               disabled={
-                option.disabled ||
+                option.disable ||
                 (maxOptions !== undefined &&
                   selectedOptions.length >= maxOptions &&
-                  !selectedOptions.includes(option.id))
+                  !selectedOptions.includes(option.value))
               }
             >
               <span
                 style={{
                   color:
                     (themeColor && (themeColor === '#ffffff' || theme === 'light')) ||
-                    option.disabled ||
+                    option.disable ||
                     (maxOptions !== undefined &&
                       selectedOptions.length >= maxOptions &&
-                      !selectedOptions.includes(option.id))
+                      !selectedOptions.includes(option.value))
                       ? '#333333'
                       : themeColor && (themeColor !== '#ffffff' || theme !== 'light')
                       ? themeColor
                       : '#006bb1',
                 }}
               >
-                {option.text}
+                {option.label}
               </span>
             </Checkbox>
           </li>

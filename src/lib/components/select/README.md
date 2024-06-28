@@ -36,7 +36,7 @@ const people = [
 # Dropdown without search
 
 ```ts
-const [selected, setSelected] = useState<Option | null>(people.length ? people[0] : null);
+const [selected, setSelected] = useState<IOption | null>(people.length ? people[0] : null);
 return (
 	<>
 		<span>Drop down without search</span>
@@ -81,7 +81,7 @@ return (
 # Dropdown with search
 
 ```ts
-const [selected, setSelected] = useState<Option | null>(people.length ? people[0] : null);
+const [selected, setSelected] = useState<IOption | null>(people.length ? people[0] : null);
 const [searchQuery, setSearchQuery] = useState('');
 const onSelectDropDown = (object: any) => {
 	setSelected(object);

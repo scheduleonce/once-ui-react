@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, CSSProperties, KeyboardEvent } from 'react';
-import { Option } from '../../interfaces/select.type';
+import { IOption } from '../../interfaces/select.type';
 import { Button } from '../button/button';
 import styles from './multi-select.module.scss';
 import luminance from '@oncehub/relative-luminance';
@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 import PseudoCheckbox from '../common/pseudo-checkbox/pseudo-checkbox';
 
 interface Props {
-  options: Option[];
+  options: IOption[];
   checkedValue: string[];
   onSelectionChange: (val: string[]) => void;
   maxOptions?: number;
@@ -94,7 +94,7 @@ export const MultiSelect: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    const filtered = options.filter((option) => option.text.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filtered = options.filter((option) => option.label.toLowerCase().includes(searchTerm.toLowerCase()));
     filteredOptions.current = filtered;
   }, [options, searchTerm]);
 
@@ -102,28 +102,24 @@ export const MultiSelect: React.FC<Props> = ({
   const selectedText =
     selectedOptions.length > 0
       ? selectedOptions
-          .map((id) => {
-            const selectedOption = options.find((option) => option.id === id);
-            return selectedOption?.text !== null ? selectedOption?.text : '';
+          .map((value) => {
+            const selectedOption = options.find((option) => option.value === value);
+            return selectedOption?.label !== null ? selectedOption?.label : '';
           })
-          .filter((text) => text !== '')
+          .filter((label) => label !== '')
           .join(', ')
       : 'Select your option';
 
   const handleLiClick = (id: string) => {
-    const clickedOption = options.find((option) => option.id === id);
-    if (
-      clickedOption &&
-      !clickedOption.disabled &&
-      (maxOptions === undefined || selectedOptions.length <= maxOptions)
-    ) {
+    const clickedOption = options.find((option) => option.value === id);
+    if (clickedOption && !clickedOption.disable && (maxOptions === undefined || selectedOptions.length <= maxOptions)) {
       const isSelected = selectedOptions.includes(id);
       const newSelectedValues = isSelected ? selectedOptions.filter((val) => val !== id) : [...selectedOptions, id];
       const isWithinLimit = maxOptions === undefined || newSelectedValues.length <= maxOptions;
       if (isWithinLimit && dropdownOpen) {
         setSelectedOptions(newSelectedValues);
         onSelectionChange(newSelectedValues);
-        announceOption(`${clickedOption?.text} ${newSelectedValues.includes(id) ? 'selected' : 'not selected'}`);
+        announceOption(`${clickedOption?.label} ${newSelectedValues.includes(id) ? 'selected' : 'not selected'}`);
       }
     }
   };
@@ -257,7 +253,7 @@ export const MultiSelect: React.FC<Props> = ({
       }
     } else if (key === 'Enter' || key === 'Space' || key === ' ') {
       if (focusedIndex !== -1) {
-        handleLiClick(filteredOptions.current[focusedIndex].id);
+        handleLiClick(filteredOptions.current[focusedIndex].value);
       }
     } else if (key === 'Escape') {
       toggleDropDown(false);
@@ -400,23 +396,23 @@ export const MultiSelect: React.FC<Props> = ({
                           {filteredOptions.current.map((option, index) => (
                             // eslint-disable-next-line jsx-a11y/role-supports-aria-props
                             <li
-                              key={option.id}
+                              key={option.value}
                               className={`${styles.optionsList} ${index === focusedIndex ? styles.focused : ''}`}
-                              onClick={() => handleLiClick(option.id)}
+                              onClick={() => handleLiClick(option.value)}
                               aria-selected={index === focusedIndex}
                               role="option"
                             >
                               <PseudoCheckbox
                                 themeColor={themeColor}
-                                checked={selectedOptions.includes(option.id)}
+                                checked={selectedOptions.includes(option.value)}
                                 disabled={
-                                  option.disabled ||
+                                  option.disable ||
                                   (maxOptions !== undefined &&
                                     selectedOptions.length >= maxOptions &&
-                                    !selectedOptions.includes(option.id))
+                                    !selectedOptions.includes(option.value))
                                 }
                               />
-                              <span>{option.text}</span>
+                              <span>{option.label}</span>
                             </li>
                           ))}
                         </ul>
