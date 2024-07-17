@@ -53,31 +53,30 @@ const options: IOption[] = [
 
 const handleSelectionChange = () => {};
 
-const children = () => {
-  return (
-    <SelectOptions setQuery={() => {}}>
-      {options.map((option) => (
-        <SelectOption
-          disable={false}
-          key={option.value}
-          className={({ active }: { active: boolean }) =>
-            `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
-              active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
-            }`
-          }
-          value={option}
-        >
-          {({ selected, active }: { selected: boolean; active: boolean }) => (
-            <div className="tw-flex tw-items-center">
-              <span className={`tw-block ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>{option.label}</span>
-            </div>
-          )}
-        </SelectOption>
-      ))}
-    </SelectOptions>
-  );
-};
-
+const children = (
+  <SelectOptions setQuery={() => {}}>
+    {options.map((option) => (
+      <SelectOption
+        disable={false}
+        key={option.value}
+        className={({ active }: { active: boolean }) =>
+          `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
+            active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
+          }`
+        }
+        value={option}
+      >
+        {({ selected, active }: { selected: boolean; active: boolean }) => (
+          <div className="tw-flex tw-items-center">
+            <span className={`tw-block tw-truncate ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>
+              {option.label}
+            </span>
+          </div>
+        )}
+      </SelectOption>
+    ))}
+  </SelectOptions>
+);
 export const WithoutTheme: Story = {
   args: {
     selected: options[2],
