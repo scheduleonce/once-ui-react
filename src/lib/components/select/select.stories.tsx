@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 
 import { Select } from './select';
@@ -12,7 +12,6 @@ const meta: Meta<typeof Select> = {
   decorators: [
     (Story) => (
       <div style={{ height: '250px' }}>
-        {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
         <Story />
       </div>
     ),
@@ -26,11 +25,27 @@ const meta: Meta<typeof Select> = {
         type: { summary: 'string' },
       },
     },
+    selected: {
+      description: 'The currently selected option. This prop helps maintain the state of the selected option.',
+      control: { type: 'text' },
+      table: {
+        defaultValue: { summary: '' },
+        type: { summary: 'string' },
+      },
+    },
+    onSelect: {
+      description:
+        'A callback function that gets called when an option is selected. It takes the selected option as an argument.',
+      control: { type: 'function' },
+      table: {
+        defaultValue: { summary: '' },
+        type: { summary: 'function' },
+      },
+    },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Select>;
 
 const options: IOption[] = [
   {
@@ -52,7 +67,6 @@ const options: IOption[] = [
 ];
 
 const handleSelectionChange = () => {};
-
 const children = (
   <SelectOptions setQuery={() => {}}>
     {options.map((option) => (
@@ -77,17 +91,22 @@ const children = (
     ))}
   </SelectOptions>
 );
-export const WithoutTheme: Story = {
-  args: {
-    selected: options[2],
-    onSelect: handleSelectionChange,
-    children: children,
-  },
+const Template: StoryFn<typeof Select> = (args) => {
+  return (
+    <Select {...args} selected={options[2]} onSelect={handleSelectionChange}>
+      {children}
+    </Select>
+  );
 };
 
-export const WithTheme: Story = {
-  args: {
-    ...WithoutTheme.args,
-    themeColor: '#ff0000',
-  },
+export const WithoutTheme = Template.bind({});
+WithoutTheme.args = {
+  selected: options[2],
+  onSelect: handleSelectionChange,
+};
+
+export const WithTheme = Template.bind({});
+WithTheme.args = {
+  ...WithoutTheme.args,
+  themeColor: '#ff0000',
 };

@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
+import type { Meta, StoryFn } from '@storybook/react';
+import React, { useState } from 'react';
 import { AutoComplete } from './auto-complete';
 import { AutoCompleteOptions, AutoCompleteOption } from './options';
-import { IOption } from '../../interfaces/select.type';
+import { IOption } from './select.types';
 
 const meta: Meta<typeof AutoComplete> = {
   title: 'Basic/AutoComplete',
@@ -11,7 +11,6 @@ const meta: Meta<typeof AutoComplete> = {
   decorators: [
     (Story) => (
       <div style={{ height: '250px' }}>
-        {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
         <Story />
       </div>
     ),
@@ -70,7 +69,6 @@ const meta: Meta<typeof AutoComplete> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof AutoComplete>;
 
 const options: IOption[] = [
   {
@@ -91,42 +89,64 @@ const options: IOption[] = [
   },
 ];
 
-const handleSelectionChange = () => {};
+const Template: StoryFn<typeof AutoComplete> = (args) => {
+  const [searchQuery, setSearchQuery] = useState('');
 
-const children = (
-  <AutoCompleteOptions setQuery={() => {}}>
-    {options.map((option) => (
-      <AutoCompleteOption
-        disable={false}
-        key={option.value}
-        className={({ active }: { active: boolean }) =>
-          `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
-            active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
-          }`
-        }
-        value={option}
-      >
-        {({ selected, active }: { selected: boolean; active: boolean }) => (
-          <div className="tw-flex tw-items-center">
-            <span className={`tw-block ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>{option.label}</span>
-          </div>
-        )}
-      </AutoCompleteOption>
-    ))}
-  </AutoCompleteOptions>
-);
+  const filteredOptions =
+    searchQuery === ''
+      ? options
+      : options.filter((option) =>
+          option.label.toLowerCase().replace(/\s+/g, '').includes(searchQuery.toLowerCase().replace(/\s+/g, '')),
+        );
 
-export const WithoutTheme: Story = {
-  args: {
-    selected: options[2],
-    onSelect: handleSelectionChange,
-    children: children,
-  },
+  const handleSelectionChange = () => {};
+
+  const children = (
+    <AutoCompleteOptions setQuery={setSearchQuery}>
+      {filteredOptions.length === 0 && searchQuery !== '' ? (
+        <div className="tw-relative tw-cursor-default tw-select-none tw-px-4 tw-py-2 tw-text-[#333333]">
+          Nothing found.
+        </div>
+      ) : (
+        filteredOptions.map((option) => (
+          <AutoCompleteOption
+            disable={false}
+            key={option.value}
+            className={({ active }: { active: boolean }) =>
+              `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
+                active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
+              }`
+            }
+            value={option}
+          >
+            {({ selected, active }: { selected: boolean; active: boolean }) => (
+              <div className="tw-flex tw-items-center">
+                <span className={`tw-block ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>{option.label}</span>
+              </div>
+            )}
+          </AutoCompleteOption>
+        ))
+      )}
+    </AutoCompleteOptions>
+  );
+
+  return (
+    <AutoComplete {...args} selected={args.selected} onSelect={handleSelectionChange} setQuery={setSearchQuery}>
+      {children}
+    </AutoComplete>
+  );
 };
 
-export const WithTheme: Story = {
-  args: {
-    ...WithoutTheme.args,
-    themeColor: '#ff0000',
-  },
+export const WithoutTheme = Template.bind({});
+WithoutTheme.args = {
+  selected: options[2],
+  themeColor: '',
+  disable: false,
+  clearSearch: false,
+};
+
+export const WithTheme = Template.bind({});
+WithTheme.args = {
+  ...WithoutTheme.args,
+  themeColor: '#ff0000',
 };
