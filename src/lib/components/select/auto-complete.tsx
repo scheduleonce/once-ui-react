@@ -31,7 +31,7 @@ export const AutoComplete: FC<Props> = ({
   const [isMounted, setIsMounted] = useState(false);
   const selectRef = useRef<HTMLDivElement | null>(null);
   const selectDropdownRef = useRef<HTMLDivElement | null>(null);
-  const [dropdownPosition, setdropdownPosition] = useState({ left: 0, top: 0 });
+  const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 });
   const windowHeight = useRef<number>(0);
   const pageScrollHeight = useRef<number>(0);
   let OptionStyleObj: CSSProperties = {};
@@ -47,11 +47,12 @@ export const AutoComplete: FC<Props> = ({
     pageScrollHeight.current = document.body.scrollHeight;
     setIsMounted(true);
   };
+
   useEffect(() => {
     handleOnResize();
     window.addEventListener('resize', handleOnResize);
     return () => {
-      window.addEventListener('resize', handleOnResize);
+      window.removeEventListener('resize', handleOnResize);
     };
   }, []);
 
@@ -85,7 +86,7 @@ export const AutoComplete: FC<Props> = ({
             topPosition = selectRect.y - selectDropdownHeight;
           }
 
-          setdropdownPosition({
+          setDropdownPosition({
             left: selectRect.left,
             top: topPosition ?? selectRect.top,
           });
@@ -139,8 +140,11 @@ export const AutoComplete: FC<Props> = ({
   const handleFocus = () => {
     setIsFocused(true);
   };
-  const handleBlur = () => {
-    setIsFocused(false);
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (!selectDropdownRef.current?.contains(event.relatedTarget as Node)) {
+      setIsFocused(false);
+    }
   };
 
   if (themeColor) {
