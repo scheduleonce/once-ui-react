@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-
 import { Select } from './select';
 import { SelectOption, SelectOptions } from './select-options';
 import { IOption } from './select.types';

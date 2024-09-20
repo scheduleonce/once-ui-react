@@ -1,5 +1,7 @@
 import React, { FC, Fragment, forwardRef } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
+import styles from './auto-complete.module.scss';
+
 interface Props {
   children: any;
   setQuery: (query: any) => void;
@@ -9,14 +11,12 @@ export const AutoCompleteOptions: FC<Props> = ({ children, setQuery }) => {
   return (
     <Transition
       as={Fragment}
-      leave="tw-transition tw-ease-in tw-duration-100"
-      leaveFrom="tw-opacity-100"
-      leaveTo="tw-opacity-0"
+      leave={styles.leave}
+      leaveFrom={styles.leaveFrom}
+      leaveTo={styles.leaveTo}
       afterLeave={() => setQuery('')}
     >
-      <Combobox.Options className="tw-max-h-[210px] tw-w-full tw-overflow-auto tw-bg-white tw-list-none tw-m-0 tw-px-0 tw-py-[10px] tw-text-base tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none sm:tw-text-sm [&::-webkit-scrollbar-thumb]:tw-rounded-md [&::-webkit-scrollbar-thumb]:tw-bg-[#a9a9a9] [&::-webkit-scrollbar]:tw-w-[6px]">
-        {children}
-      </Combobox.Options>
+      <Combobox.Options className={styles.autocompleteOptions}>{children}</Combobox.Options>
     </Transition>
   );
 };

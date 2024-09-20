@@ -5,6 +5,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
 import { createPortal } from 'react-dom';
+import styles from './auto-complete.module.scss';
 
 interface Props {
   children: any;
@@ -157,17 +158,12 @@ export const AutoComplete: FC<Props> = ({
   return (
     <Combobox value={selected} onChange={onSelection} disabled={disable}>
       {({ open }) => (
-        <div className="tw-relative ">
-          <div
-            ref={selectRef}
-            className={`tw-relative tw-h-10 tw-w-full tw-cursor-default tw-overflow-hidden tw-bg-white tw-text-left focus:tw-outline-none focus-visible:tw-ring-1 focus-visible:tw-ring-[#DFDFDF] focus-visible:tw-ring-offset-2 focus-visible:tw-ring-offset-[#DFDFDF] ${
-              disable ? 'tw-text-[#A7A7A7]' : 'tw-text-[#333333]'
-            }`}
-          >
+        <div className={styles.autocomplete}>
+          <div ref={selectRef} className={`${styles.autocompleteContainer} ${disable ? 'disable' : ''}`}>
             <Combobox.Input
               ref={inputRef}
               data-testid={'select-input'}
-              className="tw-h-full tw-w-full tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-pb-2 tw-pl-[10px] tw-pr-10 tw-pt-2 tw-text-base tw-leading-5 tw-placeholder-[#666666] tw-shadow-none focus:tw-border-b-2 focus:tw-border-b-[#006bb1] focus:tw-pb-[7px] focus:tw-outline-none focus:tw-ring-[0px] focus-visible:tw-ring-[0px]"
+              className={styles.autocompleteInput}
               displayValue={displayInputValue}
               onChange={(event) => {
                 setQuery(event.target.value);
@@ -186,15 +182,12 @@ export const AutoComplete: FC<Props> = ({
               autoComplete="off"
             />
             <Combobox.Button
-              className="tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-pr-2"
+              className={styles.autocompleteButton}
               data-testid={'select-button'}
               ref={inputButton}
               onClick={getDropdownPosition}
             >
-              <ChevronDownIcon
-                className={`tw-h-5 tw-w-5 ${disable ? 'tw-text-[#A7A7A7]' : 'tw-text-[#333333]'}`}
-                aria-hidden="true"
-              />
+              <ChevronDownIcon className={`${styles.chevronDownIcon} ${disable ? 'disable' : ''}`} aria-hidden="true" />
             </Combobox.Button>
           </div>
           {isMounted
@@ -211,8 +204,8 @@ export const AutoComplete: FC<Props> = ({
                     >
                       <div
                         ref={selectDropdownRef}
-                        className="tw-absolute"
                         style={{
+                          position: 'absolute',
                           opacity: dropdownPosition.left ? 1 : 0,
                           width: selectRef.current ? selectRef.current.clientWidth : 'auto',
                           left: dropdownPosition.left,

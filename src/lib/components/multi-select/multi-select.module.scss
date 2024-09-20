@@ -51,6 +51,9 @@
 	}
 	.btnContainer {
 		@apply tw-absolute tw-box-border tw-inset-x-0 tw-flex tw-h-[64px] tw-w-full tw-items-center tw-justify-end tw-border-0 tw-border-t tw-border-solid tw-border-t-[#C8C8C8] tw-px-[18px];
+		.hiddenButton{
+			@apply tw-absolute tw-left-[-9999px] tw-h-0 tw-w-0 tw-opacity-0;
+		}
 	}
 }
 
@@ -60,4 +63,8 @@
 .optionsListContainer ::-webkit-scrollbar-thumb {
 	background-color: darkgrey;
 	border-radius: 6px;
+}
+
+.announcement{
+	@apply tw-pointer-events-none tw-h-0 tw-overflow-hidden tw-opacity-0;
 }
