@@ -5,6 +5,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
 import { createPortal } from 'react-dom';
+import styles from './select.module.scss';
 interface Props {
   children: any;
   selected: IOption | null;
@@ -110,8 +111,8 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
   return (
     <Listbox value={selected} onChange={onSelection}>
       {({ open }) => (
-        <div className={'tw-relative'}>
-          <div className="tw-relative" ref={selectRef}>
+        <div className={styles.select}>
+          <div className={styles.selectContainer} ref={selectRef}>
             <Listbox.Button
               data-testid={'select-options'}
               onFocus={handleFocus}
@@ -123,21 +124,16 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
                 }
               }}
               style={{ borderBottomColor: themeColor && (isFocused || open) ? borderColor : '' }}
-              className={
-                `tw-border-solid tw-border-x-0 tw-relative tw-h-10 tw-w-full tw-cursor-pointer tw-border-b tw-border-t tw-border-t-transparent tw-bg-white tw-py-1.5 tw-pl-[10px] tw-pr-8 tw-text-left tw-text-base tw-text-[#333333] focus:tw-border-b-2 focus:tw-border-t-2 focus:tw-border-b-[#006bb1] focus:tw-py-[5px] focus:tw-outline-none focus:tw-ring-0` +
-                (open ? ' tw-border-b-2 tw-border-t-2 tw-border-b-[#006bb1]' : ' tw-border-b-[#333333]')
-              }
+              className={`${styles.selectButton} ${open ? ' open' : ''}`}
             >
               {selected && (
-                <span className="tw-flex tw-items-center">
-                  {selected.avatar && (
-                    <img src={selected.avatar} alt="" className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0" />
-                  )}
-                  <span className="tw-block tw-truncate">{selected.label}</span>
+                <span className={styles.selectValue}>
+                  {selected.avatar && <img src={selected.avatar} alt="" className={styles.seletIcon} />}
+                  <span className={styles.selectText}>{selected.label}</span>
                 </span>
               )}
-              <span className="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-pr-2">
-                <ChevronDownIcon className={'tw-h-5 tw-w-5 tw-text-[#333333]'} aria-hidden="true" />
+              <span className={styles.chevronDownIconSpan}>
+                <ChevronDownIcon className={styles.chevronDownIcon} aria-hidden="true" />
               </span>
             </Listbox.Button>
           </div>
@@ -155,8 +151,8 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
                     >
                       <div
                         ref={selectDropdownRef}
-                        className="tw-absolute"
                         style={{
+                          position: 'absolute',
                           opacity: dropdownPosition.left ? 1 : 0,
                           width: selectRef.current ? selectRef.current.clientWidth : 'auto',
                           left: dropdownPosition.left,
