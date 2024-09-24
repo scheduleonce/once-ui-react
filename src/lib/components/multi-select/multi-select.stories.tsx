@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { MultiSelect } from './multi-select';
-import { Option } from './multi-select.type';
+import { IOption } from '../../interfaces/select.type';
 
 const meta: Meta<typeof MultiSelect> = {
   title: 'Basic/MultiSelect',
@@ -25,7 +25,7 @@ const meta: Meta<typeof MultiSelect> = {
       },
     },
     options: {
-      description: 'An array of Option objects representing the available choices.',
+      description: 'An array of IOption objects representing the available choices.',
       type: 'string',
       table: {
         defaultValue: { summary: '' },
@@ -62,10 +62,10 @@ const meta: Meta<typeof MultiSelect> = {
 export default meta;
 type Story = StoryObj<typeof MultiSelect>;
 
-const options: Option[] = [
-  { id: '1', text: 'Option 1', order: 1 },
-  { id: '2', text: 'Option 2', order: 2 },
-  { id: '3', text: 'Option 3', order: 3, disabled: true },
+const options: IOption[] = [
+  { value: '1', label: 'Option 1', order: 1 },
+  { value: '2', label: 'Option 2', order: 2 },
+  { value: '3', label: 'Option 3', order: 3, disable: true },
 ];
 const handleSelectionChange = () => {};
 

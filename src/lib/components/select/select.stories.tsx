@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-
 import { Select } from './select';
 import { SelectOption, SelectOptions } from './select-options';
-import { IOption } from './select.types';
+import { IOption } from '../../interfaces/select.type';
 
 const meta: Meta<typeof Select> = {
   title: 'Basic/Select',
@@ -77,6 +76,7 @@ const children = (
     ))}
   </SelectOptions>
 );
+
 export const WithoutTheme: Story = {
   args: {
     selected: options[2],

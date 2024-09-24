@@ -1,6 +1,6 @@
 import { FC, useRef, useEffect, CSSProperties, useState } from 'react';
 import { Combobox } from '@headlessui/react';
-import { IOption } from './select.types';
+import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
@@ -167,7 +167,7 @@ export const AutoComplete: FC<Props> = ({
             <Combobox.Input
               ref={inputRef}
               data-testid={'select-input'}
-              className="tw-h-full tw-w-full tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-pb-2 tw-pl-[10px] tw-pr-10 tw-pt-2 tw-text-base tw-leading-5 tw-placeholder-[#666666] tw-shadow-none focus:tw-border-b-2 focus:tw-border-b-[#006bb1] focus:tw-pb-[7px] focus:tw-outline-none focus:tw-ring-[0px] focus-visible:tw-ring-[0px]"
+              className="tw-h-full tw-w-full tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-pb-2 tw-pl-[10px] tw-pr-10 tw-pt-2 tw-text-base tw-leading-5 tw-truncate tw-placeholder-[#666666] tw-shadow-none focus:tw-border-b-2 focus:tw-border-b-[#006bb1] focus:tw-pb-[7px] focus:tw-outline-none focus:tw-ring-[0px] focus-visible:tw-ring-[0px]"
               displayValue={displayInputValue}
               onChange={(event) => {
                 setQuery(event.target.value);
