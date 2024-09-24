@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { Listbox } from '@headlessui/react';
-import { IOption } from './select.types';
+import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
