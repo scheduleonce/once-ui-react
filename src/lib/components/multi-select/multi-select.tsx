@@ -345,12 +345,7 @@ export const MultiSelect: React.FC<Props> = ({
             </svg>
           </span>
         </div>
-        <div
-          id="announcement"
-          aria-live="assertive"
-          role="alert"
-          className="tw-pointer-events-none tw-h-0 tw-overflow-hidden tw-opacity-0"
-        ></div>
+        <div id="announcement" aria-live="assertive" role="alert" className={styles.announcement}></div>
         {isMounted
           ? createPortal(
               <>
@@ -423,7 +418,7 @@ export const MultiSelect: React.FC<Props> = ({
                           onKeyDown={(event) => {
                             handleKeyDown(event);
                           }}
-                          className="tw-absolute tw-left-[-9999px] tw-h-0 tw-w-0 tw-opacity-0"
+                          className={styles.hiddenButton}
                         />
                         <Button
                           themeColor={themeColor}
