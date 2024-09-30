@@ -124,7 +124,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
                 }
               }}
               style={{ borderBottomColor: themeColor && (isFocused || open) ? borderColor : '' }}
-              className={`${styles.selectButton} ${open ? ' open' : ''}`}
+              className={`${styles.selectButton} ${open ? styles.open : ''}`}
             >
               {selected && (
                 <span className={styles.selectValue}>

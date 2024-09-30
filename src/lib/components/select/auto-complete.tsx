@@ -159,7 +159,7 @@ export const AutoComplete: FC<Props> = ({
     <Combobox value={selected} onChange={onSelection} disabled={disable}>
       {({ open }) => (
         <div className={styles.autocomplete}>
-          <div ref={selectRef} className={`${styles.autocompleteContainer} ${disable ? 'disable' : ''}`}>
+          <div ref={selectRef} className={`${styles.autocompleteContainer} ${disable ? styles.disable : ''}`}>
             <Combobox.Input
               ref={inputRef}
               data-testid={'select-input'}
@@ -187,7 +187,10 @@ export const AutoComplete: FC<Props> = ({
               ref={inputButton}
               onClick={getDropdownPosition}
             >
-              <ChevronDownIcon className={`${styles.chevronDownIcon} ${disable ? 'disable' : ''}`} aria-hidden="true" />
+              <ChevronDownIcon
+                className={`${styles.chevronDownIcon} ${disable ? styles.disable : ''}`}
+                aria-hidden="true"
+              />
             </Combobox.Button>
           </div>
           {isMounted
