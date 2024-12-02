@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "1.4.20",
+  "version": "1.4.21",
   "repository": {
     "type": "git",
     "url": "https://github.com/scheduleonce/once-ui-react"
@@ -89,7 +89,7 @@
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2",
     "vite": "^4.5.5",
-    "vite-plugin-dts": "^3.6.2",
+    "vite-plugin-dts": "4.3.0",
     "vite-plugin-css-injected-by-js": "^3.5.0",
     "vitest": "^0.34.6"
   },
