@@ -144,6 +144,20 @@ export const AutoComplete: FC<Props> = ({
     setIsFocused(false);
   };
 
+  useEffect(() => {
+    const input = inputRef.current;
+    if (input) {
+      input.addEventListener('focus', handleFocus);
+      input.addEventListener('blur', handleBlur);
+    }
+    return () => {
+      if (input) {
+        input.removeEventListener('focus', handleFocus);
+        input.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, [handleFocus, handleBlur]);
+
   if (themeColor) {
     const theme = luminance(themeColor);
     themeColor = ColorsService.convert3HexTo6(themeColor);
