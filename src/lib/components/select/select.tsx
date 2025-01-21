@@ -21,6 +21,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
   const [isFocused, setIsFocused] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const selectRef = useRef<HTMLDivElement | null>(null);
+  const selectButtonRef = useRef<HTMLButtonElement>(null);
   const selectDropdownRef = useRef<HTMLDivElement | null>(null);
   const [dropdownPosition, setdropdownPosition] = useState<IDropdownPosition>({ left: 0, top: 0 });
   const windowHeight = useRef<number>(0);
@@ -36,6 +37,20 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
   const handleBlur = (): void => {
     setIsFocused(false);
   };
+
+  useEffect(() => {
+    const selectButton = selectButtonRef.current;
+    if (selectButton) {
+      selectButton.addEventListener('focus', handleFocus);
+      selectButton.addEventListener('blur', handleBlur);
+    }
+    return () => {
+      if (selectButton) {
+        selectButton.removeEventListener('focus', handleFocus);
+        selectButton.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, [handleFocus, handleBlur]);
 
   const handleOnResize = (): void => {
     windowHeight.current = window.innerHeight;
@@ -115,6 +130,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
           <div className={styles.selectContainer} ref={selectRef}>
             <Listbox.Button
               data-testid={'select-options'}
+              ref={selectButtonRef}
               onFocus={handleFocus}
               onBlur={handleBlur}
               onClick={getDropdownPosition}

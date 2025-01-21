@@ -45,6 +45,7 @@ export const MultiSelect: React.FC<Props> = ({
   const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 });
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
   const shiftKeyPressedRef = useRef(false);
+  const multiSelectRef = useRef<HTMLDivElement | null>(null);
 
   const setfocusOnDropdownClose = () => {
     setTimeout(() => {
@@ -283,6 +284,20 @@ export const MultiSelect: React.FC<Props> = ({
     setIsFocused(false);
   };
 
+  useEffect(() => {
+    const multiSelect = multiSelectRef.current;
+    if (multiSelect) {
+      multiSelect.addEventListener('focus', handleFocus);
+      multiSelect.addEventListener('blur', handleBlur);
+    }
+    return () => {
+      if (multiSelect) {
+        multiSelect.removeEventListener('focus', handleFocus);
+        multiSelect.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, [handleFocus, handleBlur]);
+
   if (themeColor) {
     const theme = luminance(themeColor);
     themeColor = ColorsService.convert3HexTo6(themeColor);
@@ -306,6 +321,7 @@ export const MultiSelect: React.FC<Props> = ({
             className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''} ${
               selectedOptions.length === 0 ? styles.placeholder : ''
             }`}
+            ref={multiSelectRef}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onClick={() => toggleDropDown(!dropdownOpen)}
