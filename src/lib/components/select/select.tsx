@@ -141,6 +141,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
               }}
               style={{ borderBottomColor: themeColor && (isFocused || open) ? borderColor : '' }}
               className={`${styles.selectButton} ${open ? styles.open : ''}`}
+              tabIndex={0}
             >
               {selected && (
                 <span className={styles.selectValue}>

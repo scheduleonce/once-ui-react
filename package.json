@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "1.4.22-beta.1.1",
+  "version": "1.4.22",
   "repository": {
     "type": "git",
     "url": "https://github.com/scheduleonce/once-ui-react"
