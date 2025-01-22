@@ -126,7 +126,6 @@ export const AutoComplete: FC<Props> = ({
   };
 
   const displayInputValue = (option: IOption) => {
-    // handlingCursorPosition();
     return option?.label;
   };
 
