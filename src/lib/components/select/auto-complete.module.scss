@@ -1,30 +1,30 @@
-.autocomplete{
+.autocomplete {
   @apply tw-relative;
-  .autocompleteContainer{
-    @apply tw-relative tw-h-10 tw-w-full tw-cursor-default tw-overflow-hidden tw-bg-white tw-text-left tw-text-[#333333];
-    &.disable{
-      @apply tw-text-[#A7A7A7] 
+  .autocompleteContainer {
+    @apply tw-relative tw-h-10 tw-w-full tw-cursor-default tw-overflow-hidden tw-bg-transparent tw-text-left tw-text-[#333333];
+    &.disable {
+      @apply tw-text-[#A7A7A7];
     }
-    &:focus{
+    &:focus {
       @apply tw-outline-none;
     }
-    &:focus-visible{
+    &:focus-visible {
       @apply tw-ring-1 tw-ring-[#DFDFDF] tw-ring-offset-2 tw-ring-offset-[#DFDFDF];
     }
-    .autocompleteInput{
-      @apply tw-h-full tw-w-full tw-box-border tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-pb-2 tw-pl-[10px] tw-pr-10 tw-pt-2 tw-text-base tw-leading-5 tw-placeholder-[#666666] tw-shadow-none;
-      &:focus{
-       @apply tw-border-b-2 tw-border-b-[#006bb1] tw-pb-[7px] tw-outline-none tw-ring-[0px];
+    .autocompleteInput {
+      @apply tw-h-full tw-w-full tw-bg-transparent tw-box-border tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-pb-2 tw-pl-[10px] tw-pr-10 tw-pt-2 tw-text-base tw-leading-5 tw-placeholder-[#666666] tw-shadow-none;
+      &:focus {
+        @apply tw-border-b-2 tw-border-b-[#006bb1] tw-pb-[7px] tw-outline-none tw-ring-[0px];
       }
-      &:focus-visible{
+      &:focus-visible {
         @apply tw-ring-[0px];
       }
     }
-    .autocompleteButton{
+    .autocompleteButton {
       @apply tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-pr-2 tw-bg-transparent tw-border-0;
-      .chevronDownIcon{
+      .chevronDownIcon {
         @apply tw-h-5 tw-w-5 tw-text-[#333333];
-        &.disable{
+        &.disable {
           @apply tw-text-[#A7A7A7];
         }
       }
@@ -32,19 +32,19 @@
   }
 }
 
-.leave{
- @apply tw-transition tw-ease-in tw-duration-100;
+.leave {
+  @apply tw-transition tw-ease-in tw-duration-100;
 }
-.leaveFrom{
+.leaveFrom {
   @apply tw-opacity-100;
 }
-.leaveTo{
+.leaveTo {
   @apply tw-opacity-0;
 }
 
-.autocompleteOptions{
+.autocompleteOptions {
   @apply tw-max-h-[210px] tw-w-full tw-overflow-auto tw-bg-white tw-list-none tw-m-0 tw-px-0 tw-py-[10px] tw-text-base tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] sm:tw-text-sm [&::-webkit-scrollbar-thumb]:tw-rounded-md [&::-webkit-scrollbar-thumb]:tw-bg-[#a9a9a9] [&::-webkit-scrollbar]:tw-w-[6px];
-  &:focus{
+  &:focus {
     @apply tw-outline-none;
   }
 }
