@@ -44,7 +44,7 @@ The Phone component accepts the following props:
 
 - `themeColor` (string, optional): The color theme for the input field.
 
-- `showConsent` (boolean, optional): If set to true, it indicates that the user gives consent to receive communication on the provided phone number.
+<!-- - `showConsent` (boolean, optional): If set to true, it indicates that the user gives consent to receive communication on the provided phone number. -->
 
 - `onUpdate` (function, required): A callback function that is called whenever the phone number is changed. It receives an object of type IPhoneData as an argument.
 
@@ -57,5 +57,3 @@ The `onUpdate` callback function is triggered whenever the user makes changes to
 - `countryCode` (string): The country code derived from the phone number input.
 
 - `error` (undefined | 'invalid' | 'required'): Indicates whether there is an error with the phone number input. It can be undefined if there is no error, 'invalid' if the phone number is invalid, or 'required' if the field is required but empty.
-
-- `consentChecked` (boolean): Indicates whether the user has given consent to receive communication on the provided phone number.

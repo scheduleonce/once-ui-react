@@ -2,7 +2,7 @@ import { SelectOption, SelectOptions } from '../select/select-options';
 import { Select } from '../select/select';
 import { SingleLineInput } from '../single-line-input';
 import { IOption } from '../../interfaces/select.type';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styles from './phone.module.scss';
 import { isValidPhoneNumber, getCountries, getCountryCallingCode } from 'react-phone-number-input/max';
 import { CountryCode } from 'libphonenumber-js';
@@ -18,6 +18,8 @@ interface Props {
   error?: boolean;
   validate?: boolean;
   id?: string;
+  phoneNumberValue?: string | null;
+  countryCodeFromURL?: string | null;
 }
 
 export const Phone: FC<Props> = ({
@@ -29,6 +31,8 @@ export const Phone: FC<Props> = ({
   error = false,
   validate = true,
   id = '',
+  phoneNumberValue = '',
+  countryCodeFromURL = '',
 }) => {
   /* Country Dropdown */
   const [validationError, setValidationError] = useState<boolean>(error);
@@ -36,6 +40,16 @@ export const Phone: FC<Props> = ({
   const countryCode = useRef<string>(
     countryShortName && countryShortName !== '001' ? countryShortName : DEFAULT_COUNTRY_CODE,
   );
+
+  useEffect(() => {
+    if (countryCodeFromURL) {
+      const selectedCountry = findCountry(countryCodeFromURL);
+      if (selectedCountry) {
+        setSelected(selectedCountry);
+        countryCode.current = countryCodeFromURL;
+      }
+    }
+  }, [countryCodeFromURL]);
 
   const isSelected = (obj1: any, obj2: any) => {
     if (JSON.stringify(obj1) === JSON.stringify(obj2)) {
@@ -81,7 +95,7 @@ export const Phone: FC<Props> = ({
   };
 
   /* PhoneNumber input box */
-  const phoneNumber = useRef('');
+  const phoneNumber = useRef(phoneNumberValue ?? '');
 
   const validatePhoneNumber = (phoneNumber: string) => {
     const trimmedPhoneNumber = phoneNumber.trim();
@@ -109,6 +123,7 @@ export const Phone: FC<Props> = ({
         phoneNumber: phoneNumber,
         countryCode: countryCode.current,
         error: undefined,
+        id: id,
       };
       onUpdate(phoneObject);
     }
@@ -127,6 +142,7 @@ export const Phone: FC<Props> = ({
       phoneNumber: phoneNumber,
       countryCode: countryCode.current,
       error: error,
+      id: id,
     };
     onUpdate(phoneObject);
   };
@@ -169,6 +185,7 @@ export const Phone: FC<Props> = ({
               placeholder={placeholder}
               className={`${styles.phoneInput} ${validationError && validate ? styles.serverError : ''}`}
               id={id}
+              value={phoneNumberValue ?? ''}
               onBlur={(e) => {
                 phoneNumber.current = e.target.value.trim();
               }}

@@ -16,7 +16,7 @@ const meta: Meta<typeof Phone> = {
   ],
   argTypes: {
     themeColor: {
-      description: 'A custom theme color for the input bottom border. Optional.',
+      description: 'The color theme for the input field.',
       control: { type: 'color', presetColors: ['#006bb1'] },
       table: {
         defaultValue: { summary: '' },
@@ -24,59 +24,52 @@ const meta: Meta<typeof Phone> = {
       },
     },
     countryShortName: {
-      description: 'An array of IOption objects representing the available choices.',
-      type: 'string',
+      description: ' The country code of the phone number input. For example, "IN" for India',
+      control: { type: 'text' },
       table: {
         defaultValue: { summary: '' },
         type: { summary: 'string' },
       },
     },
     required: {
-      description: 'An array of numbers representing the initially selected options.',
-      type: 'string',
+      description: 'If set to true, the input field will be marked as required',
+      control: { type: 'boolean' },
       table: {
         defaultValue: { summary: '' },
-        type: { summary: 'string' },
+        type: { summary: 'boolean' },
       },
     },
     onUpdate: {
-      description: 'An array of numbers representing the initially selected options.',
+      description:
+        'A callback function that is called whenever the phone number is changed. It receives an object of type IPhoneData as an argument.',
+      control: { type: 'function' },
+      table: {
+        defaultValue: { summary: '' },
+        type: { summary: 'function' },
+      },
+    },
+    placeholder: {
+      description: 'The text to display as a placeholder inside the input field.',
+      control: { type: 'text' },
+      table: {
+        defaultValue: { summary: 'Enter phone number' },
+        type: { summary: 'string' },
+      },
+    },
+    validate: {
+      description: '',
+      control: { type: 'boolean' },
+      table: {
+        defaultValue: { summary: '' },
+        type: { summary: 'boolean' },
+      },
+    },
+    id: {
+      description: 'Id of a particular phone number',
       type: 'string',
       table: {
         defaultValue: { summary: '' },
         type: { summary: 'string' },
-      },
-    },
-    placeholder: {
-      description: 'Maximum number of options that can be selected',
-      type: 'number',
-      table: {
-        defaultValue: { summary: '' },
-        type: { summary: 'number' },
-      },
-    },
-    validate: {
-      description: 'Maximum number of options that can be selected',
-      type: 'number',
-      table: {
-        defaultValue: { summary: '' },
-        type: { summary: 'number' },
-      },
-    },
-    id: {
-      description: 'Maximum number of options that can be selected',
-      type: 'number',
-      table: {
-        defaultValue: { summary: '' },
-        type: { summary: 'number' },
-      },
-      style: {
-        description: 'Maximum number of options that can be selected',
-        type: 'number',
-        table: {
-          defaultValue: { summary: '' },
-          type: { summary: 'number' },
-        },
       },
     },
   },
