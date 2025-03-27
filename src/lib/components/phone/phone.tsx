@@ -20,6 +20,7 @@ interface Props {
   id?: string;
   phoneNumberValue?: string | null;
   countryCodeFromURL?: string | null;
+  additionalClassName?: string;
 }
 
 export const Phone: FC<Props> = ({
@@ -33,6 +34,7 @@ export const Phone: FC<Props> = ({
   id = '',
   phoneNumberValue = '',
   countryCodeFromURL = '',
+  additionalClassName = '',
 }) => {
   /* Country Dropdown */
   const [validationError, setValidationError] = useState<boolean>(error);
@@ -151,7 +153,7 @@ export const Phone: FC<Props> = ({
   return (
     <>
       {
-        <div className={styles.phoneWrapper} data-testid="phone-wrapper">
+        <div className={`${styles.phoneWrapper} ${additionalClassName?.trim() || ''}`} data-testid="phone-wrapper">
           <div className={styles.countryCode}>
             <Select selected={selected} onSelect={onSelectDropDown} data-testid="phone-select" themeColor={themeColor}>
               <div className={styles.phonNumberList}>

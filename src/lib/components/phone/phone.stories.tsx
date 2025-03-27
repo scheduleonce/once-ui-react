@@ -72,6 +72,14 @@ const meta: Meta<typeof Phone> = {
         type: { summary: 'string' },
       },
     },
+    additionalClassName: {
+      description: 'You can add Additional class name for the phone number input to customize the css',
+      type: 'string',
+      table: {
+        defaultValue: { summary: '' },
+        type: { summary: 'string' },
+      },
+    },
   },
 };
 
