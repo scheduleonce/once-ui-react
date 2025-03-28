@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "1.4.24-beta.1.2",
+  "version": "1.4.24-beta.1.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/scheduleonce/once-ui-react"
@@ -16,9 +16,9 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "styles": "./dist/index.css",
       "import": "./dist/ui-react.es.js",
-      "require": "./dist/ui-react.umd.js",
-      "styles": "./dist/index.css"
+      "require": "./dist/ui-react.umd.js"
     },
     "./components/select": "./dist/components/select/*",
     "./components/multi-select": {
@@ -26,7 +26,7 @@
     }
   },
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
@@ -54,8 +54,8 @@
     "@storybook/react-vite": "^8.6.7",
     "@testing-library/react": "16.2.0",
     "@types/node": "^20.8.9",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "^4.1.0",
@@ -79,9 +79,9 @@
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "prop-types": "15.8.1",
-    "react": "19.0.0",
+    "react": "^19.0.0",
     "react-device-detect": "^2.2.3",
-    "react-dom": "19.0.0",
+    "react-dom": "^19.0.0",
     "sass": "^1.69.5",
     "storybook": "^8.6.7",
     "tailwindcss": "^3.3.5",
@@ -97,7 +97,7 @@
     ]
   },
   "peerDependencies": {
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
