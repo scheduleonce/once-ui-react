@@ -153,10 +153,10 @@ export const Phone: FC<Props> = ({
   return (
     <>
       {
-        <div className={`${styles.phoneWrapper} ${additionalClassName?.trim() || ''}`} data-testid="phone-wrapper">
-          <div className={styles.countryCode}>
+        <div className={`phoneWrapper ${additionalClassName?.trim() || ''}`} data-testid="phone-wrapper">
+          <div className="countryCode">
             <Select selected={selected} onSelect={onSelectDropDown} data-testid="phone-select" themeColor={themeColor}>
-              <div className={styles.phonNumberList}>
+              <div className="phonNumberList">
                 <SelectOptions setQuery={() => {}} data-testid="phone-select-options">
                   {countryList.map((country) => (
                     <SelectOption
@@ -168,7 +168,7 @@ export const Phone: FC<Props> = ({
                       }
                       data-testid={`phone-select-option-${country.value}`}
                     >
-                      <div className={styles.countryListText}>
+                      <div className="countryListText">
                         <span>
                           {en[country.value as CountryCode]} +{getCountryCallingCode(country.value as CountryCode)}
                         </span>
@@ -180,12 +180,12 @@ export const Phone: FC<Props> = ({
               </div>
             </Select>
           </div>
-          <div className={styles.phoneInputWrap}>
+          <div className="phoneInputWrap">
             <SingleLineInput
               type="text"
               aria-labelledby="phone-number"
               placeholder={placeholder}
-              className={`${styles.phoneInput} ${validationError && validate ? styles.serverError : ''}`}
+              className={`phoneInput ${validationError && validate ? styles.serverError : ''}`}
               id={id}
               value={phoneNumberValue ?? ''}
               onBlur={(e) => {
