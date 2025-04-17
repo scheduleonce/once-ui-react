@@ -1,0 +1,16 @@
+.progress {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  min-width: 260px;
+  margin: 0 auto;
+}
+.progress-bar {
+  position: absolute;
+  display: block;
+  left: -200px;
+  width: 200px;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
