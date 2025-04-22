@@ -15,7 +15,7 @@ export type ProgressBarProps = {
   trackColor?: string;
 };
 
-const ProgressBar: React.FC<ProgressBarProps> = ({
+export const ProgressBar: React.FC<ProgressBarProps> = ({
   value,
   mode: propMode,
   strokeWidth = 4,
@@ -80,5 +80,3 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     </>
   );
 };
-
-export default ProgressBar;
