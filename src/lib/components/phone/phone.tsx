@@ -119,13 +119,14 @@ export const Phone: FC<Props> = ({
     return true;
   };
 
-  const processPhoneNumberInput = (phoneNumber: string) => {
+  const processPhoneNumberInput = (phoneNumber: string, initialConsentChecked: boolean = false) => {
     if (!validate) {
       const phoneObject: IPhoneData = {
         phoneNumber: phoneNumber,
         countryCode: countryCode.current,
         error: undefined,
         id: id,
+        initialConsentChecked: initialConsentChecked,
       };
       onUpdate(phoneObject);
     }
@@ -135,8 +136,8 @@ export const Phone: FC<Props> = ({
         ? undefined
         : 'invalid'
       : required
-      ? 'required'
-      : undefined;
+        ? 'required'
+        : undefined;
 
     setValidationError(!(!validationError && error !== undefined));
 
@@ -145,6 +146,7 @@ export const Phone: FC<Props> = ({
       countryCode: countryCode.current,
       error: error,
       id: id,
+      initialConsentChecked: initialConsentChecked,
     };
     onUpdate(phoneObject);
   };

@@ -3,4 +3,5 @@ export interface IPhoneData {
   countryCode: string;
   error: undefined | 'invalid' | 'required';
   id?: string;
+  initialConsentChecked?: boolean;
 }
