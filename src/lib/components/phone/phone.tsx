@@ -39,7 +39,7 @@ export const Phone: FC<Props> = ({
   /* Country Dropdown */
   const [validationError, setValidationError] = useState<boolean>(error);
   const DEFAULT_COUNTRY_CODE = 'US';
-  const countryCode = useRef<string>(
+  const [countryCode, setCountryCode] = useState<string>(
     countryShortName && countryShortName !== '001' ? countryShortName : DEFAULT_COUNTRY_CODE,
   );
 
@@ -48,10 +48,20 @@ export const Phone: FC<Props> = ({
       const selectedCountry = findCountry(countryCodeFromURL);
       if (selectedCountry) {
         setSelected(selectedCountry);
-        countryCode.current = countryCodeFromURL;
+        setCountryCode(countryCodeFromURL);
       }
     }
   }, [countryCodeFromURL]);
+
+  useEffect(() => {
+    if (countryShortName) {
+      const selectedCountry = findCountry(countryShortName);
+      if (selectedCountry) {
+        setSelected(selectedCountry);
+        setCountryCode(countryShortName);
+      }
+    }
+  }, [countryShortName]);
 
   const isSelected = (obj1: any, obj2: any) => {
     if (JSON.stringify(obj1) === JSON.stringify(obj2)) {
@@ -85,33 +95,42 @@ export const Phone: FC<Props> = ({
   };
 
   const [selected, setSelected] = useState<any | null>(() => {
-    const selectedCountry = findCountry(countryCode.current);
+    const selectedCountry = findCountry(countryCode);
     return selectedCountry ? selectedCountry : null;
   });
 
   const onSelectDropDown = (value: any) => {
-    countryCode.current = value;
+    setCountryCode(value);
     const selectedCountry = findCountry(value);
     setSelected(selectedCountry);
-    processPhoneNumberInput(phoneNumber.current);
+    processPhoneNumberInput(phoneNumber, false);
   };
 
   /* PhoneNumber input box */
-  const phoneNumber = useRef(phoneNumberValue ?? '');
+  const [phoneNumber, setPhoneNumber] = useState(phoneNumberValue ?? '');
+
+  useEffect(() => {
+    if (phoneNumberValue) {
+      setPhoneNumber(phoneNumberValue); // Update state when phoneNumberValue changes
+    }
+  }, [phoneNumberValue]);
+
+  const handlePhoneNumberChange = (value: string) => {
+    setPhoneNumber(value); // Update state immediately
+    processPhoneNumberInput(value, false); // Pass the updated value to the processing function
+  };
 
   const validatePhoneNumber = (phoneNumber: string) => {
     const trimmedPhoneNumber = phoneNumber.trim();
 
-    if (trimmedPhoneNumber && countryCode.current) {
+    if (trimmedPhoneNumber && countryCode) {
       /* Validation for all digits are same */
       const pattern = /^(\d)\1*$/;
       const areAllDigitsSame = pattern.test(phoneNumber.trim());
       if (areAllDigitsSame) return false;
 
       /* Validation according to country code */
-      const phoneNumberWithCountryCode = `+${getCountryCallingCode(
-        countryCode.current as CountryCode,
-      )}${trimmedPhoneNumber}`;
+      const phoneNumberWithCountryCode = `+${getCountryCallingCode(countryCode as CountryCode)}${trimmedPhoneNumber}`;
 
       return isValidPhoneNumber(phoneNumberWithCountryCode);
     }
@@ -119,11 +138,11 @@ export const Phone: FC<Props> = ({
     return true;
   };
 
-  const processPhoneNumberInput = (phoneNumber: string) => {
+  const processPhoneNumberInput = (phoneNumber: string, initialConsentChecked: boolean = false) => {
     if (!validate) {
       const phoneObject: IPhoneData = {
         phoneNumber: phoneNumber,
-        countryCode: countryCode.current,
+        countryCode: countryCode,
         error: undefined,
         id: id,
       };
@@ -142,7 +161,7 @@ export const Phone: FC<Props> = ({
 
     const phoneObject: IPhoneData = {
       phoneNumber: phoneNumber,
-      countryCode: countryCode.current,
+      countryCode: countryCode,
       error: error,
       id: id,
     };
@@ -189,11 +208,11 @@ export const Phone: FC<Props> = ({
               id={id}
               value={phoneNumberValue ?? ''}
               onBlur={(e) => {
-                phoneNumber.current = e.target.value.trim();
+                handlePhoneNumberChange(e.target.value);
               }}
               onChange={(e) => {
-                phoneNumber.current = e.target.value;
-                processPhoneNumberInput(phoneNumber.current);
+                handlePhoneNumberChange(e.target.value);
+                processPhoneNumberInput(e.target.value, false);
               }}
               data-testid="phone-input"
               themeColor={themeColor}
