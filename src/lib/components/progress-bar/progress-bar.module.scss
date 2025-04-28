@@ -2,14 +2,14 @@
   position: relative;
   overflow: hidden;
   max-width: 100%;
-  min-width: 260px;
+  width: 100%;
   margin: 0 auto;
 }
 .progress-bar {
   position: absolute;
   display: block;
-  left: -200px;
-  width: 200px;
+  left: -60%;
+  width: 60%;
   animation-duration: 2s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
