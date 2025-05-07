@@ -1,0 +1,7 @@
+export interface IPhoneData {
+  phoneNumber: string;
+  countryCode: string;
+  error: undefined | 'invalid' | 'required';
+  id?: string;
+  initialConsentChecked?: boolean;
+}
