@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { IOption } from '../../interfaces';
+import styles from './radio.module.scss';
 
 interface RadioProps {
   themeColor?: string;
@@ -17,10 +18,10 @@ export const Radio: FC<RadioProps> = ({ themeColor, name, checked, onChange, opt
   };
 
   return (
-    <div className="tw-flex tw-flex-col">
-      <div className="tw-relative tw-flex tw-items-center">
-        <label htmlFor={option.value} className="tw-my-[6px] tw-flex tw-cursor-pointer">
-          <div className="tw-relative tw-mr-[10px] tw-size-5">
+    <div className={styles.radioWrapper}>
+      <div className={styles.radioBtnBox}>
+        <label htmlFor={option.value} className={styles.radioBtnLabel}>
+          <div className={styles.radioBtnInsideLabel}>
             <input
               type="radio"
               id={option.value}
@@ -28,37 +29,32 @@ export const Radio: FC<RadioProps> = ({ themeColor, name, checked, onChange, opt
               value={option.value}
               checked={checked}
               onChange={() => handleChange(option)}
-              className="tw-absolute tw-size-0 tw-opacity-0"
+              className={styles.radioBtnInput}
             />
             <span
-              className={`tw-relative tw-mt-px tw-inline-block tw-w-5 tw-h-5 tw-rounded-full tw-border tw-border-solid ${
-                checked ? 'tw-border-2' : ''
-              }`}
+              className={`${styles.radioBtnCircle} ${checked ? styles.radioBtnChecked : ''}`}
               style={{
                 borderColor: checked ? effectiveThemeColor : '#C8C8C8',
               }}
             >
               {checked && (
-                <span
-                  className="tw-absolute tw-left-1/2 tw-top-1/2 tw-ml-[-5px] tw-mt-[-5px] tw-w-[10px] tw-h-[10px] tw-rounded-full"
-                  style={{ backgroundColor: effectiveThemeColor }}
-                ></span>
+                <span className={styles.radioBtnCircleInside} style={{ backgroundColor: effectiveThemeColor }}></span>
               )}
             </span>
           </div>
           {option.avatar && (
-            <div className="tw-mr-[9px] tw-max-h-5">
+            <div className={styles.radioBtnAvatar}>
               <img
                 aria-hidden={true}
                 src={option.avatar}
                 width={20}
                 height={20}
                 alt="Location icon"
-                className="tw-mt-px tw-w-5 tw-h-5 tw-min-w-5"
+                className={styles.radioBtnAvatarImg}
               />
             </div>
           )}
-          <div className="tw-text-base tw-text-[16px] tw-leading-[22px]">{option.label}</div>
+          <div className={styles.radioBtnText}>{option.label}</div>
         </label>
       </div>
     </div>

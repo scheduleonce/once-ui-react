@@ -1,0 +1,34 @@
+.radioWrapper {
+  @apply tw-flex tw-flex-col;
+  .radioBtnBox {
+    @apply tw-relative tw-flex tw-items-center;
+    .radioBtnLabel {
+      @apply tw-my-[6px] tw-flex tw-cursor-pointer;
+      .radioBtnInsideLabel {
+        @apply tw-relative tw-mr-[10px] tw-w-5 tw-h-5;
+      }
+      .radioBtnInput {
+        @apply tw-absolute tw-w-0 tw-h-0 tw-opacity-0;
+      }
+      .radioBtnAvatar {
+        @apply tw-mr-[9px] tw-w-5 tw-h-5;
+        img {
+          @apply tw-mt-px tw-w-5 tw-h-5;
+          min-width: 20px;
+        }
+      }
+      .radioBtnText {
+        @apply tw-text-base tw-text-[16px] tw-leading-[22px];
+      }
+      .radioBtnCircle {
+        @apply tw-relative tw-mt-px tw-inline-block tw-w-5 tw-h-5 tw-rounded-full tw-border tw-border-solid;
+        &.radioBtnChecked {
+          @apply tw-border-2;
+        }
+      }
+      .radioBtnCircleInside {
+        @apply tw-absolute tw-left-1/2 tw-top-1/2 tw-ml-[-5px] tw-mt-[-5px] tw-w-[10px] tw-h-[10px] tw-rounded-full;
+      }
+    }
+  }
+}
