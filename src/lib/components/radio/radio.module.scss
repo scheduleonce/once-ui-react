@@ -3,7 +3,7 @@
   .radioBtnBox {
     @apply tw-relative tw-flex tw-items-center;
     .radioBtnLabel {
-      @apply tw-my-[6px] tw-flex tw-cursor-pointer;
+      @apply tw-my-[7px] tw-flex tw-cursor-pointer;
       .radioBtnInsideLabel {
         @apply tw-relative tw-mr-[10px] tw-w-5 tw-h-5;
       }
@@ -19,6 +19,7 @@
       }
       .radioBtnText {
         @apply tw-text-base tw-text-[16px] tw-leading-[22px];
+        word-break: break-word;
       }
       .radioBtnCircle {
         @apply tw-relative tw-mt-px tw-inline-block tw-w-5 tw-h-5 tw-rounded-full tw-border tw-border-solid;
