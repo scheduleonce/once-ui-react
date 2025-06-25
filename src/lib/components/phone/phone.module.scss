@@ -1,0 +1,40 @@
+.phoneWrapper {
+  @apply tw-flex tw-max-w-[380px] tw-items-center tw-justify-between tw-gap-3;
+  .countryCode {
+    @apply tw-h-10 tw-w-full tw-max-w-[110px];
+    button {
+      @apply tw-h-10 tw-bg-transparent tw-pl-[10px] tw-font-normal;
+      background: transparent !important;
+    }
+  }
+  .phoneInputWrap {
+    @apply tw-w-full;
+    .phoneInput {
+      @apply tw-h-10 tw-box-border tw-w-full tw-border-0 tw-border-b tw-border-[#333333] tw-bg-transparent tw-px-[3px] tw-text-base tw-text-[#333333] tw-placeholder-[#666666] tw-outline-none focus:tw-border-b-2 focus:tw-border-[#006bb1];
+      &.serverError {
+        &:focus {
+          @apply tw-border-b-[#f54d4d];
+        }
+      }
+    }
+  }
+}
+
+.phonNumberList {
+  @apply tw-min-w-[286px];
+  ul {
+    width: auto;
+    li {
+      @apply tw-relative tw-cursor-default tw-select-none tw-px-[10px] tw-py-2;
+      &.active {
+        @apply tw-bg-[#EEEEEE] tw-text-[#333333];
+      }
+      .countryListText {
+        @apply tw-flex tw-items-center;
+        & > span {
+          @apply tw-block tw-truncate tw-font-normal;
+        }
+      }
+    }
+  }
+}
