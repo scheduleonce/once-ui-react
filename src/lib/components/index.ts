@@ -9,4 +9,5 @@ export * from './select';
 export * from './single-line-input';
 export * from './colors.service';
 export * from './phone';
+export * from './progress-bar';
 export * from './radio';
