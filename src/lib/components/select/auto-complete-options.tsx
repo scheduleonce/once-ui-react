@@ -1,32 +1,25 @@
-import React, { FC, Fragment, forwardRef } from 'react';
-import { Combobox, Transition } from '@headlessui/react';
-import styles from './auto-complete.module.scss';
+import React, { FC, forwardRef } from 'react';
+import { ComboboxOption } from '@headlessui/react';
 
-interface Props {
-  children: any;
-  setQuery: (query: any) => void;
-}
-
-export const AutoCompleteOptions: FC<Props> = ({ children, setQuery }) => {
-  return (
-    <Transition
-      as={Fragment}
-      leave={styles.leave}
-      leaveFrom={styles.leaveFrom}
-      leaveTo={styles.leaveTo}
-      afterLeave={() => setQuery('')}
-    >
-      <Combobox.Options className={styles.autocompleteOptions}>{children}</Combobox.Options>
-    </Transition>
-  );
+// Since we're using ComboboxOptions directly in the main component,
+// this wrapper can be simplified or removed entirely in future versions
+export const AutoCompleteOptions: FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <>{children}</>;
 };
 
-type ComboboxOptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
-export type ComboboxRef = HTMLLIElement;
+type ComboboxOptionProps = {
+  children: React.ReactNode;
+  value: any;
+  className?: any;
+  disable?: boolean;
+};
+
+export type ComboboxRef = HTMLDivElement;
+
 export const AutoCompleteOption = forwardRef<ComboboxRef, ComboboxOptionProps>((props, ref) => (
-  <Combobox.Option ref={ref} className={props.className} value={props.value} disabled={props.disable}>
+  <ComboboxOption ref={ref} className={props.className} value={props.value} disabled={props.disable}>
     {props.children}
-  </Combobox.Option>
+  </ComboboxOption>
 ));
 
 AutoCompleteOption.displayName = 'AutoCompleteOption';
