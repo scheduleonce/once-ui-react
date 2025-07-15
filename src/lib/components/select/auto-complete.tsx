@@ -180,11 +180,25 @@ export const AutoComplete: FC<Props> = ({
     setIsOpen(false);
   };
 
+  const handleInputClick = () => {
+    getDropdownPosition();
+    setIsFocused(true);
+    if (inputRef.current && selected) {
+      inputRef.current.value = selected.label || '';
+    }
+    if (inputRef.current && inputButton.current) {
+      if (clearSearch) {
+        inputRef.current.value = '';
+        setInputValue('');
+        safeSetQuery('');
+      }
+      inputButton.current.click();
+    }
+  };
+
   const handleFocus = useCallback(() => {
     setIsFocused(true);
-    safeSetQuery(inputValue); // <--- this ensures query is reprocessed
-    openDropdown(true); // reopen the dropdown always
-  }, [inputValue, openDropdown, safeSetQuery]);
+  }, []);
 
   const toggleDropdown = () => {
     if (isOpen) {
@@ -192,15 +206,6 @@ export const AutoComplete: FC<Props> = ({
     } else {
       openDropdown();
     }
-  };
-
-  const handleInputClick = () => {
-    if (clearSearch && inputRef.current) {
-      inputRef.current.value = '';
-      safeSetQuery('');
-    }
-    getDropdownPosition();
-    toggleDropdown();
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -250,10 +255,10 @@ export const AutoComplete: FC<Props> = ({
               }
             }}
             onClick={handleInputClick}
-            onKeyDown={handleKeyDown}
             onFocus={handleFocus}
+            onKeyDown={handleKeyDown}
             onBlur={handleBlur}
-            style={OptionStyleObj}
+            style={{ ...OptionStyleObj }}
             placeholder="Select your option"
             autoComplete="off"
           />
@@ -262,6 +267,11 @@ export const AutoComplete: FC<Props> = ({
             data-testid={'select-button'}
             ref={inputButton}
             onClick={() => {
+              if (inputRef.current) {
+                inputRef.current.value = '';
+                setInputValue('');
+                safeSetQuery('');
+              }
               getDropdownPosition();
               toggleDropdown();
             }}
