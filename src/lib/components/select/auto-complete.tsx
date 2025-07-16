@@ -1,5 +1,5 @@
 import { FC, useRef, useEffect, CSSProperties, useState, useCallback } from 'react';
-import { Combobox, ComboboxInput, ComboboxButton, ComboboxOptions } from '@headlessui/react';
+import { Combobox, ComboboxInput, ComboboxButton } from '@headlessui/react';
 import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
@@ -267,11 +267,6 @@ export const AutoComplete: FC<Props> = ({
             data-testid={'select-button'}
             ref={inputButton}
             onClick={() => {
-              if (inputRef.current) {
-                inputRef.current.value = '';
-                setInputValue('');
-                safeSetQuery('');
-              }
               getDropdownPosition();
               toggleDropdown();
             }}
@@ -304,9 +299,7 @@ export const AutoComplete: FC<Props> = ({
                     top: dropdownPosition.top,
                   }}
                 >
-                  <ComboboxOptions static className={styles.autocompleteOptions}>
-                    {children}
-                  </ComboboxOptions>
+                  {children}
                 </div>
               </div>
             ),

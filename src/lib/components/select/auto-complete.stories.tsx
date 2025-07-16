@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { AutoComplete } from './auto-complete';
-import { AutoCompleteOption } from './auto-complete-options';
+import { AutoCompleteOptions, AutoCompleteOption } from './auto-complete-options';
 import { IOption } from '../../interfaces/select.type';
 
 const meta: Meta<typeof AutoComplete> = {
@@ -36,6 +36,7 @@ const meta: Meta<typeof AutoComplete> = {
     onSelect: {
       description:
         'A callback function that gets called when an option is selected. It takes the selected option as an argument.',
+      control: { type: 'function' },
       table: {
         defaultValue: { summary: '' },
         type: { summary: 'function' },
@@ -53,7 +54,7 @@ const meta: Meta<typeof AutoComplete> = {
       description: 'Disable the dropdown',
       control: { type: 'boolean' },
       table: {
-        defaultValue: { summary: 'false' },
+        defaultValue: { summary: false },
         type: { summary: 'boolean' },
       },
     },
@@ -61,7 +62,7 @@ const meta: Meta<typeof AutoComplete> = {
       description: 'Clear search query',
       control: { type: 'boolean' },
       table: {
-        defaultValue: { summary: 'false' },
+        defaultValue: { summary: false },
         type: { summary: 'boolean' },
       },
     },
@@ -92,44 +93,40 @@ const options: IOption[] = [
 
 const handleSelectionChange = () => {};
 
-// Create a wrapper component that manages state for the AutoComplete
-const AutoCompleteWrapper = (args: any) => {
-  const [selectedOption, setSelectedOption] = useState<IOption | null>(args.selected || null);
-  const [query, setQuery] = useState<string>('');
-
-  const filteredOptions = options.filter((option) => option.label.toLowerCase().includes(query.toLowerCase()));
-
-  return (
-    <AutoComplete {...args} selected={selectedOption} onSelect={setSelectedOption} setQuery={setQuery}>
-      {filteredOptions.map((option) => (
-        <AutoCompleteOption
-          disable={false}
-          key={option.value}
-          className="tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 data-[focus]:tw-bg-[#EEEEEE] data-[focus]:tw-text-[#333333]"
-          value={option}
-        >
+const children = (
+  <AutoCompleteOptions setQuery={() => {}}>
+    {options.map((option) => (
+      <AutoCompleteOption
+        disable={false}
+        key={option.value}
+        className={({ active }: { active: boolean }) =>
+          `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
+            active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
+          }`
+        }
+        value={option}
+      >
+        {({ selected, active }: { selected: boolean; active: boolean }) => (
           <div className="tw-flex tw-items-center">
-            <span className="tw-block tw-font-normal">{option.label}</span>
+            <span className={`tw-block ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>{option.label}</span>
           </div>
-        </AutoCompleteOption>
-      ))}
-    </AutoComplete>
-  );
-};
+        )}
+      </AutoCompleteOption>
+    ))}
+  </AutoCompleteOptions>
+);
 
 export const WithoutTheme: Story = {
-  render: AutoCompleteWrapper,
   args: {
     selected: options[2],
     onSelect: handleSelectionChange,
+    children: children,
   },
 };
 
 export const WithTheme: Story = {
-  render: AutoCompleteWrapper,
   args: {
-    selected: options[2],
-    onSelect: handleSelectionChange,
+    ...WithoutTheme.args,
     themeColor: '#ff0000',
   },
 };
