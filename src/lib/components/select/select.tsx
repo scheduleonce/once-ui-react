@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { Listbox } from '@headlessui/react';
+import { Listbox, ListboxButton } from '@headlessui/react';
 import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
@@ -128,7 +128,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
       {({ open }) => (
         <div className={styles.select}>
           <div className={styles.selectContainer} ref={selectRef}>
-            <Listbox.Button
+            <ListboxButton
               data-testid={'select-options'}
               ref={selectButtonRef}
               onFocus={handleFocus}
@@ -152,38 +152,9 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
               <span className={styles.chevronDownIconSpan}>
                 <ChevronDownIcon className={styles.chevronDownIcon} aria-hidden="true" />
               </span>
-            </Listbox.Button>
+            </ListboxButton>
           </div>
-          {isMounted
-            ? createPortal(
-                <>
-                  {open && (
-                    <div
-                      style={{
-                        position: 'fixed',
-                        inset: 0,
-                        backgroundColor: 'rgba(255,255,255,0)',
-                        zIndex: 1000,
-                      }}
-                    >
-                      <div
-                        ref={selectDropdownRef}
-                        style={{
-                          position: 'absolute',
-                          opacity: dropdownPosition.left ? 1 : 0,
-                          width: selectRef.current ? selectRef.current.clientWidth : 'auto',
-                          left: dropdownPosition.left,
-                          top: dropdownPosition.top,
-                        }}
-                      >
-                        {children}
-                      </div>
-                    </div>
-                  )}
-                </>,
-                document.body,
-              )
-            : null}
+          {children}
         </div>
       )}
     </Listbox>

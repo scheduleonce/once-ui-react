@@ -29,7 +29,13 @@ export const AutoCompleteOptions: FC<Props> = ({ children, setQuery }) => {
       leaveTo={styles.leaveTo}
       afterLeave={() => setQuery('')}
     >
-      <ComboboxOptions className={styles.autocompleteOptions}>{children}</ComboboxOptions>
+      <ComboboxOptions
+        anchor="bottom start"
+        className={styles.autocompleteOptions}
+        style={{ width: 'var(--input-width)' }}
+      >
+        {children}
+      </ComboboxOptions>
     </Transition>
   );
 };

@@ -278,33 +278,7 @@ export const AutoComplete: FC<Props> = ({
           </ComboboxButton>
         </div>
 
-        {isMounted &&
-          createPortal(
-            isOpen && (
-              <div
-                style={{
-                  position: 'fixed',
-                  inset: 0,
-                  backgroundColor: 'rgba(255,255,255,0)',
-                  zIndex: 1000,
-                }}
-              >
-                <div
-                  ref={selectDropdownRef}
-                  style={{
-                    position: 'absolute',
-                    opacity: dropdownPosition.left ? 1 : 0,
-                    width: selectRef.current?.clientWidth || 'auto',
-                    left: dropdownPosition.left,
-                    top: dropdownPosition.top,
-                  }}
-                >
-                  {children}
-                </div>
-              </div>
-            ),
-            document.body,
-          )}
+        {children}
       </div>
     </Combobox>
   );
