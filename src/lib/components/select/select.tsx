@@ -1,42 +1,36 @@
-import { FC, useEffect, useRef, useState } from 'react';
-import { Listbox, ListboxButton } from '@headlessui/react';
-import { IOption } from '../../interfaces/select.type';
+import { FC, useEffect, useRef, useState, useCallback } from 'react';
+import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
-import { createPortal } from 'react-dom';
 import styles from './select.module.scss';
+
 interface Props {
   children: any;
-  selected: IOption | null;
-  onSelect: (obj: IOption) => void;
+  selected: any;
+  onSelect: (obj: any) => void;
   themeColor?: string;
-}
-interface IDropdownPosition {
-  left: number;
-  top: number;
 }
 
 export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const selectRef = useRef<HTMLDivElement | null>(null);
   const selectButtonRef = useRef<HTMLButtonElement>(null);
-  const selectDropdownRef = useRef<HTMLDivElement | null>(null);
-  const [dropdownPosition, setdropdownPosition] = useState<IDropdownPosition>({ left: 0, top: 0 });
-  const windowHeight = useRef<number>(0);
-  const pageScrollHeight = useRef<number>(0);
 
+  console.log('test phone number');
   let borderColor = '#333333';
-  const onSelection = (option: IOption): void => {
+
+  const onSelection = (option: any): void => {
     onSelect(option);
   };
-  const handleFocus = (): void => {
+
+  const handleFocus = useCallback((): void => {
     setIsFocused(true);
-  };
-  const handleBlur = (): void => {
+  }, []);
+
+  const handleBlur = useCallback((): void => {
     setIsFocused(false);
-  };
+  }, []);
 
   useEffect(() => {
     const selectButton = selectButtonRef.current;
@@ -52,69 +46,6 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
     };
   }, [handleFocus, handleBlur]);
 
-  const handleOnResize = (): void => {
-    windowHeight.current = window.innerHeight;
-    pageScrollHeight.current = document.body.scrollHeight;
-    setIsMounted(true);
-  };
-  useEffect(() => {
-    handleOnResize();
-    window.addEventListener('resize', handleOnResize);
-    return () => {
-      window.addEventListener('resize', handleOnResize);
-    };
-  }, []);
-
-  const calculateRemainingScroll = (): number => {
-    return pageScrollHeight.current - (windowHeight.current + window.scrollY);
-  };
-
-  const getDropdownPosition = (): void => {
-    if (selectRef.current) {
-      const selectRect = selectRef.current.getBoundingClientRect();
-      setTimeout(() => {
-        const selectDropdownRect = selectDropdownRef?.current?.getBoundingClientRect();
-        const remainingScroll = calculateRemainingScroll();
-        const remainingSpace = windowHeight.current - selectRect.bottom;
-        let topPosition;
-        /* istanbul ignore next */
-        if (selectDropdownRect) {
-          const selectHeight = selectRect.height;
-          const selectTopPosition = selectRect.top;
-          const selectDropdownHeight = selectDropdownRect.height;
-          const noSpaceAvailableAbove = selectDropdownHeight >= selectTopPosition + window.scrollY;
-          if (
-            (selectDropdownHeight >= selectTopPosition &&
-              (noSpaceAvailableAbove ||
-                (noSpaceAvailableAbove && remainingSpace <= selectDropdownHeight) ||
-                remainingScroll >= selectDropdownHeight ||
-                remainingSpace >= selectDropdownHeight)) ||
-            (selectTopPosition >= selectDropdownHeight && remainingSpace >= selectDropdownHeight)
-          ) {
-            topPosition = selectRect.y + selectHeight;
-          } else {
-            topPosition = selectRect.y - selectDropdownHeight;
-          }
-
-          setdropdownPosition({
-            left: selectRect.left,
-            top: topPosition ?? selectRect.top,
-          });
-        }
-      }, 0);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', getDropdownPosition);
-    window.addEventListener('resize', getDropdownPosition);
-
-    return () => {
-      window.removeEventListener('scroll', getDropdownPosition);
-      window.removeEventListener('resize', getDropdownPosition);
-    };
-  }, []);
-
   if (themeColor) {
     themeColor = ColorsService.convert3HexTo6(themeColor);
     const theme = luminance(themeColor);
@@ -126,19 +57,20 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
   return (
     <Listbox value={selected} onChange={onSelection}>
       {({ open }) => (
-        <div className={styles.select}>
+        <div
+          className={styles.select}
+          // style={
+          //   {
+          //     '--button-width': selectRef.current?.offsetWidth ? `${selectRef.current.offsetWidth}px` : '100%',
+          //   } as React.CSSProperties
+          // }
+        >
           <div className={styles.selectContainer} ref={selectRef}>
             <ListboxButton
               data-testid={'select-options'}
               ref={selectButtonRef}
               onFocus={handleFocus}
               onBlur={handleBlur}
-              onClick={getDropdownPosition}
-              onKeyDown={(event) => {
-                if (event.key === ' ' || event.code === 'Space' || event.code === 'Enter') {
-                  getDropdownPosition();
-                }
-              }}
               style={{ borderBottomColor: themeColor && (isFocused || open) ? borderColor : '' }}
               className={`${styles.selectButton} ${open ? styles.open : ''}`}
               tabIndex={0}
@@ -154,7 +86,17 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
               </span>
             </ListboxButton>
           </div>
-          {children}
+
+          <ListboxOptions
+            anchor="bottom start"
+            style={{
+              width: selectRef.current?.offsetWidth ? `${selectRef.current.offsetWidth}px` : '100%',
+              zIndex: 1000,
+            }}
+            className={styles.selectOptions}
+          >
+            {children}
+          </ListboxOptions>
         </div>
       )}
     </Listbox>

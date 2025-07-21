@@ -158,27 +158,29 @@ export const Phone: FC<Props> = ({
         <div className={`${styles.phoneWrapper} ${additionalClassName?.trim() || ''}`} data-testid="phone-wrapper">
           <div className={`${styles.countryCode} ouiCountryCode`}>
             <Select selected={selected} onSelect={onSelectDropDown} data-testid="phone-select" themeColor={themeColor}>
-              <div className={`${styles.phonNumberList} ouiPhonNumberList`}>
-                <SelectOptions setQuery={() => {}} data-testid="phone-select-options">
-                  {countryList.map((country) => (
-                    <SelectOption
-                      disable={false}
-                      key={country.value}
-                      value={country.value}
-                      className={({ active }: { active: boolean }) =>
-                        `${active || isSelected(selected, country) ? styles.active : ''}`
-                      }
-                      data-testid={`phone-select-option-${country.value}`}
-                    >
-                      <div className={`${styles.countryListText} ouiCountryListText`}>
-                        <span>
-                          {en[country.value as CountryCode]} +{getCountryCallingCode(country.value as CountryCode)}
-                        </span>
-                      </div>
-                      {/*  )} */}
-                    </SelectOption>
-                  ))}
-                </SelectOptions>
+              <div id="test">
+                <div className={`${styles.phonNumberList} ouiPhonNumberList`}>
+                  <SelectOptions setQuery={() => {}} data-testid="phone-select-options">
+                    {countryList.map((country) => (
+                      <SelectOption
+                        disable={false}
+                        key={country.value}
+                        value={country.value}
+                        className={({ active }: { active: boolean }) =>
+                          `${active || isSelected(selected, country) ? styles.active : ''}`
+                        }
+                        data-testid={`phone-select-option-${country.value}`}
+                      >
+                        <div className={`${styles.countryListText} ouiCountryListText`}>
+                          <span>
+                            {en[country.value as CountryCode]} +{getCountryCallingCode(country.value as CountryCode)}
+                          </span>
+                        </div>
+                        {/*  )} */}
+                      </SelectOption>
+                    ))}
+                  </SelectOptions>
+                </div>
               </div>
             </Select>
           </div>
