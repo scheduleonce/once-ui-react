@@ -103,8 +103,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
 
   const handleToggle = () => {
     if (!open) getDropdownPosition();
-
-    setOpen(true);
+    setOpen((prev) => !prev);
   };
 
   const handleOutsideClick = () => setOpen(false);
@@ -154,7 +153,11 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
               </span>
             )}
             <span className={styles.chevronDownIconSpan}>
-              <ChevronDownIcon className={styles.chevronDownIcon} aria-hidden="true" />
+              <ChevronDownIcon
+                className={styles.chevronDownIcon}
+                aria-hidden="true"
+                data-open={open ? true : undefined}
+              />
             </span>
           </ListboxButton>
         </div>

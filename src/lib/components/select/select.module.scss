@@ -25,7 +25,11 @@
           @apply tw-h-5 tw-w-5 tw-text-[#333333] tw-transition-transform tw-duration-200 tw-ease-in-out;
         }
       }
-      &[data-open] .chevronDownIcon {
+      // &[data-open] .chevronDownIcon {
+      //   @apply tw-rotate-180;
+      // }
+
+      .chevronDownIcon[data-open] {
         @apply tw-rotate-180;
       }
     }
