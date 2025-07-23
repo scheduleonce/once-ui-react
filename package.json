@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "2.0.4-beta.6",
+  "version": "2.0.4-beta.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/scheduleonce/once-ui-react"
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
-    "@headlessui/react": "^2.2.0",
+    "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.0.18",
     "@oncehub/relative-luminance": "^2.1.0",
     "@storybook/addon-essentials": "^8.6.7",

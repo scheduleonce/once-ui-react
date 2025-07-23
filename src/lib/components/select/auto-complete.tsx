@@ -86,61 +86,22 @@ export const AutoComplete: FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    if (!isOpen) return;
-
-    const handleScrollOrResize = () => {
-      getDropdownPosition();
-    };
-
-    window.addEventListener('scroll', handleScrollOrResize, true); // true = capture phase
-    window.addEventListener('resize', handleScrollOrResize);
+    window.addEventListener('scroll', getDropdownPosition);
+    window.addEventListener('resize', getDropdownPosition);
 
     return () => {
-      window.removeEventListener('scroll', handleScrollOrResize, true);
-      window.removeEventListener('resize', handleScrollOrResize);
+      window.removeEventListener('scroll', getDropdownPosition);
+      window.removeEventListener('resize', getDropdownPosition);
     };
-  }, [isOpen, getDropdownPosition]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        !selectRef.current?.contains(event.target as Node) &&
-        !selectDropdownRef.current?.contains(event.target as Node)
-      ) {
-        closeDropdown(); // ← Closes the dropdown when you try to inspect
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (selected?.label) {
-      setInputValue(selected.label);
-    }
-  }, [selected]);
-
-  const safeSetQuery = useCallback(
-    (query: string) => {
-      if (typeof setQuery === 'function') {
-        setQuery(query);
-      }
-    },
-    [setQuery],
-  );
+  }, []);
 
   const onSelection = (option: IOption) => {
-    if (!option) return;
     onSelect(option);
-    setInputValue(option.label || '');
-    safeSetQuery('');
     handlingCursorPosition();
-    closeDropdown();
+  };
+
+  const displayInputValue = (option: IOption) => {
+    return option?.label;
   };
 
   const handlingCursorPosition = useCallback(() => {
@@ -189,8 +150,7 @@ export const AutoComplete: FC<Props> = ({
     if (inputRef.current && inputButton.current) {
       if (clearSearch) {
         inputRef.current.value = '';
-        setInputValue('');
-        safeSetQuery('');
+        setQuery('');
       }
       inputButton.current.click();
     }
@@ -207,6 +167,20 @@ export const AutoComplete: FC<Props> = ({
       openDropdown();
     }
   };
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (input) {
+      input.addEventListener('focus', handleFocus);
+      input.addEventListener('blur', handleBlur);
+    }
+    return () => {
+      if (input) {
+        input.removeEventListener('focus', handleFocus);
+        input.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, [handleFocus, handleBlur]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Escape') {
@@ -244,21 +218,16 @@ export const AutoComplete: FC<Props> = ({
             ref={inputRef}
             data-testid={'select-input'}
             className={styles.autocompleteInput}
-            value={inputValue}
+            displayValue={displayInputValue}
             onChange={(event) => {
-              const value = event.target.value;
-              setInputValue(value);
-              safeSetQuery(value);
+              setQuery(event.target.value);
               getDropdownPosition();
-              if (!isOpen) {
-                openDropdown(true);
-              }
             }}
             onClick={handleInputClick}
             onFocus={handleFocus}
-            onKeyDown={handleKeyDown}
             onBlur={handleBlur}
             style={{ ...OptionStyleObj }}
+            onKeyDown={handleKeyDown}
             placeholder="Select your option"
             autoComplete="off"
           />
@@ -267,7 +236,6 @@ export const AutoComplete: FC<Props> = ({
             data-testid={'select-button'}
             ref={inputButton}
             onClick={() => {
-              getDropdownPosition();
               toggleDropdown();
             }}
           >
@@ -278,7 +246,33 @@ export const AutoComplete: FC<Props> = ({
           </ComboboxButton>
         </div>
 
-        {children}
+        {isMounted &&
+          createPortal(
+            isOpen && (
+              <div
+                style={{
+                  position: 'fixed',
+                  inset: 0,
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  zIndex: 1000,
+                }}
+              >
+                <div
+                  ref={selectDropdownRef}
+                  style={{
+                    position: 'absolute',
+                    opacity: dropdownPosition.left ? 1 : 0,
+                    width: selectRef.current?.clientWidth || 'auto',
+                    left: dropdownPosition.left,
+                    top: dropdownPosition.top,
+                  }}
+                >
+                  {children}
+                </div>
+              </div>
+            ),
+            document.body,
+          )}
       </div>
     </Combobox>
   );

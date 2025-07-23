@@ -1,15 +1,26 @@
-import React, { FC, forwardRef } from 'react';
-import { ListboxOption } from '@headlessui/react';
+import React, { FC, forwardRef, Fragment } from 'react';
+import { ListboxOption, ListboxOptions, Transition } from '@headlessui/react';
+import styles from './select.module.scss';
 
 interface Props {
   children: any;
   setQuery: (query: any) => void;
 }
 
-export const SelectOptions: FC<Props> = ({ children }) => {
+export const SelectOptions: FC<Props> = ({ children, setQuery }) => {
   // In HeadlessUI v2.2, this is just a wrapper that passes through children
   // The actual ListboxOptions is handled in the main Select component
-  return <>{children}</>;
+  return (
+    <Transition
+      as={Fragment}
+      leave={styles.leave}
+      leaveFrom={styles.leaveFrom}
+      leaveTo={styles.leaveTo}
+      afterLeave={() => setQuery('')}
+    >
+      <ListboxOptions className={styles.selectOptions}>{children}</ListboxOptions>
+    </Transition>
+  );
 };
 
 type SelectOptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
