@@ -45,7 +45,7 @@
     "@babel/core": "^7.23.2",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.0.18",
-    "@oncehub/relative-luminance": "^2.1.0",
+    "@oncehub/relative-luminance": "^2.1.4-beta.1",
     "@storybook/addon-essentials": "^8.6.7",
     "@storybook/addon-interactions": "^8.6.7",
     "@storybook/addon-links": "^8.6.7",

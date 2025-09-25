@@ -19,14 +19,38 @@
       &:focus-visible {
         @apply tw-ring-[0px];
       }
+      /* Headless UI data attributes */
+      &[data-focus] {
+        @apply tw-border-b-2 tw-border-b-[#006bb1] tw-pb-[7px] tw-outline-none tw-ring-[0px];
+      }
+
+      &[data-disabled] {
+        @apply tw-text-[#A7A7A7] tw-cursor-not-allowed;
+      }
     }
+
     .autocompleteButton {
       @apply tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-pr-2 tw-bg-transparent tw-border-0;
+
+      /* Headless UI data attributes */
+      &[data-focus] {
+        @apply tw-outline-none tw-ring-2 tw-ring-[#006bb1] tw-ring-offset-1;
+      }
+
+      &[data-disabled] {
+        @apply tw-cursor-not-allowed;
+      }
+
       .chevronDownIcon {
-        @apply tw-h-5 tw-w-5 tw-text-[#333333];
+        @apply tw-h-5 tw-w-5 tw-text-[#333333] tw-transition-transform tw-duration-200;
         &.disable {
           @apply tw-text-[#A7A7A7];
         }
+      }
+
+      /* Rotate chevron when combobox is open */
+      &[data-open] .chevronDownIcon {
+        @apply tw-rotate-180;
       }
     }
   }
@@ -43,7 +67,22 @@
 }
 
 .autocompleteOptions {
-  @apply tw-max-h-[210px] tw-w-full tw-overflow-auto tw-bg-white tw-list-none tw-m-0 tw-px-0 tw-py-[10px] tw-text-base tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] sm:tw-text-sm [&::-webkit-scrollbar-thumb]:tw-rounded-md [&::-webkit-scrollbar-thumb]:tw-bg-[#a9a9a9] [&::-webkit-scrollbar]:tw-w-[6px];
+  @apply tw-max-h-[210px] tw-w-full tw-overflow-auto tw-bg-white tw-list-none tw-m-0 tw-px-0 tw-py-[10px] tw-text-base tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] sm:tw-text-sm;
+  @apply [&::-webkit-scrollbar-thumb]:tw-rounded-md [&::-webkit-scrollbar-thumb]:tw-bg-[#a9a9a9] [&::-webkit-scrollbar]:tw-w-[6px];
+
+  /* Headless UI transition data attributes */
+  &[data-transition] {
+    @apply tw-transition tw-duration-200 tw-ease-out;
+  }
+
+  &[data-closed] {
+    @apply tw-opacity-0 tw-scale-95;
+  }
+
+  &[data-open] {
+    @apply tw-opacity-100 tw-scale-100;
+  }
+
   &:focus {
     @apply tw-outline-none;
   }

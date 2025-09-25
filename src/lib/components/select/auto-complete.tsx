@@ -1,10 +1,10 @@
-import { FC, useRef, useEffect, CSSProperties, useState } from 'react';
-import { Combobox } from '@headlessui/react';
+import { FC, useRef, useState, CSSProperties, useEffect } from 'react';
 import { IOption } from '../../interfaces/select.type';
+import { Combobox, ComboboxInput, ComboboxButton } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { createPortal } from 'react-dom';
 import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
-import { createPortal } from 'react-dom';
 import styles from './auto-complete.module.scss';
 
 interface Props {
@@ -26,136 +26,67 @@ export const AutoComplete: FC<Props> = ({
   clearSearch = false,
   themeColor,
 }) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const inputButton = useRef<HTMLButtonElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const selectRef = useRef<HTMLDivElement | null>(null);
-  const selectDropdownRef = useRef<HTMLDivElement | null>(null);
-  const [dropdownPosition, setdropdownPosition] = useState({ left: 0, top: 0 });
-  const windowHeight = useRef<number>(0);
-  const pageScrollHeight = useRef<number>(0);
   let OptionStyleObj: CSSProperties = {};
 
   useEffect(() => {
-    if (inputRef.current && selected) {
-      inputRef.current.value = selected.label || '';
-    }
-  }, [selected]);
-
-  const handleOnResize = () => {
-    windowHeight.current = window.innerHeight;
-    pageScrollHeight.current = document.body.scrollHeight;
     setIsMounted(true);
-  };
-  useEffect(() => {
-    handleOnResize();
-    window.addEventListener('resize', handleOnResize);
-    return () => {
-      window.addEventListener('resize', handleOnResize);
-    };
   }, []);
 
-  const calculateRemainingScroll = () => {
-    return pageScrollHeight.current - (windowHeight.current + window.scrollY);
-  };
-
-  const getDropdownPosition = () => {
-    if (selectRef.current) {
-      const selectRect = selectRef.current.getBoundingClientRect();
-      setTimeout(() => {
-        const selectDropdownRect = selectDropdownRef?.current?.getBoundingClientRect();
-        const remainingScroll = calculateRemainingScroll();
-        const remainingSpace = windowHeight.current - selectRect.bottom;
-        let topPosition;
-        if (selectDropdownRect) {
-          const selectHeight = selectRect.height;
-          const selectTopPosition = selectRect.top;
-          const selectDropdownHeight = selectDropdownRect.height;
-          const noSpaceAvailableAbove = selectDropdownHeight > selectTopPosition + window.scrollY;
-          if (
-            (selectTopPosition < selectDropdownHeight &&
-              (noSpaceAvailableAbove ||
-                (noSpaceAvailableAbove && remainingSpace < selectDropdownHeight) ||
-                remainingScroll > selectDropdownHeight ||
-                remainingSpace > selectDropdownHeight)) ||
-            (selectTopPosition > selectDropdownHeight && remainingSpace > selectDropdownHeight)
-          ) {
-            topPosition = selectRect.y + selectHeight;
-          } else {
-            topPosition = selectRect.y - selectDropdownHeight;
-          }
-
-          setdropdownPosition({
-            left: selectRect.left,
-            top: topPosition ?? selectRect.top,
-          });
-        }
-      }, 0);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', getDropdownPosition);
-    window.addEventListener('resize', getDropdownPosition);
-
-    return () => {
-      window.removeEventListener('scroll', getDropdownPosition);
-      window.removeEventListener('resize', getDropdownPosition);
-    };
-  }, []);
-
-  const onSelection = (option: IOption) => {
-    onSelect(option);
-    handlingCursorPosition();
-  };
-
-  const handleInputClick = () => {
-    getDropdownPosition();
+  const handleInputClick = (isOpen: boolean) => {
     setIsFocused(true);
-    if (inputRef.current && selected) {
-      inputRef.current.value = selected.label || '';
-    }
-    if (inputRef.current && inputButton.current) {
-      if (clearSearch) {
-        inputRef.current.value = '';
-        setQuery('');
+    if (isOpen) {
+      // If dropdown is open, restore selected value and close it
+      if (inputRef.current && selected) {
+        inputRef.current.value = selected.label || '';
       }
-      inputButton.current.click();
-    }
-  };
-
-  const displayInputValue = (option: IOption) => {
-    return option?.label;
-  };
-
-  const handlingCursorPosition = () => {
-    const input = inputRef.current;
-    if (input) {
-      input.setSelectionRange(input.value.length, input.value.length);
-    }
-  };
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
-  useEffect(() => {
-    const input = inputRef.current;
-    if (input) {
-      input.addEventListener('focus', handleFocus);
-      input.addEventListener('blur', handleBlur);
-    }
-    return () => {
-      if (input) {
-        input.removeEventListener('focus', handleFocus);
-        input.removeEventListener('blur', handleBlur);
+      if (inputRef.current) {
+        const escapeEvent = new KeyboardEvent('keydown', {
+          key: 'Escape',
+          bubbles: true,
+          cancelable: true,
+        });
+        inputRef.current.dispatchEvent(escapeEvent);
       }
-    };
-  }, [handleFocus, handleBlur]);
+      return;
+    }
+
+    // If dropdown is closed, clear search if needed and open it
+    if (inputRef.current && clearSearch) {
+      inputRef.current.value = '';
+      setQuery('');
+    }
+
+    if (inputRef.current) {
+      inputRef.current.focus();
+      const arrowDownEvent = new KeyboardEvent('keydown', {
+        key: 'ArrowDown',
+        bubbles: true,
+        cancelable: true,
+      });
+      inputRef.current.dispatchEvent(arrowDownEvent);
+    }
+  };
+
+  const handleButtonClick = (isOpen: boolean) => {
+    if (!isOpen) {
+      // If dropdown is currently open, it will close - so restore selected value
+      if (inputRef.current && selected) {
+        inputRef.current.value = selected.label || '';
+      }
+      return;
+    }
+
+    // If dropdown is currently closed, it will open - so clear search if needed
+    if (inputRef.current && clearSearch) {
+      inputRef.current.value = '';
+      setQuery('');
+    }
+  };
 
   if (themeColor) {
     const theme = luminance(themeColor);
@@ -169,73 +100,50 @@ export const AutoComplete: FC<Props> = ({
   }
 
   return (
-    <Combobox value={selected} onChange={onSelection} disabled={disable}>
+    <Combobox value={selected} onChange={onSelect} disabled={disable}>
       {({ open }) => (
         <div className={styles.autocomplete}>
           <div ref={selectRef} className={`${styles.autocompleteContainer} ${disable ? styles.disable : ''}`}>
-            <Combobox.Input
+            <ComboboxInput
               ref={inputRef}
-              data-testid={'select-input'}
+              data-testid="select-input"
               className={styles.autocompleteInput}
-              displayValue={displayInputValue}
-              onChange={(event) => {
-                setQuery(event.target.value);
-                getDropdownPosition();
-              }}
-              onClick={handleInputClick}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              onKeyDown={(event) => {
-                if (event.key === ' ' || event.code === 'Space') {
-                  getDropdownPosition();
-                }
-              }}
+              displayValue={(o: any) => o?.label || ''}
+              onChange={(e) => setQuery(e.target.value)}
+              onClick={() => handleInputClick(open)}
               style={{ ...OptionStyleObj }}
               placeholder="Select your option"
               autoComplete="off"
             />
-            <Combobox.Button
+            <ComboboxButton
+              ref={buttonRef}
               className={styles.autocompleteButton}
-              data-testid={'select-button'}
-              ref={inputButton}
-              onClick={getDropdownPosition}
+              data-testid="select-button"
+              onClick={() => handleButtonClick(open)}
             >
               <ChevronDownIcon
-                className={`${styles.chevronDownIcon} ${disable ? styles.disable : ''}`}
+                className={`${styles.chevronDownIcon} ${disable ? styles.disable : ''} ${open ? styles.open : ''}`}
                 aria-hidden="true"
               />
-            </Combobox.Button>
+            </ComboboxButton>
           </div>
-          {isMounted
-            ? createPortal(
-                <>
-                  {open && (
-                    <div
-                      style={{
-                        position: 'fixed',
-                        inset: 0,
-                        backgroundColor: 'rgba(255,255,255,0)',
-                        zIndex: 1000,
-                      }}
-                    >
-                      <div
-                        ref={selectDropdownRef}
-                        style={{
-                          position: 'absolute',
-                          opacity: dropdownPosition.left ? 1 : 0,
-                          width: selectRef.current ? selectRef.current.clientWidth : 'auto',
-                          left: dropdownPosition.left,
-                          top: dropdownPosition.top,
-                        }}
-                      >
-                        {children}
-                      </div>
-                    </div>
-                  )}
-                </>,
-                document.body,
-              )
-            : null}
+          {isMounted &&
+            createPortal(
+              open && (
+                <div
+                  style={{
+                    position: 'fixed',
+                    left: selectRef.current?.getBoundingClientRect().left || 0,
+                    top: (selectRef.current?.getBoundingClientRect().bottom || 0) + 2,
+                    width: selectRef.current?.clientWidth || 'auto',
+                    zIndex: 1000,
+                  }}
+                >
+                  {children}
+                </div>
+              ),
+              document.body,
+            )}
         </div>
       )}
     </Combobox>
