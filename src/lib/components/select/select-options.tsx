@@ -1,5 +1,5 @@
 import React, { FC, Fragment, forwardRef } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
+import { Transition, ListboxOption, ListboxOptions } from '@headlessui/react';
 import styles from './select.module.scss';
 interface Props {
   children: any;
@@ -15,7 +15,7 @@ export const SelectOptions: FC<Props> = ({ children, setQuery }) => {
       leaveTo={styles.leaveTo}
       afterLeave={() => setQuery('')}
     >
-      <Listbox.Options className={styles.selectOptions}>{children}</Listbox.Options>
+      <ListboxOptions className={styles.selectOptions}>{children}</ListboxOptions>
     </Transition>
   );
 };
@@ -23,9 +23,9 @@ export const SelectOptions: FC<Props> = ({ children, setQuery }) => {
 type SelectOptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
 export type SelectRef = HTMLLIElement;
 export const SelectOption = forwardRef<SelectRef, SelectOptionProps>((props, ref) => (
-  <Listbox.Option ref={ref} className={props.className} value={props.value} disabled={props.disable}>
+  <ListboxOption ref={ref} className={props.className} value={props.value} disabled={props.disable}>
     {props.children}
-  </Listbox.Option>
+  </ListboxOption>
 ));
 
 SelectOption.displayName = 'SelectOption';
