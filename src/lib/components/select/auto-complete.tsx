@@ -200,7 +200,6 @@ export const AutoComplete: FC<Props> = ({
                           inset: 0,
                           backgroundColor: 'rgba(255,255,255,0)',
                           zIndex: 1000,
-                          pointerEvents: 'none',
                         }}
                       >
                         <div
@@ -211,7 +210,7 @@ export const AutoComplete: FC<Props> = ({
                             width: selectRef.current ? selectRef.current.clientWidth : 'auto',
                             left: dropdownPosition.left,
                             top: dropdownPosition.top,
-                            pointerEvents: 'auto',
+
                             zIndex: 1000,
                           }}
                         >
