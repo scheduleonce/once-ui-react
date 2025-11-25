@@ -17,6 +17,7 @@ interface Props {
   style?: CSSProperties;
   categoryName?: string;
   variant?: 'default' | 'rounded';
+  placeholder?: string;
 }
 
 export const MultiSelectWithCount: React.FC<Props> = ({
@@ -29,6 +30,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
   style = {},
   categoryName = '',
   variant = 'default',
+  placeholder = 'Select your option',
 }) => {
   const filteredOptions = useRef(options);
   const [selectedOptions, setSelectedOptions] = useState<string[]>(checkedValue);
@@ -115,7 +117,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
             })
             .filter((label) => label !== '')
             .join(', ')
-        : 'Select your option';
+        : placeholder;
 
   const handleLiClick = (id: string) => {
     const clickedOption = options.find((option) => option.value === id);
@@ -307,11 +309,10 @@ export const MultiSelectWithCount: React.FC<Props> = ({
   if (themeColor) {
     const theme = luminance(themeColor);
     themeColor = ColorsService.convert3HexTo6(themeColor);
-    const borderColor = themeColor === '#ffffff' ? '#c8c8c8' : isFocused || dropdownOpen ? themeColor : '#333333';
+    const borderColor = themeColor === '#ffffff' ? '#c8c8c8' : isFocused || dropdownOpen ? themeColor : '#c8c8c8';
     if (theme === 'dark' || theme === 'light') {
-      multiSelectStyleObj = {
-        borderBottomColor: borderColor,
-      };
+      // For default variant we use bottom border only, for rounded we use full border.
+      multiSelectStyleObj = variant === 'rounded' ? { borderColor } : { borderBottomColor: borderColor };
     }
   }
 
@@ -356,7 +357,11 @@ export const MultiSelectWithCount: React.FC<Props> = ({
             {selectedText}
           </div>
           {selectedOptions.length > 0 && (
-            <span className={styles.selectedCount} data-testid={'selected-count'}>
+            <span
+              className={styles.selectedCount}
+              data-testid={'selected-count'}
+              style={{ backgroundColor: themeColor }}
+            >
               {selectedOptions.length}
             </span>
           )}

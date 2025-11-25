@@ -39,6 +39,7 @@ The `MultiSelectWithCount` component accepts the following props:
 - `maxOptions` (optional): Maximum number of options that can be selected.
 - `categoryName` (optional): A dynamic category name to display when more than one option is selected.
 - `variant` (optional): Visual variant of the component. Options: `'default'` | `'rounded'`. Default: `'default'`.
+- `placeholder` (optional): Text shown when nothing is selected. Default: `Select your option`.
 
 ## Features
 
@@ -81,6 +82,7 @@ function App() {
 				minOptions={0}
 				maxOptions={5}
 				categoryName="Selected Items"
+				placeholder="Choose items"
    				 />
 	);
 }

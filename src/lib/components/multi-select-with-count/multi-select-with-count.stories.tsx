@@ -64,6 +64,14 @@ const meta: Meta<typeof MultiSelectWithCount> = {
         type: { summary: 'string' },
       },
     },
+    placeholder: {
+      description: 'Placeholder text when no options are selected',
+      type: 'string',
+      table: {
+        defaultValue: { summary: 'Select your option' },
+        type: { summary: 'string' },
+      },
+    },
     variant: {
       description: 'Visual variant of the component',
       control: { type: 'select' },
@@ -83,6 +91,14 @@ const options: IOption[] = [
   { value: '1', label: 'Option 1', order: 1 },
   { value: '2', label: 'Option 2', order: 2 },
   { value: '3', label: 'Option 3', order: 3, disable: true },
+  { value: '4', label: 'Option 4', order: 4 },
+  { value: '5', label: 'Option 5', order: 5 },
+  { value: '6', label: 'Option 6', order: 6 },
+  { value: '7', label: 'Option 7', order: 7 },
+  { value: '8', label: 'Option 8', order: 8 },
+  { value: '9', label: 'Option 9', order: 9 },
+  { value: '10', label: 'Option 10', order: 10 },
+  { value: '11', label: 'Option 11', order: 11 },
 ];
 const handleSelectionChange = () => {};
 
@@ -93,6 +109,7 @@ export const WithoutTheme: Story = {
     onSelectionChange: handleSelectionChange,
     maxOptions: 5,
     categoryName: 'Selected Items',
+    placeholder: 'Choose items',
   },
 };
 
