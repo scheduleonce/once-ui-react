@@ -53,6 +53,11 @@ export const MultiSelectWithCount: React.FC<Props> = ({
   const shiftKeyPressedRef = useRef(false);
   const multiSelectRef = useRef<HTMLDivElement | null>(null);
 
+  // Sync selectedOptions with checkedValue prop changes
+  useEffect(() => {
+    setSelectedOptions(checkedValue);
+  }, [checkedValue]);
+
   const setfocusOnDropdownClose = () => {
     setTimeout(() => {
       const selectFocusElement = selectRef.current?.children[0] as HTMLElement;
@@ -129,6 +134,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
         setSelectedOptions(newSelectedValues);
         onSelectionChange(newSelectedValues);
         announceOption(`${clickedOption?.label} ${newSelectedValues.includes(id) ? 'selected' : 'not selected'}`);
+        getDropdownPosition();
       }
     }
   };
@@ -310,9 +316,11 @@ export const MultiSelectWithCount: React.FC<Props> = ({
     const theme = luminance(themeColor);
     themeColor = ColorsService.convert3HexTo6(themeColor);
     const borderColor = themeColor === '#ffffff' ? '#c8c8c8' : isFocused || dropdownOpen ? themeColor : '#c8c8c8';
+    const boxShadow = dropdownOpen ? `0 0 0 1px ${themeColor}` : 'none';
     if (theme === 'dark' || theme === 'light') {
       // For default variant we use bottom border only, for rounded we use full border.
-      multiSelectStyleObj = variant === 'rounded' ? { borderColor } : { borderBottomColor: borderColor };
+      const borderStyles = variant === 'rounded' ? { borderColor } : { borderBottomColor: borderColor };
+      multiSelectStyleObj = { ...borderStyles, boxShadow };
     }
   }
 
@@ -404,7 +412,6 @@ export const MultiSelectWithCount: React.FC<Props> = ({
                       onClick={(e) => e.stopPropagation()}
                       style={{
                         opacity: dropdownPosition.left ? 1 : 0,
-                        width: selectRef.current ? selectRef.current.clientWidth : 'auto',
                         left: dropdownPosition.left,
                         top: dropdownPosition.top,
                       }}

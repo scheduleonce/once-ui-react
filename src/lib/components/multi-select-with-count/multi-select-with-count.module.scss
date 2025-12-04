@@ -18,7 +18,7 @@ body {
 				&.rounded {
 					@apply tw-rounded-full tw-border tw-border-[#c8c8c8] tw-pl-4 tw-py-2 tw-pb-2 tw-pt-2;
 					&.focused {
-						@apply tw-border-2 tw-border-[#006BB1] tw-pb-2 tw-pt-2;
+						@apply tw-border-b-[1px] tw-border-[#006BB1] tw-shadow-[0_0_0_1px_#006BB1];
 					}
 				}
 			}
@@ -32,7 +32,7 @@ body {
 	}
 }
 .optionsListContainer {
-	@apply tw-absolute tw-z-10 tw-mt-0 tw-max-h-[293px] tw-w-full tw-bg-white tw-pb-16 tw-text-sm tw-leading-[22px] tw-min-w-[367px] tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none;
+	@apply tw-absolute tw-z-10 tw-mt-0 tw-max-h-[293px] tw-w-[90%] tw-bg-white tw-pb-16 tw-text-sm tw-leading-[22px] tw-max-w-[367px] tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none;
 	&.top {
 		transform: translateY(calc(-100% - 40px));
 	}
@@ -78,5 +78,5 @@ body {
 }
 
 .announcement{
-	@apply tw-pointer-events-none tw-h-0 tw-overflow-hidden tw-opacity-0;
+	@apply tw-pointer-events-none tw-h-0 tw-overflow-hidden tw-opacity-0 tw-w-[58px];
 }
