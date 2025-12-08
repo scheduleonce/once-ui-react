@@ -135,7 +135,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
         onSelectionChange(newSelectedValues);
         setTimeout(() => {
           getDropdownPosition();
-        }, 5);
+        }, 1000);
         announceOption(`${clickedOption?.label} ${newSelectedValues.includes(id) ? 'selected' : 'not selected'}`);
       }
     }
@@ -213,7 +213,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
 
           setDropdownPosition({
             left: leftPosition,
-            top: topPosition,
+            top: topPosition + 1, // Adding 1px to avoid overlap with select border
           });
         }
       }, 0);
@@ -367,7 +367,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
       <div className={styles.listOptionsWrap}>
         <div className={`${className} ${styles.selectedValuesWrap}`} ref={selectRef}>
           <div
-            className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''} ${selectedOptions.length > 0 ? styles.selected : ''} ${
+            className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''} ${selectedOptions.length > 0 ? styles.selected : ''} ${selectedOptions.length > 1 ? styles.countShow : ''}  ${
               selectedOptions.length === 0 ? styles.placeholder : ''
             } ${variant === 'rounded' ? styles.rounded : ''}`}
             ref={multiSelectRef}

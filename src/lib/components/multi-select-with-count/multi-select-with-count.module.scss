@@ -8,7 +8,10 @@ body {
 		.selectedValuesWrap {
 			@apply tw-relative tw-h-[38px] tw-w-full;
 			.selectedValues {
-				@apply tw-box-border tw-border-solid tw-block tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#c8c8c8] tw-pb-2 tw-pl-[10px] tw-pr-[67px] tw-pt-2 tw-text-[14px] tw-leading-[22px] tw-text-[#333333] tw-placeholder-[#666666] focus-within:tw-outline-none focus:tw-pb-[7px] focus-visible:tw-outline-none;
+				@apply tw-box-border tw-border-solid tw-block tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#c8c8c8] tw-pb-2 tw-pl-[10px] tw-pr-9 tw-pt-2 tw-text-[14px] tw-leading-[22px] tw-text-[#333333] tw-placeholder-[#666666] focus-within:tw-outline-none focus:tw-pb-[7px] focus-visible:tw-outline-none;
+				&.countShow {
+					@apply tw-pr-[67px];
+				}
 				&:focus {
 					border-bottom: 2px solid var(--theme-color, #006bb1);
 				}
