@@ -152,40 +152,66 @@ export const MultiSelectWithCount: React.FC<Props> = ({
     }, 0);
   };
 
-  const calculateRemainingScroll = (): number => {
-    return pageScrollHeight.current - (windowHeight.current + window.scrollY);
-  };
-
   const getDropdownPosition = () => {
     if (selectRef.current) {
       const selectRect = selectRef.current.getBoundingClientRect();
       setTimeout(() => {
         const selectDropdownRect = selectDropdownRef?.current?.getBoundingClientRect();
-        const remainingScroll = calculateRemainingScroll();
-        const remainingSpace = windowHeight.current - selectRect.bottom;
-        let topPosition;
-        /* istanbul ignore next */
+
         if (selectDropdownRect) {
-          const selectHeight = selectRect.height;
-          const selectTopPosition = selectRect.top;
           const selectDropdownHeight = selectDropdownRect.height;
-          const noSpaceAvailableAbove = selectDropdownHeight > selectTopPosition + window.scrollY;
-          if (
-            (selectTopPosition < selectDropdownHeight &&
-              (noSpaceAvailableAbove ||
-                (noSpaceAvailableAbove && remainingSpace < selectDropdownHeight) ||
-                remainingScroll > selectDropdownHeight ||
-                remainingSpace > selectDropdownHeight)) ||
-            (selectTopPosition > selectDropdownHeight && remainingSpace > selectDropdownHeight)
-          ) {
-            topPosition = selectRect.y + selectHeight;
+          const selectDropdownWidth = selectDropdownRect.width;
+          const viewportWidth = window.innerWidth;
+
+          // Vertical positioning logic
+          const spaceBelow = windowHeight.current - selectRect.bottom;
+          const spaceAbove = selectRect.top;
+
+          let topPosition: number;
+
+          // Try to position below first (preferred)
+          if (spaceBelow >= selectDropdownHeight) {
+            // Enough space below - position dropdown below the select
+            topPosition = selectRect.bottom;
+          } else if (spaceAbove >= selectDropdownHeight) {
+            // Not enough space below but enough above - position above the select
+            topPosition = selectRect.top - selectDropdownHeight;
           } else {
-            topPosition = selectRect.y - selectDropdownHeight;
+            // Not enough space in either direction - choose the side with more space
+            if (spaceBelow >= spaceAbove) {
+              topPosition = selectRect.bottom;
+            } else {
+              topPosition = selectRect.top - selectDropdownHeight;
+            }
+          }
+
+          // Horizontal positioning logic
+          const spaceRight = viewportWidth - selectRect.left;
+          const spaceLeft = selectRect.right;
+
+          let leftPosition: number;
+
+          // Try to align with select left edge first (preferred)
+          if (spaceRight >= selectDropdownWidth) {
+            // Enough space to the right - align with select left edge
+            leftPosition = selectRect.left;
+          } else if (spaceLeft >= selectDropdownWidth) {
+            // Not enough space to the right but enough to the left - align with select right edge
+            leftPosition = selectRect.right - selectDropdownWidth;
+          } else {
+            // Not enough space in either direction - position to stay within viewport
+            if (spaceRight >= spaceLeft) {
+              // More space to the right - align with left edge but constrain to viewport
+              leftPosition = Math.max(0, viewportWidth - selectDropdownWidth);
+            } else {
+              // More space to the left - align with right edge but constrain to viewport
+              leftPosition = Math.max(0, selectRect.right - selectDropdownWidth);
+            }
           }
 
           setDropdownPosition({
-            left: selectRect.left,
-            top: topPosition ?? selectRect.top,
+            left: leftPosition,
+            top: topPosition,
           });
         }
       }, 0);
