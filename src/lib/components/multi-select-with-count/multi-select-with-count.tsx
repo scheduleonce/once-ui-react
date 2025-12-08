@@ -135,7 +135,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
         onSelectionChange(newSelectedValues);
         setTimeout(() => {
           getDropdownPosition();
-        }, 1000);
+        }, 100);
         announceOption(`${clickedOption?.label} ${newSelectedValues.includes(id) ? 'selected' : 'not selected'}`);
       }
     }
