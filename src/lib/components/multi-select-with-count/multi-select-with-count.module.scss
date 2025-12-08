@@ -8,22 +8,52 @@ body {
 		.selectedValuesWrap {
 			@apply tw-relative tw-h-[38px] tw-w-full;
 			.selectedValues {
-				@apply tw-box-border tw-border-solid tw-block tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#c8c8c8] tw-pb-2 tw-pl-[10px] tw-pr-[67px] tw-pt-2 tw-text-[14px] tw-leading-[22px] tw-text-[#333333] tw-placeholder-[#666666] focus-within:tw-outline-none focus:tw-border-b-2 focus:tw-border-[#006BB1] focus:tw-pb-[7px] focus-visible:tw-outline-none;
+				@apply tw-box-border tw-border-solid tw-block tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#c8c8c8] tw-pb-2 tw-pl-[10px] tw-pr-[67px] tw-pt-2 tw-text-[14px] tw-leading-[22px] tw-text-[#333333] tw-placeholder-[#666666] focus-within:tw-outline-none focus:tw-pb-[7px] focus-visible:tw-outline-none;
+				&:focus {
+					border-bottom: 2px solid var(--theme-color, #006bb1);
+				}
 				&.focused {
-					@apply tw-border-b-2 tw-border-[#006BB1] tw-pb-[7px] tw-outline-none;
+					@apply tw-pb-[7px] tw-outline-none;
 				}
 				&.placeholder {
 					@apply tw-text-[#666666];
 				}
 				&.rounded {
 					@apply tw-rounded-full tw-border tw-border-[#c8c8c8] tw-pl-4 tw-py-2 tw-pb-2 tw-pt-2;
-					&.focused {
-						@apply tw-border-b-[1px] tw-border-[#006BB1] tw-shadow-[0_0_0_1px_#006BB1];
+					&.focused, &:hover, &:focus-visible {
+						@apply tw-border-b-[1px];
+						border-color: var(--theme-color, #006bb1);
+						box-shadow: 0 0 0 1px var(--theme-color, #006bb1);
+					}
+					&::before {
+						@apply tw-bg-[#F4F4F4];
+						position: absolute;
+						width: 100%;
+						height: 100%;
+						left: 0;
+						top: 0;
+						content: '';
+						z-index: -1;
+						border-radius: 25px;
+					}
+					&.selected {
+						border: 1px solid var(--theme-color, #006bb1);
+						box-shadow: 0 0 0 1px var(--theme-color, #006bb1);
+						&::before {
+						background-color: var(--theme-color, #006bb1) !important;
+						opacity: 0.18;
+						}
+						&:hover {
+							&::before {
+								opacity: 0.36;
+							}
+						}
 					}
 				}
 			}
 			.selectedCount {
-				@apply tw-absolute tw-right-[38px] tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-h-[22px] tw-items-center tw-justify-center tw-rounded-full tw-bg-[#006BB1] tw-px-[7px] tw-font-semibold tw-text-white tw-text-[14px] tw-leading-[22px];
+				@apply tw-absolute tw-right-[38px] tw-z-[-1] tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-h-[22px] tw-items-center tw-justify-center tw-rounded-full tw-px-[7px] tw-font-semibold tw-text-white tw-text-[14px] tw-leading-[22px];
+				background-color: var(--theme-color, #006bb1);
 			}
 			.dropDownIcon {
 				@apply tw-absolute tw-right-2 tw-top-1/2 tw-flex tw-h-full tw-w-7 -tw-translate-y-1/2 tw-cursor-pointer tw-items-center tw-justify-center;

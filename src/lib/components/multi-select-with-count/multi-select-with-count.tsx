@@ -133,8 +133,10 @@ export const MultiSelectWithCount: React.FC<Props> = ({
       if (isWithinLimit && dropdownOpen) {
         setSelectedOptions(newSelectedValues);
         onSelectionChange(newSelectedValues);
+        setTimeout(() => {
+          getDropdownPosition();
+        }, 5);
         announceOption(`${clickedOption?.label} ${newSelectedValues.includes(id) ? 'selected' : 'not selected'}`);
-        getDropdownPosition();
       }
     }
   };
@@ -341,12 +343,11 @@ export const MultiSelectWithCount: React.FC<Props> = ({
   if (themeColor) {
     const theme = luminance(themeColor);
     themeColor = ColorsService.convert3HexTo6(themeColor);
-    const borderColor = themeColor === '#ffffff' ? '#c8c8c8' : isFocused || dropdownOpen ? themeColor : '#c8c8c8';
-    const boxShadow = dropdownOpen ? `0 0 0 1px ${themeColor}` : 'none';
     if (theme === 'dark' || theme === 'light') {
       // For default variant we use bottom border only, for rounded we use full border.
-      const borderStyles = variant === 'rounded' ? { borderColor } : { borderBottomColor: borderColor };
-      multiSelectStyleObj = { ...borderStyles, boxShadow };
+      multiSelectStyleObj = {
+        ['--theme-color' as any]: themeColor,
+      };
     }
   }
 
@@ -366,7 +367,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
       <div className={styles.listOptionsWrap}>
         <div className={`${className} ${styles.selectedValuesWrap}`} ref={selectRef}>
           <div
-            className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''} ${
+            className={`${styles.selectedValues} ${dropdownOpen ? styles.focused : ''} ${selectedOptions.length > 0 ? styles.selected : ''} ${
               selectedOptions.length === 0 ? styles.placeholder : ''
             } ${variant === 'rounded' ? styles.rounded : ''}`}
             ref={multiSelectRef}
@@ -390,7 +391,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
           >
             {selectedText}
           </div>
-          {selectedOptions.length > 0 && (
+          {selectedOptions.length > 1 && (
             <span
               className={styles.selectedCount}
               data-testid={'selected-count'}

@@ -88,7 +88,7 @@ export default meta;
 type Story = StoryObj<typeof MultiSelectWithCount>;
 
 const options: IOption[] = [
-  { value: '1', label: 'Option 1', order: 1 },
+  { value: '1', label: 'Option 1Option 1Option 1Option 1', order: 1 },
   { value: '2', label: 'Option 2', order: 2 },
   { value: '3', label: 'Option 3', order: 3, disable: true },
   { value: '4', label: 'Option 4', order: 4 },
@@ -125,6 +125,12 @@ export const RoundedVariant: Story = {
     ...WithoutTheme.args,
     variant: 'rounded',
   },
+  render: (args) => (
+    <div style={{ padding: '16px', display: 'flex', gap: '8px', border: '1px solid #e5e7eb', borderRadius: 8 }}>
+      <MultiSelectWithCount {...args} />
+      <MultiSelectWithCount {...args} />
+    </div>
+  ),
 };
 
 export const RoundedWithTheme: Story = {
