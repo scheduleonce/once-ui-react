@@ -159,7 +159,6 @@ export const MultiSelectWithCount: React.FC<Props> = ({
       const selectRect = selectRef.current.getBoundingClientRect();
       setTimeout(() => {
         const selectDropdownRect = selectDropdownRef?.current?.getBoundingClientRect();
-
         if (selectDropdownRect) {
           const selectDropdownHeight = selectDropdownRect.height;
           const selectDropdownWidth = selectDropdownRect.width;
