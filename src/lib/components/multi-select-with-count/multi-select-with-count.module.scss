@@ -24,42 +24,26 @@ body {
 				&.rounded {
 					@apply tw-rounded-full tw-border tw-border-[#c8c8c8] tw-pl-4 tw-py-2 tw-pb-2 tw-pt-2;
 					&.focused, &:hover, &:focus-visible {
-						@apply tw-border-b-[1px];
+						@apply tw-border-b-[1px] tw-bg-[#F4F4F4];
 						border-color: var(--theme-color, #006bb1);
 						box-shadow: 0 0 0 1px var(--theme-color, #006bb1);
-					}
-					&::before {
-						@apply tw-bg-[#F4F4F4];
-						position: absolute;
-						width: 100%;
-						height: 100%;
-						left: 0;
-						top: 0;
-						content: '';
-						z-index: 0;
-						border-radius: 25px;
 					}
 					&.selected {
 						border: 1px solid var(--theme-color, #006bb1);
 						box-shadow: 0 0 0 1px var(--theme-color, #006bb1);
-						&::before {
-						background-color: var(--theme-color, #006bb1) !important;
-						opacity: 0.18;
-						}
+						background-color: color-mix(in srgb, var(--theme-color, #006bb1) 18%, transparent);
 						&:hover {
-							&::before {
-								opacity: 0.36;
-							}
+							background-color: color-mix(in srgb, var(--theme-color, #006bb1) 36%, transparent);
 						}
 					}
 				}
 			}
 			.selectedCount {
-				@apply tw-absolute tw-right-[38px] tw-z-[-1] tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-h-[22px] tw-items-center tw-justify-center tw-rounded-full tw-px-[7px] tw-font-semibold tw-text-white tw-text-[14px] tw-leading-[22px];
+				@apply tw-absolute tw-right-[38px] tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-h-[22px] tw-items-center tw-justify-center tw-rounded-full tw-px-[7px] tw-font-semibold tw-text-white tw-text-[14px] tw-leading-[22px];
 				background-color: var(--theme-color, #006bb1);
 			}
 			.dropDownIcon {
-				@apply tw-absolute tw-right-2 tw-top-1/2 tw-z-[-1] tw-flex tw-h-full tw-w-7 -tw-translate-y-1/2 tw-cursor-pointer tw-items-center tw-justify-center;
+				@apply tw-absolute tw-right-2 tw-top-1/2 tw-flex tw-h-full tw-w-7 -tw-translate-y-1/2 tw-cursor-pointer tw-items-center tw-justify-center;
 			}
 		}
 	}
