@@ -8,7 +8,7 @@ body {
 		.selectedValuesWrap {
 			@apply tw-relative tw-h-[38px] tw-w-full;
 			.selectedValues {
-				@apply tw-box-border tw-border-solid tw-block tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#c8c8c8] tw-pb-2 tw-pl-[10px] tw-pr-9 tw-pt-2 tw-text-[14px] tw-leading-[22px] tw-text-[#333333] tw-placeholder-[#666666] focus-within:tw-outline-none focus:tw-pb-[7px] focus-visible:tw-outline-none;
+				@apply tw-box-border tw-border-solid tw-block tw-cursor-pointer tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#c8c8c8] tw-pb-2 tw-pl-[10px] tw-pr-9 tw-pt-2 tw-text-[14px] tw-leading-[22px] tw-text-[#333333] tw-placeholder-[#666666] focus-within:tw-outline-none focus:tw-pb-[7px] focus-visible:tw-outline-none;
 				&.countShow {
 					@apply tw-pr-[67px];
 				}
@@ -36,7 +36,7 @@ body {
 						left: 0;
 						top: 0;
 						content: '';
-						z-index: -1;
+						z-index: 0;
 						border-radius: 25px;
 					}
 					&.selected {
@@ -59,13 +59,13 @@ body {
 				background-color: var(--theme-color, #006bb1);
 			}
 			.dropDownIcon {
-				@apply tw-absolute tw-right-2 tw-top-1/2 tw-flex tw-h-full tw-w-7 -tw-translate-y-1/2 tw-cursor-pointer tw-items-center tw-justify-center;
+				@apply tw-absolute tw-right-2 tw-top-1/2 tw-z-[-1] tw-flex tw-h-full tw-w-7 -tw-translate-y-1/2 tw-cursor-pointer tw-items-center tw-justify-center;
 			}
 		}
 	}
 }
 .optionsListContainer {
-	@apply tw-absolute tw-z-10 tw-mt-0 tw-max-h-[293px] tw-w-[90%] tw-bg-white tw-pb-16 tw-text-sm tw-leading-[22px] tw-max-w-[367px] tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none;
+	@apply tw-absolute tw-z-10 tw-mt-0 tw-max-h-[293px] tw-w-[85%] tw-bg-white tw-pb-16 tw-text-sm tw-leading-[22px] tw-max-w-[367px] tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none;
 	&.top {
 		transform: translateY(calc(-100% - 40px));
 	}

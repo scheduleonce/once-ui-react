@@ -216,7 +216,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
             top: topPosition + 1, // Adding 1px to avoid overlap with select border
           });
         }
-      }, 0);
+      }, 10);
     }
   };
 
@@ -497,6 +497,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
                           themeColor={themeColor}
                           variant="primary"
                           size="medium"
+                          disabled={selectedOptions.length > 0 ? false : true}
                           onClick={handleDoneButtonClick}
                           data-testid={'done-button'}
                           onKeyDown={(event) => {
