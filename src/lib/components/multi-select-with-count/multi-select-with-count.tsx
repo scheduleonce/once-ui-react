@@ -136,6 +136,9 @@ export const MultiSelectWithCount: React.FC<Props> = ({
         setTimeout(() => {
           getDropdownPosition();
         }, 50);
+        if (filteredOptions.current.length === 1) {
+          setDropdownOpen(false);
+        }
         announceOption(`${clickedOption?.label} ${newSelectedValues.includes(id) ? 'selected' : 'not selected'}`);
       }
     }
@@ -212,7 +215,7 @@ export const MultiSelectWithCount: React.FC<Props> = ({
 
           setDropdownPosition({
             left: leftPosition,
-            top: topPosition + 1, // Adding 1px to avoid overlap with select border
+            top: topPosition,
           });
         }
       }, 10);
@@ -437,9 +440,10 @@ export const MultiSelectWithCount: React.FC<Props> = ({
                       ref={selectDropdownRef}
                       onClick={(e) => e.stopPropagation()}
                       style={{
-                        opacity: dropdownPosition.left ? 1 : 0,
+                        opacity: dropdownPosition.top ? 1 : 0,
                         left: dropdownPosition.left,
                         top: dropdownPosition.top,
+                        paddingBottom: filteredOptions.current.length === 1 ? 0 : undefined,
                       }}
                     >
                       <div className={styles.optionsListWrap}>
@@ -484,29 +488,31 @@ export const MultiSelectWithCount: React.FC<Props> = ({
                           ))}
                         </ul>
                       </div>
-                      <div className={styles.btnContainer}>
-                        <input
-                          ref={hiddenButtonRef}
-                          onKeyDown={(event) => {
-                            handleKeyDown(event);
-                          }}
-                          className={styles.hiddenButton}
-                        />
-                        <Button
-                          themeColor={themeColor}
-                          variant="primary"
-                          size="medium"
-                          disabled={selectedOptions.length > 0 ? false : true}
-                          onClick={handleDoneButtonClick}
-                          data-testid={'done-button'}
-                          onKeyDown={(event) => {
-                            doneButtonKeyDown(event);
-                          }}
-                          ref={doneButtonRef}
-                        >
-                          Done
-                        </Button>
-                      </div>
+                      {filteredOptions.current.length > 1 && (
+                        <div className={styles.btnContainer}>
+                          <input
+                            ref={hiddenButtonRef}
+                            onKeyDown={(event) => {
+                              handleKeyDown(event);
+                            }}
+                            className={styles.hiddenButton}
+                          />
+                          <Button
+                            themeColor={themeColor}
+                            variant="primary"
+                            size="medium"
+                            disabled={selectedOptions.length > 0 ? false : true}
+                            onClick={handleDoneButtonClick}
+                            data-testid={'done-button'}
+                            onKeyDown={(event) => {
+                              doneButtonKeyDown(event);
+                            }}
+                            ref={doneButtonRef}
+                          >
+                            Done
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}

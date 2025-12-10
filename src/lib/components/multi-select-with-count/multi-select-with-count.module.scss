@@ -22,9 +22,8 @@ body {
 					@apply tw-text-[#666666];
 				}
 				&.rounded {
-					@apply tw-rounded-full tw-border tw-border-[#c8c8c8] tw-pl-4 tw-py-2 tw-pb-2 tw-pt-2 tw-h-9 tw-mt-[1px];
+					@apply tw-rounded-full tw-border tw-border-[#c8c8c8] tw-pl-4 tw-py-2 tw-pb-2 tw-pt-2 tw-h-9 tw-mt-[1px] tw-bg-[#F4F4F4];
 					&.focused, &:hover, &:focus-visible {
-						@apply tw-border-b-[1px] tw-bg-[#F4F4F4];
 						border-color: var(--theme-color, #006bb1);
 						box-shadow: 0 0 0 1px var(--theme-color, #006bb1);
 					}
@@ -49,7 +48,7 @@ body {
 	}
 }
 .optionsListContainer {
-	@apply tw-absolute tw-z-10 tw-mt-0 tw-max-h-[293px] tw-w-[83%] tw-bg-white tw-pb-16 tw-text-sm tw-leading-[22px] tw-max-w-[367px] tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none;
+	@apply tw-absolute tw-z-10 tw-mt-0 tw-max-h-[293px] tw-w-[83%] tw-bg-white tw-pb-16 tw-text-sm tw-leading-[22px] tw-max-w-[367px] s767:tw-max-w-[320px]  tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] focus:tw-outline-none;
 	&.top {
 		transform: translateY(calc(-100% - 40px));
 	}
