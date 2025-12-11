@@ -8,7 +8,7 @@ body {
 		.selectedValuesWrap {
 			@apply tw-relative tw-h-[38px] tw-w-full;
 			.selectedValues {
-				@apply tw-box-border tw-border-solid tw-block tw-cursor-pointer tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#c8c8c8] tw-pb-2 tw-pl-[10px] tw-pr-9 tw-pt-2 tw-text-[14px] tw-leading-[20px] tw-text-[#333333] tw-placeholder-[#666666] focus-within:tw-outline-none focus:tw-pb-[7px] focus-visible:tw-outline-none tw-relative; 
+				@apply tw-box-border tw-border-solid tw-block tw-cursor-pointer tw-h-full tw-w-full tw-overflow-hidden tw-overflow-ellipsis tw-whitespace-nowrap tw-border-0 tw-border-b-[1px] tw-border-b-[#c8c8c8] tw-pb-2 tw-pl-[10px] tw-pr-9 tw-pt-2 tw-text-[14px] tw-leading-[20px] tw-text-[#333333] focus-within:tw-outline-none focus:tw-pb-[7px] focus-visible:tw-outline-none tw-relative; 
 				&.countShow {
 					@apply tw-pr-[75px];
 				}
@@ -17,9 +17,6 @@ body {
 				}
 				&.focused {
 					@apply tw-pb-[7px] tw-outline-none;
-				}
-				&.placeholder {
-					@apply tw-text-[#666666];
 				}
 				&.rounded {
 					@apply tw-rounded-full tw-border tw-border-[#c8c8c8] tw-pl-4 tw-py-2 tw-pb-2 tw-pt-2 tw-h-9 tw-mt-[1px] tw-bg-[#F4F4F4];
@@ -38,7 +35,7 @@ body {
 				}
 			}
 			.selectedCount {
-				@apply tw-absolute tw-right-[38px] tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-h-[22px] tw-items-center tw-justify-center tw-rounded-full tw-px-[7px] tw-font-semibold tw-text-white tw-text-[14px] tw-leading-[22px];
+				@apply tw-absolute tw-right-[38px] tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-h-[23px] tw-items-center tw-justify-center tw-rounded-full tw-px-[7px] tw-font-semibold tw-text-white tw-text-[14px] tw-leading-[22px];
 				background-color: var(--theme-color, #006bb1);
 			}
 			.dropDownIcon {
