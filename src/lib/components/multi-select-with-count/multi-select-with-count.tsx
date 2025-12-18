@@ -201,15 +201,15 @@ export const MultiSelectWithCount: React.FC<Props> = ({
             leftPosition = selectRect.left;
           } else if (spaceLeft >= selectDropdownWidth) {
             // Not enough space to the right but enough to the left - align with select right edge
-            leftPosition = selectRect.right - selectDropdownWidth;
+            leftPosition = selectRect.right - selectDropdownWidth + 20;
           } else {
             // Not enough space in either direction - position to stay within viewport
             if (spaceRight >= spaceLeft) {
               // More space to the right - align with left edge but constrain to viewport
-              leftPosition = Math.max(0, viewportWidth - selectDropdownWidth);
+              leftPosition = Math.max(20, viewportWidth - selectDropdownWidth);
             } else {
               // More space to the left - align with right edge but constrain to viewport
-              leftPosition = Math.max(0, selectRect.right - selectDropdownWidth);
+              leftPosition = Math.max(20, selectRect.right - selectDropdownWidth + 20);
             }
           }
 
