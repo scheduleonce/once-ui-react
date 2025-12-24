@@ -35,11 +35,11 @@ body {
 				}
 			}
 			.selectedCount {
-				@apply tw-box-border tw-h-[22px] tw-min-w-[22px] tw-rounded-full tw-px-[7px] tw-font-semibold tw-text-white tw-text-[14px] tw-leading-[23px] tw-ml-2;
+				@apply tw-box-border tw-h-[22px] tw-min-w-[22px] tw-rounded-full tw-px-[7px] tw-font-semibold tw-text-white tw-text-[14px] tw-leading-[22px] tw-ml-2 tw-mt-[1px];
 				background-color: var(--theme-color, #006bb1);
 			}
 			.dropDownIcon {
-				@apply tw-cursor-pointer tw-ml-2 tw-mr-[18px] -tw-mt-[1px];
+				@apply tw-cursor-pointer tw-ml-2 tw-mr-[18px] tw-mt-0;
 			}
 		}
 	}
