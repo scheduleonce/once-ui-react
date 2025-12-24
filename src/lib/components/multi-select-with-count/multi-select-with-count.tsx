@@ -392,33 +392,35 @@ export const MultiSelectWithCount: React.FC<Props> = ({
             role="combobox"
           >
             <span>{selectedText}</span>
-            {selectedOptions.length > 1 && (
+            <div className={styles.countAndIconContainer}>
+              {selectedOptions.length > 1 && (
+                <span
+                  className={styles.selectedCount}
+                  data-testid={'selected-count'}
+                  style={{ backgroundColor: themeColor }}
+                >
+                  {selectedOptions.length}
+                </span>
+              )}
               <span
-                className={styles.selectedCount}
-                data-testid={'selected-count'}
-                style={{ backgroundColor: themeColor }}
+                className={styles.dropDownIcon}
+                onClick={() => toggleDropDown(!dropdownOpen)}
+                data-testid={'arrow-button'}
               >
-                {selectedOptions.length}
-              </span>
-            )}
-            <span
-              className={styles.dropDownIcon}
-              onClick={() => toggleDropDown(!dropdownOpen)}
-              data-testid={'arrow-button'}
-            >
-              <svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                  <g transform="translate(-2360.000000, -295.000000)" fill="#666666">
-                    <g transform="translate(2006.000000, 248.000000)">
-                      <path
-                        d="M358.027356,44.3431458 L358.027146,50.6581458 L364.343146,50.6589352 L364.343146,52.3431458 L358.027146,52.3421458 L358.027356,52.3431458 L356.343146,52.3431458 L356.343146,44.3431458 L358.027356,44.3431458 Z"
-                        transform="translate(360.343146, 48.343146) scale(-1, -1) rotate(-225.000000) translate(-360.343146, -48.343146)"
-                      ></path>
+                <svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                    <g transform="translate(-2360.000000, -295.000000)" fill="#666666">
+                      <g transform="translate(2006.000000, 248.000000)">
+                        <path
+                          d="M358.027356,44.3431458 L358.027146,50.6581458 L364.343146,50.6589352 L364.343146,52.3431458 L358.027146,52.3421458 L358.027356,52.3431458 L356.343146,52.3431458 L356.343146,44.3431458 L358.027356,44.3431458 Z"
+                          transform="translate(360.343146, 48.343146) scale(-1, -1) rotate(-225.000000) translate(-360.343146, -48.343146)"
+                        ></path>
+                      </g>
                     </g>
                   </g>
-                </g>
-              </svg>
-            </span>
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
         <div id="announcement" aria-live="assertive" role="alert" className={styles.announcement}></div>
