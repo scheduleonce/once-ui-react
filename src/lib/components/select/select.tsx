@@ -12,6 +12,10 @@ interface Props {
   selected: IOption | null;
   onSelect: (obj: IOption) => void;
   themeColor?: string;
+  placeholder?: {
+    text: string;
+    color?: string;
+  };
 }
 
 interface IDropdownPosition {
@@ -19,7 +23,7 @@ interface IDropdownPosition {
   top: number;
 }
 
-export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) => {
+export const Select: FC<Props> = ({ children, selected, onSelect, themeColor, placeholder }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -138,11 +142,17 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor }) 
                   borderBottomColor: themeColor && (isFocused || headlessOpen) ? borderColor : '',
                 }}
               >
-                {selected && (
+                {selected ? (
                   <span className={styles.selectValue}>
                     {selected.avatar && <img src={selected.avatar} alt="" className={styles.seletIcon} />}
                     <span className={styles.selectText}>{selected.label}</span>
                   </span>
+                ) : (
+                  placeholder && (
+                    <span className={styles.selectValue} style={{ color: placeholder.color || '#9ca3af' }}>
+                      {placeholder.text}
+                    </span>
+                  )
                 )}
                 <span className={styles.chevronDownIconSpan}>
                   <ChevronDownIcon
