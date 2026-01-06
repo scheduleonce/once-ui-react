@@ -12,10 +12,7 @@ interface Props {
   selected: IOption | null;
   onSelect: (obj: IOption) => void;
   themeColor?: string;
-  placeholder?: {
-    text: string;
-    color?: string;
-  };
+  placeholder?: string;
 }
 
 interface IDropdownPosition {
@@ -148,11 +145,7 @@ export const Select: FC<Props> = ({ children, selected, onSelect, themeColor, pl
                     <span className={styles.selectText}>{selected.label}</span>
                   </span>
                 ) : (
-                  placeholder && (
-                    <span className={styles.selectValue} style={{ color: placeholder.color || '#9ca3af' }}>
-                      {placeholder.text}
-                    </span>
-                  )
+                  placeholder && <span className={`${styles.selectValue} ${styles.placeholder}`}>{placeholder}</span>
                 )}
                 <span className={styles.chevronDownIconSpan}>
                   <ChevronDownIcon

@@ -12,6 +12,9 @@
       }
       .selectValue {
         @apply tw-flex tw-items-center;
+        &.placeholder {
+          @apply tw-text-[#666666];
+        }
         .seletIcon {
           @apply tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0;
         }
