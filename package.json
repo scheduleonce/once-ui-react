@@ -97,7 +97,7 @@
     ]
   },
   "peerDependencies": {
-    "libphonenumber-js": "^1.11.20",
+    "libphonenumber-js": "^1.12.37",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-phone-number-input": "^3.4.11"
