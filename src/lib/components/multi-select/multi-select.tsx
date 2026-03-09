@@ -30,7 +30,6 @@ export const MultiSelect: React.FC<Props> = ({
   const [selectedOptions, setSelectedOptions] = useState<string[]>(checkedValue);
   const [searchTerm, setSearchTerm] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
   const selectRef = useRef<HTMLDivElement | null>(null);
   const selectDropdownRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -405,7 +404,6 @@ export const MultiSelect: React.FC<Props> = ({
                         )}
                         <ul ref={optionsListRef} role="listbox">
                           {filteredOptions.current.map((option, index) => (
-                            // eslint-disable-next-line jsx-a11y/role-supports-aria-props
                             <li
                               key={option.value}
                               className={`${styles.optionsList} ${index === focusedIndex ? styles.focused : ''}`}

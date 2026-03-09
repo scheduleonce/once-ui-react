@@ -8,8 +8,7 @@ interface SingleLineInputProps extends ComponentPropsWithRef<'input'> {
 
 export const SingleLineInput: FC<SingleLineInputProps> = React.memo(
   forwardRef<HTMLInputElement, SingleLineInputProps>(
-    ({ themeColor = '', style = {}, className = '', onFocus, onBlur, ...rest }: SingleLineInputProps, ref) => {
-      const [isFocused, setIsFocused] = useState(false);
+    ({ themeColor = '', style = {}, className = '', ...rest }: SingleLineInputProps, ref) => {
       let inputStyleObj = {};
       const textInputClasses = [styles.textInput, className].filter(Boolean).join(' ');
       themeColor = ColorsService.convert3HexTo6(themeColor);

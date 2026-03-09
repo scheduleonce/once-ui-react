@@ -43,8 +43,8 @@ export const Button: FC<ButtonProps> = forwardRef<HTMLButtonElement, ComponentPr
               ? '#ffffff'
               : '#333333'
             : theme === 'light'
-            ? '#333333'
-            : themeColor;
+              ? '#333333'
+              : themeColor;
         const borderColor = themeColor === '#ffffff' ? '#c8c8c8' : themeColor;
         buttonStyleObj = {
           backgroundColor: backgroundColor,

@@ -110,8 +110,8 @@ export const QuickMultiSelect: React.FC<Props> = ({
                       !selectedOptions.includes(option.value))
                       ? '#333333'
                       : themeColor && (themeColor !== '#ffffff' || theme !== 'light')
-                      ? themeColor
-                      : '#006bb1',
+                        ? themeColor
+                        : '#006bb1',
                 }}
               >
                 {option.label}

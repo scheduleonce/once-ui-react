@@ -10,12 +10,8 @@ interface MultiLineInputProps extends ComponentPropsWithRef<'textarea'> {
 
 export const MultiLineInput: FC<MultiLineInputProps> = React.memo(
   forwardRef<HTMLTextAreaElement, MultiLineInputProps>(
-    (
-      { themeColor = '', onSubmit, style = {}, className = '', onInput, onFocus, onBlur, ...rest }: MultiLineInputProps,
-      ref,
-    ) => {
+    ({ themeColor = '', onSubmit, style = {}, className = '', onInput, ...rest }: MultiLineInputProps, ref) => {
       const [isMobileDevice, setIsMobileDevice] = useState(true);
-      const [isFocused, setIsFocused] = useState(false);
       themeColor = ColorsService.convert3HexTo6(themeColor);
 
       useEffect(() => {

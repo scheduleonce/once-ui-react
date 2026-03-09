@@ -1,0 +1,34 @@
+﻿node.exe : npm error code ERESOLVE
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm error code ERESOLVE:String) [ 
+   ], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+npm error ERESOLVE unable to resolve dependency tree
+npm error
+npm error While resolving: @oncehub/ui-react@2.1.6
+npm error Found: @typescript-eslint/eslint-plugin@8.56.1
+npm error node_modules/@typescript-eslint/eslint-plugin
+npm error   dev @typescript-eslint/eslint-plugin@"^8.56.1" from the root 
+project
+npm error
+npm error Could not resolve dependency:
+npm error peer @typescript-eslint/eslint-plugin@"^6.4.0" from 
+eslint-config-standard-with-typescript@43.0.1
+npm error node_modules/eslint-config-standard-with-typescript
+npm error   dev eslint-config-standard-with-typescript@"^43.0.1" from the root 
+project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency 
+resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error C:\Users\siddharth.shahi_once\AppData\Local\npm-cache\_logs\2026-03-0
+9T07_57_57_786Z-eresolve-report.txt
+npm error A complete log of this run can be found in: C:\Users\siddharth.shahi_
+once\AppData\Local\npm-cache\_logs\2026-03-09T07_57_57_786Z-debug-0.log

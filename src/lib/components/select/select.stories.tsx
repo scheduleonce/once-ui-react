@@ -65,7 +65,7 @@ const children = (
         }
         value={option}
       >
-        {({ selected, active }: { selected: boolean; active: boolean }) => (
+        {({ selected }: { selected: boolean; active: boolean }) => (
           <div className="tw-flex tw-items-center">
             <span className={`tw-block tw-truncate ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>
               {option.label}

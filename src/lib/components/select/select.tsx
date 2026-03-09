@@ -23,7 +23,6 @@ interface IDropdownPosition {
 export const Select: FC<Props> = ({ children, selected, onSelect, themeColor, placeholder }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [open, setOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
   const selectRef = useRef<HTMLDivElement | null>(null);
   const selectButtonRef = useRef<HTMLButtonElement>(null);
   const selectDropdownRef = useRef<HTMLDivElement | null>(null);

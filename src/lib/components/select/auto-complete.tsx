@@ -30,7 +30,6 @@ export const AutoComplete: FC<Props> = ({
   const inputButton = useRef<HTMLButtonElement>(null);
   const selectRef = useRef<HTMLDivElement>(null);
   const selectDropdownRef = useRef<HTMLDivElement>(null);
-  const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
@@ -101,7 +100,7 @@ export const AutoComplete: FC<Props> = ({
     };
   }, []);
 
-  const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+  const handleInputClick = () => {
     if (typeof isOpen !== 'undefined' && inputRef.current) {
       if (!isOpen) {
         getDropdownPosition();

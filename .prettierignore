@@ -1,0 +1,4 @@
+# Generated files
+audit_report.json
+debug_output*.txt
+lint_output.txt
