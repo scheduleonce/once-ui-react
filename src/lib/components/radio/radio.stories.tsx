@@ -59,7 +59,9 @@ export const Primary: Story = {
     name: 'radio-btn',
     checked: true,
     themeColor: '#006bb1',
-    onChange: (option) => console.log('Selected option:', option),
+    onChange: () => {
+      // console.log('Selected option:', option);
+    },
     option: {
       value: 'Radio_value',
       label: 'Radio',
@@ -73,7 +75,9 @@ export const Secondary: Story = {
     name: 'radio-btn',
     checked: true,
     themeColor: '#006bb1',
-    onChange: (option) => console.log('Selected option:', option),
+    onChange: (option) => {
+      // console.log('Selected option:', option);
+    },
     option: {
       value: 'Radio_value',
       label: 'Radio',

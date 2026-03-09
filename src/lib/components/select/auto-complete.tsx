@@ -1,4 +1,4 @@
-import { FC, useRef, useEffect, CSSProperties, useState, useCallback } from 'react';
+import React, { FC, useRef, useEffect, CSSProperties, useState, useCallback } from 'react';
 import { Combobox, ComboboxInput, ComboboxButton } from '@headlessui/react';
 import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
@@ -101,7 +101,7 @@ export const AutoComplete: FC<Props> = ({
     };
   }, []);
 
-  const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+  const handleInputClick = () => {
     if (typeof isOpen !== 'undefined' && inputRef.current) {
       if (!isOpen) {
         getDropdownPosition();
