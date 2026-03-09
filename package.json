@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "2.1.6",
+  "version": "2.1.7-beta.2",
   "type": "module",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     }
   },
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",

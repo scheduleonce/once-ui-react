@@ -10,7 +10,7 @@ import styles from './auto-complete.module.scss';
 interface Props {
   children: any;
   selected: IOption | null;
-  onSelect: (obj: IOption) => void;
+  onSelect: (obj: IOption | null) => void;
   setQuery?: (query: string) => void;
   disable?: boolean;
   clearSearch?: boolean;
