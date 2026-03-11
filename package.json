@@ -5,7 +5,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/scheduleonce/once-ui-react"
+    "url": "git+https://github.com/scheduleonce/once-ui-react.git"
   },
   "files": [
     "dist",
@@ -27,7 +27,7 @@
     }
   },
   "engines": {
-    "node": "22"
+    "node": "24"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
