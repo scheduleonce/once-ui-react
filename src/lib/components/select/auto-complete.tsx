@@ -57,7 +57,6 @@ export const AutoComplete: FC<Props> = ({
       // Use visualViewport for zoom-aware positioning if available
       const viewport = window.visualViewport;
       const selectRect = selectRef.current.getBoundingClientRect();
-      setIsPositionCalculated(false);
       setTimeout(() => {
         const selectDropdownRect = selectDropdownRef?.current?.getBoundingClientRect();
         let left = selectRect.left;
