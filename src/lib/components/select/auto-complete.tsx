@@ -37,6 +37,7 @@ export const AutoComplete: FC<Props> = ({
   const windowHeight = useRef<number>(0);
   const pageScrollHeight = useRef<number>(0);
   const positionFrameRef = useRef<number | null>(null);
+  const dropdownResizeObserverRef = useRef<ResizeObserver | null>(null);
 
   let OptionStyleObj: CSSProperties = {};
 
@@ -99,8 +100,20 @@ export const AutoComplete: FC<Props> = ({
 
   const setDropdownNode = useCallback(
     (node: HTMLDivElement | null) => {
+      if (dropdownResizeObserverRef.current) {
+        dropdownResizeObserverRef.current.disconnect();
+        dropdownResizeObserverRef.current = null;
+      }
+
       selectDropdownRef.current = node;
+
       if (node) {
+        if (typeof ResizeObserver !== 'undefined') {
+          dropdownResizeObserverRef.current = new ResizeObserver(() => {
+            getDropdownPosition();
+          });
+          dropdownResizeObserverRef.current.observe(node);
+        }
         getDropdownPosition();
       }
     },
@@ -116,6 +129,9 @@ export const AutoComplete: FC<Props> = ({
       window.removeEventListener('resize', getDropdownPosition);
       if (positionFrameRef.current !== null) {
         cancelAnimationFrame(positionFrameRef.current);
+      }
+      if (dropdownResizeObserverRef.current) {
+        dropdownResizeObserverRef.current.disconnect();
       }
     };
   }, []);
@@ -179,7 +195,9 @@ export const AutoComplete: FC<Props> = ({
                 displayValue={(o: any) => o?.label || ''}
                 onChange={(event) => {
                   setQuery(event.target.value);
-                  getDropdownPosition();
+                  if (typeof ResizeObserver === 'undefined') {
+                    getDropdownPosition();
+                  }
                 }}
                 onClick={handleInputClick}
                 onFocus={handleFocus}
