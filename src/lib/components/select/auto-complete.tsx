@@ -172,7 +172,11 @@ export const AutoComplete: FC<Props> = ({
                 displayValue={(o: any) => o?.label || ''}
                 onChange={(event) => {
                   setQuery(event.target.value);
-                  // Remove getDropdownPosition call to prevent jerk during typing
+                  if (headlessOpen) {
+                    setTimeout(() => {
+                      getDropdownPosition();
+                    }, 0);
+                  }
                 }}
                 onClick={handleInputClick}
                 onFocus={handleFocus}
