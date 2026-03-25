@@ -87,7 +87,7 @@ export const AutoComplete: FC<Props> = ({
           });
           setIsPositionCalculated(true);
         }
-      }, 0);
+      }, 100);
     }
   }, []);
 
