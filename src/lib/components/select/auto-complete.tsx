@@ -31,12 +31,12 @@ export const AutoComplete: FC<Props> = ({
   const selectRef = useRef<HTMLDivElement>(null);
   const selectDropdownRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const [isPositionCalculated, setIsPositionCalculated] = useState(false);
   const windowHeight = useRef<number>(0);
   const pageScrollHeight = useRef<number>(0);
+  const positionFrameRef = useRef<number | null>(null);
 
   let OptionStyleObj: CSSProperties = {};
 
@@ -57,39 +57,55 @@ export const AutoComplete: FC<Props> = ({
       // Use visualViewport for zoom-aware positioning if available
       const viewport = window.visualViewport;
       const selectRect = selectRef.current.getBoundingClientRect();
-      setIsPositionCalculated(false);
-      setTimeout(() => {
-        const selectDropdownRect = selectDropdownRef?.current?.getBoundingClientRect();
-        let left = selectRect.left;
-        let top = selectRect.y + selectRect.height;
-        let remainingSpace = window.innerHeight - selectRect.bottom;
-        let remainingScroll = document.body.scrollHeight - (window.innerHeight + window.scrollY);
-        if (viewport) {
-          // Adjust for zoom and scroll offset
-          left = selectRect.left + viewport.offsetLeft;
-          top = selectRect.top + selectRect.height + viewport.offsetTop;
-          remainingSpace = viewport.height - (selectRect.bottom - viewport.offsetTop);
-          remainingScroll = document.body.scrollHeight - (viewport.height + viewport.pageTop);
-        }
-        if (selectDropdownRect) {
-          const dropdownHeight = selectDropdownRect.height;
-          const selectTop = selectRect.top;
-          const noSpaceAbove = dropdownHeight >= selectTop + window.scrollY;
-          const openTop =
-            (dropdownHeight >= selectTop &&
-              (noSpaceAbove || remainingScroll >= dropdownHeight || remainingSpace >= dropdownHeight)) ||
-            (selectTop >= dropdownHeight && remainingSpace >= dropdownHeight)
-              ? top
-              : (viewport ? selectRect.top + viewport.offsetTop : selectRect.y) - dropdownHeight;
-          setDropdownPosition({
-            left,
-            top: openTop ?? (viewport ? selectRect.top + viewport.offsetTop : selectRect.top),
-          });
-          setIsPositionCalculated(true);
-        }
-      }, 100);
+
+      if (positionFrameRef.current !== null) {
+        cancelAnimationFrame(positionFrameRef.current);
+      }
+
+      positionFrameRef.current = requestAnimationFrame(() => {
+        positionFrameRef.current = requestAnimationFrame(() => {
+          const selectDropdownRect = selectDropdownRef?.current?.getBoundingClientRect();
+          let left = selectRect.left;
+          let top = selectRect.y + selectRect.height;
+          let remainingSpace = window.innerHeight - selectRect.bottom;
+          let remainingScroll = document.body.scrollHeight - (window.innerHeight + window.scrollY);
+          if (viewport) {
+            // Adjust for zoom and scroll offset
+            left = selectRect.left + viewport.offsetLeft;
+            top = selectRect.top + selectRect.height + viewport.offsetTop;
+            remainingSpace = viewport.height - (selectRect.bottom - viewport.offsetTop);
+            remainingScroll = document.body.scrollHeight - (viewport.height + viewport.pageTop);
+          }
+          if (selectDropdownRect) {
+            const dropdownHeight = selectDropdownRect.height;
+            const selectTop = selectRect.top;
+            const noSpaceAbove = dropdownHeight >= selectTop + window.scrollY;
+            const openTop =
+              (dropdownHeight >= selectTop &&
+                (noSpaceAbove || remainingScroll >= dropdownHeight || remainingSpace >= dropdownHeight)) ||
+              (selectTop >= dropdownHeight && remainingSpace >= dropdownHeight)
+                ? top
+                : (viewport ? selectRect.top + viewport.offsetTop : selectRect.y) - dropdownHeight;
+            setDropdownPosition({
+              left,
+              top: openTop ?? (viewport ? selectRect.top + viewport.offsetTop : selectRect.top),
+            });
+            setIsPositionCalculated(true);
+          }
+        });
+      });
     }
   }, []);
+
+  const setDropdownNode = useCallback(
+    (node: HTMLDivElement | null) => {
+      selectDropdownRef.current = node;
+      if (node) {
+        getDropdownPosition();
+      }
+    },
+    [getDropdownPosition],
+  );
 
   useEffect(() => {
     window.addEventListener('scroll', getDropdownPosition);
@@ -98,29 +114,11 @@ export const AutoComplete: FC<Props> = ({
     return () => {
       window.removeEventListener('scroll', getDropdownPosition);
       window.removeEventListener('resize', getDropdownPosition);
+      if (positionFrameRef.current !== null) {
+        cancelAnimationFrame(positionFrameRef.current);
+      }
     };
   }, []);
-
-  const handleInputClick = () => {
-    if (typeof isOpen !== 'undefined' && inputRef.current) {
-      if (!isOpen) {
-        getDropdownPosition();
-        setIsFocused(true);
-        if (selected) {
-          inputRef.current.value = selected.label || '';
-        }
-        if (clearSearch) {
-          inputRef.current.value = '';
-          setQuery('');
-        }
-        inputRef.current.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-      } else {
-        // If open, close it (toggle behavior)
-        inputRef.current.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-        setIsFocused(false);
-      }
-    }
-  };
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -150,17 +148,26 @@ export const AutoComplete: FC<Props> = ({
   return (
     <Combobox value={selected} onChange={onSelect} disabled={disable}>
       {({ open: headlessOpen }) => {
-        // Sync Headless UI's open state with our local state and trigger positioning
-        if (headlessOpen !== isOpen) {
-          setIsOpen(headlessOpen);
-          if (headlessOpen) {
-            // Calculate positioning when dropdown opens
+        const handleInputClick = () => {
+          if (!inputRef.current) return;
+
+          if (!headlessOpen) {
             getDropdownPosition();
-          } else {
-            // Reset position calculation when dropdown closes
-            setIsPositionCalculated(false);
+            setIsFocused(true);
+            if (selected) {
+              inputRef.current.value = selected.label || '';
+            }
+            if (clearSearch) {
+              inputRef.current.value = '';
+              setQuery('');
+            }
+            inputRef.current.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+            return;
           }
-        }
+
+          inputRef.current.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+          setIsFocused(false);
+        };
 
         return (
           <div className={styles.autocomplete}>
@@ -172,7 +179,7 @@ export const AutoComplete: FC<Props> = ({
                 displayValue={(o: any) => o?.label || ''}
                 onChange={(event) => {
                   setQuery(event.target.value);
-                  // Remove getDropdownPosition call to prevent jerk during typing
+                  getDropdownPosition();
                 }}
                 onClick={handleInputClick}
                 onFocus={handleFocus}
@@ -203,7 +210,7 @@ export const AutoComplete: FC<Props> = ({
                         }}
                       >
                         <div
-                          ref={selectDropdownRef}
+                          ref={setDropdownNode}
                           style={{
                             position: 'absolute',
                             opacity: isPositionCalculated ? 1 : 0,
