@@ -2,7 +2,7 @@ import { SelectOption, SelectOptions } from '../select/select-options';
 import { Select } from '../select/select';
 import { SingleLineInput } from '../single-line-input';
 import { IOption } from '../../interfaces/select.type';
-import { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import styles from './phone.module.scss';
 import { isValidPhoneNumber, getCountries, getCountryCallingCode } from 'react-phone-number-input/max';
 import { CountryCode } from 'libphonenumber-js';
@@ -21,6 +21,8 @@ interface Props {
   phoneNumberValue?: string | null;
   countryCodeFromURL?: string | null;
   additionalClassName?: string;
+  type?: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
 }
 
 export const Phone: FC<Props> = ({
@@ -35,6 +37,8 @@ export const Phone: FC<Props> = ({
   phoneNumberValue = '',
   countryCodeFromURL = '',
   additionalClassName = '',
+  type = 'tel',
+  inputMode = 'numeric',
 }) => {
   /* Country Dropdown */
   const [validationError, setValidationError] = useState<boolean>(error);
@@ -184,7 +188,8 @@ export const Phone: FC<Props> = ({
           </div>
           <div className={`${styles.phoneInputWrap} ouiPhoneInputWrap`}>
             <SingleLineInput
-              type="text"
+              type={type}
+              inputMode={inputMode}
               aria-labelledby="phone-number"
               placeholder={placeholder}
               className={`${styles.phoneInput} ${validationError && validate ? styles.serverError : ''} ouiPhoneInput`}
