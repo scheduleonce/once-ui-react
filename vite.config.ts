@@ -37,15 +37,11 @@ const app = async (): Promise<UserConfigExport> => {
         fileName: (format) => `${formattedName}.${format}.js`,
       },
       rollupOptions: {
-        external: [
-          ...Object.keys(peerDependencies),
-          'react/jsx-runtime',
-          'react-phone-number-input/max',
-          'react-phone-number-input/min',
-          'react-phone-number-input/mobile',
-          'prop-types',
-          'react-device-detect',
-        ],
+        external: (id) => {
+          const externals = [...Object.keys(peerDependencies), 'react/jsx-runtime', 'prop-types'];
+
+          return externals.some((dep) => id === dep || id.startsWith(`${dep}/`));
+        },
         output: {
           globals: {
             react: 'React',
