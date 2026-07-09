@@ -37,7 +37,7 @@ const app = async (): Promise<UserConfigExport> => {
         fileName: (format) => `${formattedName}.${format}.js`,
       },
       rollupOptions: {
-        external: [...Object.keys(peerDependencies), /react-phone-number-input\/locale/, /^libphonenumber-js/],
+        external: [...Object.keys(peerDependencies)],
         output: {
           globals: {
             react: 'React',
