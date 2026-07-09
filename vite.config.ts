@@ -44,6 +44,7 @@ const app = async (): Promise<UserConfigExport> => {
           'react-phone-number-input/min',
           'react-phone-number-input/mobile',
           'prop-types',
+          'react-device-detect',
         ],
         output: {
           globals: {
