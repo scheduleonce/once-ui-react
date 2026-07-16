@@ -37,8 +37,16 @@ const app = async (): Promise<UserConfigExport> => {
         fileName: (format) => `${formattedName}.${format}.js`,
       },
       rollupOptions: {
-        manualChunks: undefined,
-        external: [...Object.keys(peerDependencies)],
+        external: (id) => {
+          const externals = [
+            ...Object.keys(peerDependencies),
+            'react/jsx-runtime',
+            'prop-types',
+            'react-device-detect',
+          ];
+
+          return externals.some((dep) => id === dep || id.startsWith(`${dep}/`));
+        },
         output: {
           globals: {
             react: 'React',
