@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "2.1.9",
+  "version": "2.2.0",
   "type": "module",
   "repository": {
     "type": "git",
@@ -45,8 +45,6 @@
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@eslint/js": "^9.39.4",
-    "@headlessui/react": "^2.2.0",
-    "@heroicons/react": "^2.0.18",
     "@oncehub/relative-luminance": "^2.1.4",
     "@storybook/addon-docs": "10.4.0",
     "@storybook/react": "10.4.0",
@@ -77,7 +75,6 @@
     "prettier": "^3.0.3",
     "prop-types": "15.8.1",
     "react": "^19.0.0",
-    "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0",
     "sass": "^1.69.5",
     "storybook": "10.4.6",
@@ -94,9 +91,12 @@
     ]
   },
   "peerDependencies": {
-    "libphonenumber-js": "^1.12.36",
+    "libphonenumber-js": "^1.13.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-phone-number-input": "^3.4.11"
+    "react-phone-number-input": "^3.4.11",
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.0.18",
+    "react-device-detect": "^2.2.3"
   }
 }
