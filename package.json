@@ -71,7 +71,7 @@
     "jsdom": "^29.0.0",
     "json": "11.0.0",
     "lint-staged": "^15.0.1",
-    "postcss": "^8.5.14",
+    "postcss": "^8.5.23",
     "prettier": "^3.0.3",
     "prop-types": "15.8.1",
     "react": "^19.0.0",
