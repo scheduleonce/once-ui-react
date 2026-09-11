@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "2.2.3",
+  "version": "2.2.4",
   "type": "module",
   "repository": {
     "type": "git",
@@ -91,7 +91,7 @@
     ]
   },
   "peerDependencies": {
-    "libphonenumber-js": "^1.13.12",
+    "libphonenumber-js": "^1.13.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-phone-number-input": "^3.4.11",
