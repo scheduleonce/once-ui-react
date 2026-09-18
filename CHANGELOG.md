@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.3.0](2026-09-18)
+
+- Update Node version to latest security update v24.21.0
+
 ## [2.1.6](2026-02-17)
 
 ### Miscellaneous Chores
