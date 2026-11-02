@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.4.0](2026-10-23)
+
+- Update Node version to latest security update v24.22.1
+
 ## [2.3.0](2026-09-18)
 
 - Update Node version to latest security update v24.21.0
