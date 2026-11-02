@@ -1,4 +1,4 @@
-import React, { FC, useRef, useEffect, CSSProperties, useState, useCallback } from 'react';
+import React, { FC, useRef, useEffect, CSSProperties, useState, useCallback, useMemo } from 'react';
 import { Combobox, ComboboxInput, ComboboxButton } from '@headlessui/react';
 import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
@@ -15,6 +15,7 @@ interface Props {
   disable?: boolean;
   clearSearch?: boolean;
   themeColor?: string;
+  virtualOptions?: IOption[];
 }
 
 export const AutoComplete: FC<Props> = ({
@@ -25,6 +26,7 @@ export const AutoComplete: FC<Props> = ({
   disable,
   clearSearch = false,
   themeColor,
+  virtualOptions,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const inputButton = useRef<HTMLButtonElement>(null);
@@ -35,6 +37,16 @@ export const AutoComplete: FC<Props> = ({
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const [isPositionCalculated, setIsPositionCalculated] = useState(false);
+  const virtualConfiguration = useMemo(
+    () =>
+      virtualOptions?.length
+        ? {
+            options: virtualOptions,
+            disabled: (option: IOption | null) => Boolean(option?.disable),
+          }
+        : undefined,
+    [virtualOptions],
+  );
   const windowHeight = useRef<number>(0);
   const pageScrollHeight = useRef<number>(0);
 
@@ -148,7 +160,7 @@ export const AutoComplete: FC<Props> = ({
   }
 
   return (
-    <Combobox value={selected} onChange={onSelect} disabled={disable}>
+    <Combobox value={selected} onChange={onSelect} disabled={disable} virtual={virtualConfiguration}>
       {({ open: headlessOpen }) => {
         // Sync Headless UI's open state with our local state and trigger positioning
         if (headlessOpen !== isOpen) {

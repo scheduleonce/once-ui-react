@@ -138,3 +138,26 @@ return (
 	</>
 );
 ```
+
+## Virtualized autocomplete for large lists
+
+For long option lists, pass the filtered options to `AutoComplete` and use a render function with `AutoCompleteOptions virtual`. Headless UI then mounts only the visible options and a small overscan window. If filtering produces no options, switch back to normal children and render an empty-state message; virtual mode requires at least one option. Existing non-virtual examples continue to work without these props.
+
+```tsx
+<AutoComplete selected={selected} onSelect={setSelected} setQuery={setSearchQuery} virtualOptions={filteredOptions}>
+  <AutoCompleteOptions setQuery={setSearchQuery} virtual>
+    {(option) => (
+      <AutoCompleteOption
+        key={option.value}
+        value={option}
+        disable={Boolean(option.disable)}
+        className={({ active }) => (active ? 'tw-bg-[#EEEEEE]' : '')}
+      >
+        {option.label}
+      </AutoCompleteOption>
+    )}
+  </AutoCompleteOptions>
+</AutoComplete>
+```
+
+`virtualOptions` must contain the same filtered option set that should be displayed and searched. The render function receives one option at a time from Headless UI's virtual list. Keep option row heights consistent; the virtualizer estimates a row at 40 pixels, so style rows accordingly for accurate scrolling and positioning.

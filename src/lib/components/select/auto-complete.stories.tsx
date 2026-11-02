@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { AutoComplete } from './auto-complete';
 import { AutoCompleteOptions, AutoCompleteOption } from './auto-complete-options';
 import { IOption } from '../../interfaces/select.type';
@@ -129,4 +129,75 @@ export const WithTheme: Story = {
     ...WithoutTheme.args,
     themeColor: '#ff0000',
   },
+};
+
+const LargeOptionDemo = () => {
+  const options = useMemo<IOption[]>(
+    () =>
+      Array.from({ length: 200 }, (_, index) => ({
+        value: `option-${index + 1}`,
+        label: `Option ${String(index + 1).padStart(3, '0')}`,
+        disable: index === 10,
+      })),
+    [],
+  );
+  const [selected, setSelected] = useState<IOption | null>(null);
+  const [query, setQuery] = useState('');
+  const filteredOptions = useMemo(
+    () =>
+      query === ''
+        ? options
+        : options.filter((option) =>
+            option.label.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
+          ),
+    [options, query],
+  );
+
+  return (
+    <div style={{ width: 360, padding: 24 }}>
+      <p style={{ marginBottom: 8 }}>Searchable dropdown with 200 options (11th option disabled)</p>
+      <AutoComplete
+        selected={selected}
+        onSelect={setSelected}
+        setQuery={setQuery}
+        disable={false}
+        virtualOptions={filteredOptions.length > 0 ? filteredOptions : undefined}
+      >
+        {filteredOptions.length === 0 && query !== '' ? (
+          <AutoCompleteOptions setQuery={setQuery}>
+            <div className="tw-relative tw-cursor-default tw-select-none tw-px-4 tw-py-2 tw-text-[#333333]">
+              Nothing found.
+            </div>
+          </AutoCompleteOptions>
+        ) : (
+          <AutoCompleteOptions setQuery={setQuery} virtual>
+            {(option: IOption) => (
+              <AutoCompleteOption
+                disable={Boolean(option.disable)}
+                key={option.value}
+                className={({ active }: { active: boolean }) =>
+                  `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
+                    active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
+                  }`
+                }
+                value={option}
+              >
+                {({ selected: isSelected }: { selected: boolean; active: boolean }) => (
+                  <span className={isSelected ? 'tw-font-medium' : 'tw-font-normal'}>{option.label}</span>
+                )}
+              </AutoCompleteOption>
+            )}
+          </AutoCompleteOptions>
+        )}
+      </AutoComplete>
+      <p style={{ marginTop: 12 }} aria-live="polite">
+        Selected: {selected?.label ?? 'None'}
+      </p>
+      <p style={{ marginTop: 4, fontSize: 12 }}>Filtered options: {filteredOptions.length}</p>
+    </div>
+  );
+};
+
+export const Virtualized200Options: Story = {
+  render: () => <LargeOptionDemo />,
 };

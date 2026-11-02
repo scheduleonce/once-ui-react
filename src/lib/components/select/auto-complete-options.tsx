@@ -1,32 +1,36 @@
 import React, { FC, Fragment, forwardRef } from 'react';
 import { Transition, ComboboxOptions, ComboboxOption } from '@headlessui/react';
 import styles from './auto-complete.module.scss';
+import type { IOption } from '../../interfaces/select.type';
 
-interface Props {
-  children: any;
-  setQuery: (query: any) => void;
-}
+type VirtualOptionRenderer = (option: IOption) => React.ReactElement;
 
-export const AutoCompleteOptions: FC<Props> = ({ children, setQuery }) => {
+type Props =
+  | { children: React.ReactNode; setQuery: (query: string) => void; virtual?: false }
+  | { children: VirtualOptionRenderer; setQuery: (query: string) => void; virtual: true };
+
+export const AutoCompleteOptions: FC<Props> = (props) => {
+  const optionsContent: React.ComponentProps<typeof ComboboxOptions>['children'] = props.virtual
+    ? ({ option }: { open: boolean; option: any }) => (props.children as VirtualOptionRenderer)(option as IOption)
+    : props.children;
+
   return (
     <Transition
       as={Fragment}
       leave={styles.leave}
       leaveFrom={styles.leaveFrom}
       leaveTo={styles.leaveTo}
-      afterLeave={() => setQuery('')}
+      afterLeave={() => props.setQuery('')}
     >
-      <ComboboxOptions className={styles.autocompleteOptions}>{children}</ComboboxOptions>
+      <ComboboxOptions className={styles.autocompleteOptions}>{optionsContent}</ComboboxOptions>
     </Transition>
   );
 };
 
-type ComboboxOptionProps = { children: React.ReactNode; value: any; className: any; disable: boolean };
-export type ComboboxRef = HTMLLIElement;
-export const AutoCompleteOption = forwardRef<ComboboxRef, ComboboxOptionProps>((props, ref) => (
-  <ComboboxOption ref={ref} className={props.className} value={props.value} disabled={props.disable}>
-    {props.children}
-  </ComboboxOption>
+type ComboboxOptionProps = Omit<React.ComponentProps<typeof ComboboxOption>, 'disabled'> & { disable?: boolean };
+export type ComboboxRef = HTMLElement;
+export const AutoCompleteOption = forwardRef<ComboboxRef, ComboboxOptionProps>(({ disable, ...props }, ref) => (
+  <ComboboxOption ref={ref} {...props} disabled={disable} />
 ));
 
 AutoCompleteOption.displayName = 'AutoCompleteOption';
