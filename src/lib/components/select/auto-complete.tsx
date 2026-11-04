@@ -18,6 +18,20 @@ interface Props {
   virtualOptions?: IOption[];
 }
 
+interface ComboboxOpenEffectProps {
+  open: boolean;
+  onOpen: () => void;
+  children: React.ReactNode;
+}
+
+const ComboboxOpenEffect: FC<ComboboxOpenEffectProps> = ({ open, onOpen, children }) => {
+  useEffect(() => {
+    if (open) onOpen();
+  }, [open, onOpen]);
+
+  return <>{children}</>;
+};
+
 export const AutoComplete: FC<Props> = ({
   children,
   selected,
@@ -33,7 +47,6 @@ export const AutoComplete: FC<Props> = ({
   const selectRef = useRef<HTMLDivElement>(null);
   const selectDropdownRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const [isPositionCalculated, setIsPositionCalculated] = useState(false);
@@ -113,25 +126,25 @@ export const AutoComplete: FC<Props> = ({
     };
   }, []);
 
-  const handleInputClick = () => {
-    if (typeof isOpen !== 'undefined' && inputRef.current) {
-      if (!isOpen) {
-        getDropdownPosition();
-        setIsFocused(true);
-        if (selected) {
-          inputRef.current.value = selected.label || '';
-        }
-        if (clearSearch) {
-          inputRef.current.value = '';
-          setQuery('');
-        }
-        inputRef.current.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-      } else {
-        // If open, close it (toggle behavior)
-        inputRef.current.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-        setIsFocused(false);
-      }
+  const handleInputClick = (isOpen: boolean) => {
+    if (!inputRef.current) return;
+
+    if (isOpen) {
+      inputRef.current.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      setIsFocused(false);
+      return;
     }
+
+    getDropdownPosition();
+    setIsFocused(true);
+    if (selected) {
+      inputRef.current.value = selected.label || '';
+    }
+    if (clearSearch) {
+      inputRef.current.value = '';
+      setQuery('');
+    }
+    inputRef.current.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
   };
 
   const handleFocus = () => {
@@ -159,22 +172,20 @@ export const AutoComplete: FC<Props> = ({
     }
   }
 
-  return (
-    <Combobox value={selected} onChange={onSelect} disabled={disable} virtual={virtualConfiguration}>
-      {({ open: headlessOpen }) => {
-        // Sync Headless UI's open state with our local state and trigger positioning
-        if (headlessOpen !== isOpen) {
-          setIsOpen(headlessOpen);
-          if (headlessOpen) {
-            // Calculate positioning when dropdown opens
-            getDropdownPosition();
-          } else {
-            // Reset position calculation when dropdown closes
-            setIsPositionCalculated(false);
-          }
-        }
+  const updateDropdownPosition = useCallback(() => {
+    getDropdownPosition();
+  }, [getDropdownPosition]);
 
-        return (
+  return (
+    <Combobox
+      value={selected}
+      onChange={onSelect}
+      disabled={disable}
+      virtual={virtualConfiguration}
+      onClose={() => setIsPositionCalculated(false)}
+    >
+      {({ open }) => (
+        <ComboboxOpenEffect open={open} onOpen={updateDropdownPosition}>
           <div className={styles.autocomplete}>
             <div ref={selectRef} className={`${styles.autocompleteContainer} ${disable ? styles.disable : ''}`}>
               <ComboboxInput
@@ -184,9 +195,8 @@ export const AutoComplete: FC<Props> = ({
                 displayValue={(o: any) => o?.label || ''}
                 onChange={(event) => {
                   setQuery(event.target.value);
-                  // Remove getDropdownPosition call to prevent jerk during typing
                 }}
-                onClick={handleInputClick}
+                onClick={() => handleInputClick(open)}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 style={{ ...OptionStyleObj }}
@@ -197,46 +207,42 @@ export const AutoComplete: FC<Props> = ({
                 <ChevronDownIcon
                   className={`${styles.chevronDownIcon} ${disable ? styles.disable : ''}`}
                   aria-hidden="true"
-                  data-open={headlessOpen ? true : undefined}
+                  data-open={open ? true : undefined}
                 />
               </ComboboxButton>
             </div>
 
-            {isMounted
-              ? createPortal(
-                  <>
-                    {headlessOpen && (
-                      <div
-                        style={{
-                          position: 'fixed',
-                          inset: 0,
-                          backgroundColor: 'rgba(255,255,255,0)',
-                          zIndex: 1000,
-                        }}
-                      >
-                        <div
-                          ref={selectDropdownRef}
-                          style={{
-                            position: 'absolute',
-                            opacity: isPositionCalculated ? 1 : 0,
-                            width: selectRef.current ? selectRef.current.clientWidth : 'auto',
-                            left: dropdownPosition.left,
-                            top: dropdownPosition.top,
-
-                            zIndex: 1000,
-                          }}
-                        >
-                          {children}
-                        </div>
-                      </div>
-                    )}
-                  </>,
-                  document.body,
-                )
-              : null}
+            {isMounted &&
+              createPortal(
+                open && (
+                  <div
+                    style={{
+                      position: 'fixed',
+                      inset: 0,
+                      backgroundColor: 'rgba(255,255,255,0)',
+                      zIndex: 1000,
+                    }}
+                  >
+                    <div
+                      ref={selectDropdownRef}
+                      style={{
+                        position: 'absolute',
+                        opacity: isPositionCalculated ? 1 : 0,
+                        width: selectRef.current ? selectRef.current.clientWidth : 'auto',
+                        left: dropdownPosition.left,
+                        top: dropdownPosition.top,
+                        zIndex: 1000,
+                      }}
+                    >
+                      {children}
+                    </div>
+                  </div>
+                ),
+                document.body,
+              )}
           </div>
-        );
-      }}
+        </ComboboxOpenEffect>
+      )}
     </Combobox>
   );
 };
