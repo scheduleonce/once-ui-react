@@ -1,5 +1,9 @@
 Reference (https://headlessui.com/react/combobox).
 
+## Virtualized autocomplete
+
+`VirtualizedAutoComplete` is an opt-in autocomplete for large option lists. Pass the currently filtered options as `options`, render each item with `renderOption`, and optionally customize active/selected styling with `optionClassName`. Options should use fixed-height rows so Headless UI's virtualizer can accurately maintain scroll and keyboard navigation. The current filter is retained when an option is selected and the dropdown is reopened; set `clearSearch` to clear it on open.
+
 ## Usage of Dropdown
 
 - Dummy people object to create Drop down

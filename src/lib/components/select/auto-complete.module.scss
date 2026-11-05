@@ -87,3 +87,11 @@
     @apply tw-outline-none;
   }
 }
+
+.virtualizedAutocompleteOption {
+  @apply tw-box-border tw-w-full;
+  height: 40px;
+  min-height: 40px;
+  overflow: hidden;
+}
+
