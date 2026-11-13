@@ -41,9 +41,11 @@ Theme colors use consistent pattern across components:
 
 ### SCSS Module Conventions
 
-- Use Tailwind classes with `tw-` prefix: `@apply tw-flex tw-items-center`
-- Combine with CSS modules for component-specific styles
-- Responsive and state-based classes: `hover:tw-underline focus:tw-outline-2`
+- This project uses Tailwind CSS v4 with the `tw:` prefix: `@apply tw:flex tw:items-center`.
+- In SCSS modules that use `@apply`, add an `@reference` to `src/lib/tailwind/theme.css` using the correct relative path.
+- Combine Tailwind utilities with CSS modules for component-specific styles.
+- Prefix responsive and state variants too, for example `tw:hover:underline tw:focus:outline-2`.
+- Tailwind's prefix and custom configuration are declared in `src/lib/tailwind/theme.css` and `tailwind.config.js`; preserve the custom `s767` breakpoint and disabled Preflight when changing the configuration.
 
 ### Focus State Management
 

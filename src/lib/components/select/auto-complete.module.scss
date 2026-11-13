@@ -1,89 +1,90 @@
+@reference '../../tailwind/theme.css';
 .autocomplete {
-  @apply tw-relative;
+  @apply tw:relative;
   .autocompleteContainer {
-    @apply tw-relative tw-h-10 tw-w-full tw-cursor-default tw-overflow-hidden tw-bg-transparent tw-text-left tw-text-[#333333];
+    @apply tw:relative tw:h-10 tw:w-full tw:cursor-default tw:overflow-hidden tw:bg-transparent tw:text-left tw:text-[#333333];
     &.disable {
-      @apply tw-text-[#A7A7A7];
+      @apply tw:text-[#A7A7A7];
     }
     &:focus {
-      @apply tw-outline-none;
+      @apply tw:outline-hidden;
     }
     &:focus-visible {
-      @apply tw-ring-1 tw-ring-[#DFDFDF] tw-ring-offset-2 tw-ring-offset-[#DFDFDF];
+      @apply tw:ring-1 tw:ring-[#DFDFDF] tw:ring-offset-2 tw:ring-offset-[#DFDFDF];
     }
     .autocompleteInput {
-      @apply tw-h-full tw-w-full tw-bg-transparent tw-box-border tw-border-0 tw-border-b-[1px] tw-border-b-[#333333] tw-pb-2 tw-pl-[10px] tw-pr-10 tw-pt-2 tw-text-base tw-leading-5 tw-placeholder-[#666666] tw-shadow-none;
+      @apply tw:h-full tw:w-full tw:bg-transparent tw:box-border tw:border-0 tw:border-b-[1px] tw:border-b-[#333333] tw:pb-2 tw:pl-[10px] tw:pr-10 tw:pt-2 tw:text-base tw:leading-5 tw:placeholder-[#666666] tw:shadow-none;
       &:focus {
-        @apply tw-border-b-2 tw-border-b-[#006bb1] tw-pb-[7px] tw-outline-none tw-ring-[0px];
+        @apply tw:border-b-2 tw:border-b-[#006bb1] tw:pb-[7px] tw:outline-hidden tw:ring-[0px];
       }
       &:focus-visible {
-        @apply tw-ring-[0px];
+        @apply tw:ring-[0px];
       }
       /* Headless UI data attributes */
       &[data-focus] {
-        @apply tw-border-b-2 tw-border-b-[#006bb1] tw-pb-[7px] tw-outline-none tw-ring-[0px];
+        @apply tw:border-b-2 tw:border-b-[#006bb1] tw:pb-[7px] tw:outline-hidden tw:ring-[0px];
       }
 
       &[data-disabled] {
-        @apply tw-text-[#A7A7A7] tw-cursor-not-allowed;
+        @apply tw:text-[#A7A7A7] tw:cursor-not-allowed;
       }
     }
 
     .autocompleteButton {
-      @apply tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-pr-2 tw-bg-transparent tw-border-0;
+      @apply tw:absolute tw:inset-y-0 tw:right-0 tw:flex tw:items-center tw:pr-2 tw:bg-transparent tw:border-0;
 
       /* Headless UI data attributes */
       &[data-focus] {
-        @apply tw-outline-none tw-ring-2 tw-ring-[#006bb1] tw-ring-offset-1;
+        @apply tw:outline-hidden tw:ring-3 tw:ring-[#006bb1] tw:ring-offset-1;
       }
 
       &[data-disabled] {
-        @apply tw-cursor-not-allowed;
+        @apply tw:cursor-not-allowed;
       }
 
       .chevronDownIcon {
-        @apply tw-h-5 tw-w-5 tw-text-[#333333] tw-transition-transform tw-duration-200;
+        @apply tw:h-5 tw:w-5 tw:text-[#333333] tw:transition-transform tw:duration-200;
         &.disable {
-          @apply tw-text-[#A7A7A7];
+          @apply tw:text-[#A7A7A7];
         }
       }
 
       /* Rotate chevron when combobox is open */
       &[data-open] .chevronDownIcon {
-        @apply tw-rotate-180;
+        @apply tw:rotate-180;
       }
     }
   }
 }
 
 .leave {
-  @apply tw-transition tw-ease-in tw-duration-100;
+  @apply tw:transition tw:ease-in tw:duration-100;
 }
 .leaveFrom {
-  @apply tw-opacity-100;
+  @apply tw:opacity-100;
 }
 .leaveTo {
-  @apply tw-opacity-0;
+  @apply tw:opacity-0;
 }
 
 .autocompleteOptions {
-  @apply tw-max-h-[210px] tw-w-full tw-overflow-auto tw-bg-white tw-list-none tw-m-0 tw-px-0 tw-py-[10px] tw-text-base tw-shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] sm:tw-text-sm;
-  @apply [&::-webkit-scrollbar-thumb]:tw-rounded-md [&::-webkit-scrollbar-thumb]:tw-bg-[#a9a9a9] [&::-webkit-scrollbar]:tw-w-[6px];
+  @apply tw:max-h-[210px] tw:w-full tw:overflow-auto tw:bg-white tw:list-none tw:m-0 tw:px-0 tw:py-[10px] tw:text-base tw:shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] tw:sm:text-sm;
+  @apply tw:[&::-webkit-scrollbar-thumb]:rounded-md tw:[&::-webkit-scrollbar-thumb]:bg-[#a9a9a9] tw:[&::-webkit-scrollbar]:w-[6px];
 
   /* Headless UI transition data attributes */
   &[data-transition] {
-    @apply tw-transition tw-duration-200 tw-ease-out;
+    @apply tw:transition tw:duration-200 tw:ease-out;
   }
 
   &[data-closed] {
-    @apply tw-opacity-0 tw-scale-95;
+    @apply tw:opacity-0 tw:scale-95;
   }
 
   &[data-open] {
-    @apply tw-opacity-100 tw-scale-100;
+    @apply tw:opacity-100 tw:scale-100;
   }
 
   &:focus {
-    @apply tw-outline-none;
+    @apply tw:outline-hidden;
   }
 }

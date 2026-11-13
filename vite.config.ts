@@ -2,10 +2,8 @@ import react from '@vitejs/plugin-react';
 import path from 'node:path';
 import { defineConfig } from 'vitest/config';
 import dts from 'vite-plugin-dts';
-import tailwindcss from 'tailwindcss';
-import { peerDependencies } from './package.json';
+import { peerDependencies, name } from './package.json';
 import { UserConfigExport } from 'vite';
-import { name } from './package.json';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 const app = async (): Promise<UserConfigExport> => {
@@ -24,11 +22,6 @@ const app = async (): Promise<UserConfigExport> => {
       }),
       cssInjectedByJsPlugin(),
     ],
-    css: {
-      postcss: {
-        plugins: [tailwindcss],
-      },
-    },
     build: {
       lib: {
         entry: path.resolve(__dirname, 'src/lib/index.ts'),
@@ -52,7 +45,6 @@ const app = async (): Promise<UserConfigExport> => {
             react: 'React',
             'react/jsx-runtime': 'react/jsx-runtime',
             'react-dom': 'ReactDOM',
-            tailwindcss: 'tailwindcss',
           },
         },
       },

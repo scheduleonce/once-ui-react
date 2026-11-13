@@ -1,36 +1,37 @@
+@reference '../../tailwind/theme.css';
 .button {
-	@apply tw-box-border tw-flex tw-cursor-pointer tw-items-center tw-justify-center tw-border tw-border-solid tw-text-center tw-shadow-none hover:tw-underline focus:tw-underline disabled:tw-cursor-default disabled:hover:tw-no-underline;
+	@apply tw:box-border tw:flex tw:cursor-pointer tw:items-center tw:justify-center tw:border tw:border-solid tw:text-center tw:shadow-none tw:hover:underline tw:focus:underline tw:disabled:cursor-default tw:disabled:hover:no-underline;
 }
 .primary {
-	@apply tw-border-transparent tw-bg-[#006bb1] tw-font-medium tw-text-white tw-outline-[#006bb1] focus:tw-outline-2 focus:tw-outline-offset-[3px];
+	@apply tw:border-transparent tw:bg-[#006bb1] tw:font-medium tw:text-white tw:outline-[#006bb1] tw:focus:outline-2 tw:focus:outline-offset-[3px];
 	&:disabled {
-		@apply tw-border-[#c8c8c8] tw-bg-[#c8c8c8] tw-text-white;
+		@apply tw:border-[#c8c8c8] tw:bg-[#c8c8c8] tw:text-white;
 	}
 }
 .secondary {
-	@apply tw-border-[#006bb1] tw-bg-white tw-font-normal tw-text-[#006bb1] hover:tw-border-transparent hover:tw-outline hover:tw-outline-2 hover:tw-outline-offset-[-2px] hover:tw-outline-[#006bb1] focus:tw-border-transparent focus:tw-outline focus:tw-outline-2 focus:tw-outline-offset-[-2px] focus:tw-outline-[#006bb1];
+	@apply tw:border-[#006bb1] tw:bg-white tw:font-normal tw:text-[#006bb1] tw:hover:border-transparent tw:hover:outline tw:hover:outline-2 tw:hover:outline-offset-[-2px] tw:hover:outline-[#006bb1] tw:focus:border-transparent tw:focus:outline tw:focus:outline-2 tw:focus:outline-offset-[-2px] tw:focus:outline-[#006bb1];
 	&:disabled {
-		@apply tw-border-[#c8c8c8] tw-text-[#c8c8c8] hover:tw-outline-0 focus:tw-outline-0;
+		@apply tw:border-[#c8c8c8] tw:text-[#c8c8c8] tw:hover:outline-0 tw:focus:outline-0;
 	}
 }
 .small {
-	@apply tw-min-h-[35px] tw-min-w-[70px] tw-px-[22px] tw-py-[4px] tw-text-sm tw-leading-[22px];
+	@apply tw:min-h-[35px] tw:min-w-[70px] tw:px-[22px] tw:py-[4px] tw:text-sm tw:leading-[22px];
 	&.rounded {
-		@apply tw-rounded-[18px];
+		@apply tw:rounded-[18px];
 	}
 }
 .medium {
-	@apply tw-min-h-[40px] tw-min-w-[74px] tw-px-[22px] tw-py-[7px] tw-text-sm tw-leading-[22px];
+	@apply tw:min-h-[40px] tw:min-w-[74px] tw:px-[22px] tw:py-[7px] tw:text-sm tw:leading-[22px];
 	&.rounded {
-		@apply tw-rounded-[20px];
+		@apply tw:rounded-[20px];
 	}
 }
 .large {
-	@apply tw-min-h-[44px] tw-min-w-[94px] tw-px-6 tw-py-[8px] tw-text-base tw-leading-[24px];
+	@apply tw:min-h-[44px] tw:min-w-[94px] tw:px-6 tw:py-[8px] tw:text-base tw:leading-[24px];
 	&.rounded {
-		@apply tw-rounded-[22px];
+		@apply tw:rounded-[22px];
 	}
 }
 .squared {
-	@apply tw-rounded;
+	@apply tw:rounded;
 }

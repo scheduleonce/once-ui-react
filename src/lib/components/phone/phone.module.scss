@@ -1,19 +1,20 @@
+@reference '../../tailwind/theme.css';
 .phoneWrapper {
-  @apply tw-flex tw-max-w-[380px] tw-items-center tw-justify-between tw-gap-3;
+  @apply tw:flex tw:max-w-[380px] tw:items-center tw:justify-between tw:gap-3;
   .countryCode {
-    @apply tw-h-10 tw-w-full tw-max-w-[110px];
+    @apply tw:h-10 tw:w-full tw:max-w-[110px];
     button {
-      @apply tw-h-10 tw-bg-transparent tw-pl-[10px] tw-font-normal;
+      @apply tw:h-10 tw:bg-transparent tw:pl-[10px] tw:font-normal;
       background: transparent !important;
     }
   }
   .phoneInputWrap {
-    @apply tw-w-full;
+    @apply tw:w-full;
     .phoneInput {
-      @apply tw-h-10 tw-box-border tw-w-full tw-border-0 tw-border-b tw-border-[#333333] tw-bg-transparent tw-px-[3px] tw-text-base tw-text-[#333333] tw-placeholder-[#666666] tw-outline-none focus:tw-border-b-2 focus:tw-border-[#006bb1];
+      @apply tw:h-10 tw:box-border tw:w-full tw:border-0 tw:border-b tw:border-[#333333] tw:bg-transparent tw:px-[3px] tw:text-base tw:text-[#333333] tw:placeholder-[#666666] tw:outline-hidden tw:focus:border-b-2 tw:focus:border-[#006bb1];
       &.serverError {
         &:focus {
-          @apply tw-border-b-[#f54d4d];
+          @apply tw:border-b-[#f54d4d];
         }
       }
     }
@@ -21,27 +22,27 @@
 }
 
 .phonNumberList {
-  @apply tw-min-w-[286px];
+  @apply tw:min-w-[286px];
 
   // Updated for Headless UI 2.0 - now using div elements instead of ul/li
   & > div {
     width: auto;
 
     & > div {
-      @apply tw-relative tw-cursor-default tw-select-none tw-px-[10px] tw-py-2;
+      @apply tw:relative tw:cursor-default tw:select-none tw:px-[10px] tw:py-2;
 
       // Use Headless UI 2.0 data attributes and hover for better styling
       &[data-focus='true'],
       &[data-selected='true'],
       &.active,
       &:hover {
-        @apply tw-bg-[#EEEEEE] tw-text-[#333333];
+        @apply tw:bg-[#EEEEEE] tw:text-[#333333];
       }
 
       .countryListText {
-        @apply tw-flex tw-items-center;
+        @apply tw:flex tw:items-center;
         & > span {
-          @apply tw-block tw-truncate tw-font-normal;
+          @apply tw:block tw:truncate tw:font-normal;
         }
       }
     }
@@ -51,14 +52,14 @@
   ul {
     width: auto;
     li {
-      @apply tw-relative tw-cursor-default tw-select-none tw-px-[10px] tw-py-2;
+      @apply tw:relative tw:cursor-default tw:select-none tw:px-[10px] tw:py-2;
       &.active {
-        @apply tw-bg-[#EEEEEE] tw-text-[#333333];
+        @apply tw:bg-[#EEEEEE] tw:text-[#333333];
       }
       .countryListText {
-        @apply tw-flex tw-items-center;
+        @apply tw:flex tw:items-center;
         & > span {
-          @apply tw-block tw-truncate tw-font-normal;
+          @apply tw:block tw:truncate tw:font-normal;
         }
       }
     }
