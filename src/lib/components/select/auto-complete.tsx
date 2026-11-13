@@ -1,4 +1,15 @@
-import React, { FC, useRef, useEffect, CSSProperties, useState, useCallback } from 'react';
+import React, {
+  FC,
+  useRef,
+  useEffect,
+  CSSProperties,
+  useState,
+  useCallback,
+  Children,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { Combobox, ComboboxInput, ComboboxButton } from '@headlessui/react';
 import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
@@ -6,6 +17,8 @@ import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
 import { createPortal } from 'react-dom';
 import styles from './auto-complete.module.scss';
+import { AutoCompleteOption } from './auto-complete-options';
+import { AutoCompleteVirtualContext, RenderVirtualOption } from './auto-complete-virtual-context';
 
 interface Props {
   children: any;
@@ -16,6 +29,58 @@ interface Props {
   clearSearch?: boolean;
   themeColor?: string;
 }
+
+const VIRTUALIZATION_THRESHOLD = 100;
+const EMPTY_VIRTUAL_OPTION: IOption = { label: '', value: '' };
+
+interface VirtualOptions {
+  values: IOption[];
+  disabledValues: Set<unknown>;
+  elementByValue: Map<unknown, ReactElement>;
+  isEmpty: boolean;
+}
+
+const collectOptionElements = (node: ReactNode, elements: ReactElement<any>[] = []): ReactElement<any>[] => {
+  Children.forEach(node, (child) => {
+    if (!isValidElement(child)) return;
+    if (child.type === AutoCompleteOption) {
+      elements.push(child);
+    } else {
+      collectOptionElements((child.props as { children?: ReactNode }).children, elements);
+    }
+  });
+  return elements;
+};
+
+const getVirtualOptions = (elements: ReactElement<any>[]): VirtualOptions => {
+  const virtualOptions: VirtualOptions = {
+    values: [],
+    disabledValues: new Set(),
+    elementByValue: new Map(),
+    isEmpty: elements.length === 0,
+  };
+  elements.forEach((element) => {
+    const value = element.props.value;
+    virtualOptions.values.push(value);
+    virtualOptions.elementByValue.set(value, element);
+    if (element.props.disable) virtualOptions.disabledValues.add(value);
+  });
+  // Headless UI renders nothing for an empty virtual list, so a placeholder row carries the "nothing found" content
+  if (virtualOptions.isEmpty) {
+    virtualOptions.values.push(EMPTY_VIRTUAL_OPTION);
+    virtualOptions.disabledValues.add(EMPTY_VIRTUAL_OPTION);
+  }
+  return virtualOptions;
+};
+
+// Keeps the previous array while its items are unchanged so Headless UI does not re-key virtual items on every render.
+const useStableArray = <T,>(items: T[]): T[] => {
+  const ref = useRef(items);
+  if (ref.current.length !== items.length || ref.current.some((item, index) => item !== items[index])) {
+    ref.current = items;
+  }
+  return ref.current;
+};
 
 export const AutoComplete: FC<Props> = ({
   children,
@@ -35,10 +100,37 @@ export const AutoComplete: FC<Props> = ({
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const [isPositionCalculated, setIsPositionCalculated] = useState(false);
+  const [isVirtualized, setIsVirtualized] = useState(false);
   const windowHeight = useRef<number>(0);
   const pageScrollHeight = useRef<number>(0);
 
   let OptionStyleObj: CSSProperties = {};
+
+  const optionElements = collectOptionElements(children);
+  // Headless UI cannot drop its virtual list in place, so stay virtualized once the threshold has been exceeded
+  if (!isVirtualized && optionElements.length > VIRTUALIZATION_THRESHOLD) setIsVirtualized(true);
+  const virtualOptions = isVirtualized ? getVirtualOptions(optionElements) : null;
+  const virtualValues = useStableArray(virtualOptions?.values ?? []);
+  const lastVirtualElements = useRef<Map<unknown, ReactElement>>(new Map());
+
+  useEffect(() => {
+    if (virtualOptions) lastVirtualElements.current = virtualOptions.elementByValue;
+  });
+
+  // Headless UI can ask for an option from the previous list before the current one is committed
+  const renderVirtualOption: RenderVirtualOption | null = virtualOptions
+    ? (option, emptyContent) => {
+        if (option === EMPTY_VIRTUAL_OPTION) return <div>{virtualOptions.isEmpty ? emptyContent : null}</div>;
+        return (
+          virtualOptions.elementByValue.get(option) ??
+          lastVirtualElements.current.get(option) ?? (
+            <AutoCompleteOption value={option} className="" disable={true}>
+              {null}
+            </AutoCompleteOption>
+          )
+        );
+      }
+    : null;
 
   useEffect(() => {
     if (inputRef.current && selected) {
@@ -148,7 +240,16 @@ export const AutoComplete: FC<Props> = ({
   }
 
   return (
-    <Combobox value={selected} onChange={onSelect} disabled={disable}>
+    <Combobox
+      value={selected}
+      onChange={onSelect}
+      disabled={disable}
+      virtual={
+        virtualOptions
+          ? { options: virtualValues, disabled: (option) => virtualOptions.disabledValues.has(option) }
+          : undefined
+      }
+    >
       {({ open: headlessOpen }) => {
         // Sync Headless UI's open state with our local state and trigger positioning
         if (headlessOpen !== isOpen) {
@@ -214,7 +315,9 @@ export const AutoComplete: FC<Props> = ({
                             zIndex: 1000,
                           }}
                         >
-                          {children}
+                          <AutoCompleteVirtualContext.Provider value={renderVirtualOption}>
+                            {children}
+                          </AutoCompleteVirtualContext.Provider>
                         </div>
                       </div>
                     )}
