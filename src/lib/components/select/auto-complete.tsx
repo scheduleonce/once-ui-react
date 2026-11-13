@@ -98,7 +98,11 @@ export const AutoComplete: FC<Props> = ({
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; opensUp: boolean }>({
+    top: 0,
+    left: 0,
+    opensUp: false,
+  });
   const [isPositionCalculated, setIsPositionCalculated] = useState(false);
   const [isVirtualized, setIsVirtualized] = useState(false);
   const windowHeight = useRef<number>(0);
@@ -120,7 +124,15 @@ export const AutoComplete: FC<Props> = ({
   // Headless UI can ask for an option from the previous list before the current one is committed
   const renderVirtualOption: RenderVirtualOption | null = virtualOptions
     ? (option, emptyContent) => {
-        if (option === EMPTY_VIRTUAL_OPTION) return <div>{virtualOptions.isEmpty ? emptyContent : null}</div>;
+        // Rendered as a disabled option so Headless UI measures its real height. Headless UI updates its option list one
+        // commit late, so the empty content is shown only when this render has no options (otherwise the new options would be nested here)
+        if (option === EMPTY_VIRTUAL_OPTION) {
+          return (
+            <AutoCompleteOption value={option} className="" disable={true}>
+              {virtualOptions.isEmpty ? emptyContent : null}
+            </AutoCompleteOption>
+          );
+        }
         return (
           virtualOptions.elementByValue.get(option) ??
           lastVirtualElements.current.get(option) ?? (
@@ -144,6 +156,11 @@ export const AutoComplete: FC<Props> = ({
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    // The list unmounts on close, so its leave transition never resets the search; clear it here to match the input
+    if (!isOpen) setQuery('');
+  }, [isOpen]);
+
   const getDropdownPosition = useCallback(() => {
     if (selectRef.current) {
       // Use visualViewport for zoom-aware positioning if available
@@ -164,18 +181,22 @@ export const AutoComplete: FC<Props> = ({
           remainingScroll = document.body.scrollHeight - (viewport.height + viewport.pageTop);
         }
         if (selectDropdownRect) {
-          const dropdownHeight = selectDropdownRect.height;
+          // Decide the direction with the list's maximum height: its content can grow after opening (for example after a search)
+          const listbox = selectDropdownRef?.current?.querySelector<HTMLElement>('[role="listbox"]');
+          const listMaxHeight = listbox ? parseFloat(getComputedStyle(listbox).maxHeight) : NaN;
+          const dropdownHeight = Number.isNaN(listMaxHeight) ? selectDropdownRect.height : listMaxHeight;
           const selectTop = selectRect.top;
           const noSpaceAbove = dropdownHeight >= selectTop + window.scrollY;
-          const openTop =
+          const opensDown =
             (dropdownHeight >= selectTop &&
               (noSpaceAbove || remainingScroll >= dropdownHeight || remainingSpace >= dropdownHeight)) ||
-            (selectTop >= dropdownHeight && remainingSpace >= dropdownHeight)
-              ? top
-              : (viewport ? selectRect.top + viewport.offsetTop : selectRect.y) - dropdownHeight;
+            (selectTop >= dropdownHeight && remainingSpace >= dropdownHeight);
+          // Upward dropdowns are anchored by their bottom edge (translateY below), so they stay attached to the input when their height changes
+          const inputTop = viewport ? selectRect.top + viewport.offsetTop : selectRect.top;
           setDropdownPosition({
             left,
-            top: openTop ?? (viewport ? selectRect.top + viewport.offsetTop : selectRect.top),
+            top: opensDown ? top : inputTop,
+            opensUp: !opensDown,
           });
           setIsPositionCalculated(true);
         }
@@ -311,6 +332,7 @@ export const AutoComplete: FC<Props> = ({
                             width: selectRef.current ? selectRef.current.clientWidth : 'auto',
                             left: dropdownPosition.left,
                             top: dropdownPosition.top,
+                            transform: dropdownPosition.opensUp ? 'translateY(-100%)' : undefined,
 
                             zIndex: 1000,
                           }}
