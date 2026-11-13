@@ -1,4 +1,15 @@
-import React, { FC, useRef, useEffect, CSSProperties, useState, useCallback } from 'react';
+import React, {
+  FC,
+  useRef,
+  useEffect,
+  CSSProperties,
+  useState,
+  useCallback,
+  Children,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { Combobox, ComboboxInput, ComboboxButton } from '@headlessui/react';
 import { IOption } from '../../interfaces/select.type';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
@@ -6,6 +17,8 @@ import luminance from '@oncehub/relative-luminance';
 import { ColorsService } from '../colors.service';
 import { createPortal } from 'react-dom';
 import styles from './auto-complete.module.scss';
+import { AutoCompleteOption } from './auto-complete-options';
+import { AutoCompleteVirtualContext, RenderVirtualOption } from './auto-complete-virtual-context';
 
 interface Props {
   children: any;
@@ -16,6 +29,58 @@ interface Props {
   clearSearch?: boolean;
   themeColor?: string;
 }
+
+const VIRTUALIZATION_THRESHOLD = 100;
+const EMPTY_VIRTUAL_OPTION: IOption = { label: '', value: '' };
+
+interface VirtualOptions {
+  values: IOption[];
+  disabledValues: Set<unknown>;
+  elementByValue: Map<unknown, ReactElement>;
+  isEmpty: boolean;
+}
+
+const collectOptionElements = (node: ReactNode, elements: ReactElement<any>[] = []): ReactElement<any>[] => {
+  Children.forEach(node, (child) => {
+    if (!isValidElement(child)) return;
+    if (child.type === AutoCompleteOption) {
+      elements.push(child);
+    } else {
+      collectOptionElements((child.props as { children?: ReactNode }).children, elements);
+    }
+  });
+  return elements;
+};
+
+const getVirtualOptions = (elements: ReactElement<any>[]): VirtualOptions => {
+  const virtualOptions: VirtualOptions = {
+    values: [],
+    disabledValues: new Set(),
+    elementByValue: new Map(),
+    isEmpty: elements.length === 0,
+  };
+  elements.forEach((element) => {
+    const value = element.props.value;
+    virtualOptions.values.push(value);
+    virtualOptions.elementByValue.set(value, element);
+    if (element.props.disable) virtualOptions.disabledValues.add(value);
+  });
+  // Headless UI renders nothing for an empty virtual list, so a placeholder row carries the "nothing found" content
+  if (virtualOptions.isEmpty) {
+    virtualOptions.values.push(EMPTY_VIRTUAL_OPTION);
+    virtualOptions.disabledValues.add(EMPTY_VIRTUAL_OPTION);
+  }
+  return virtualOptions;
+};
+
+// Keeps the previous array while its items are unchanged so Headless UI does not re-key virtual items on every render.
+const useStableArray = <T,>(items: T[]): T[] => {
+  const ref = useRef(items);
+  if (ref.current.length !== items.length || ref.current.some((item, index) => item !== items[index])) {
+    ref.current = items;
+  }
+  return ref.current;
+};
 
 export const AutoComplete: FC<Props> = ({
   children,
@@ -33,12 +98,51 @@ export const AutoComplete: FC<Props> = ({
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; opensUp: boolean }>({
+    top: 0,
+    left: 0,
+    opensUp: false,
+  });
   const [isPositionCalculated, setIsPositionCalculated] = useState(false);
+  const [isVirtualized, setIsVirtualized] = useState(false);
   const windowHeight = useRef<number>(0);
   const pageScrollHeight = useRef<number>(0);
 
   let OptionStyleObj: CSSProperties = {};
+
+  const optionElements = collectOptionElements(children);
+  // Headless UI cannot drop its virtual list in place, so stay virtualized once the threshold has been exceeded
+  if (!isVirtualized && optionElements.length > VIRTUALIZATION_THRESHOLD) setIsVirtualized(true);
+  const virtualOptions = isVirtualized ? getVirtualOptions(optionElements) : null;
+  const virtualValues = useStableArray(virtualOptions?.values ?? []);
+  const lastVirtualElements = useRef<Map<unknown, ReactElement>>(new Map());
+
+  useEffect(() => {
+    if (virtualOptions) lastVirtualElements.current = virtualOptions.elementByValue;
+  });
+
+  // Headless UI can ask for an option from the previous list before the current one is committed
+  const renderVirtualOption: RenderVirtualOption | null = virtualOptions
+    ? (option, emptyContent) => {
+        // Rendered as a disabled option so Headless UI measures its real height. Headless UI updates its option list one
+        // commit late, so the empty content is shown only when this render has no options (otherwise the new options would be nested here)
+        if (option === EMPTY_VIRTUAL_OPTION) {
+          return (
+            <AutoCompleteOption value={option} className="" disable={true}>
+              {virtualOptions.isEmpty ? emptyContent : null}
+            </AutoCompleteOption>
+          );
+        }
+        return (
+          virtualOptions.elementByValue.get(option) ??
+          lastVirtualElements.current.get(option) ?? (
+            <AutoCompleteOption value={option} className="" disable={true}>
+              {null}
+            </AutoCompleteOption>
+          )
+        );
+      }
+    : null;
 
   useEffect(() => {
     if (inputRef.current && selected) {
@@ -51,6 +155,11 @@ export const AutoComplete: FC<Props> = ({
     pageScrollHeight.current = document.body.scrollHeight;
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    // The list unmounts on close, so its leave transition never resets the search; clear it here to match the input
+    if (!isOpen) setQuery('');
+  }, [isOpen]);
 
   const getDropdownPosition = useCallback(() => {
     if (selectRef.current) {
@@ -72,18 +181,22 @@ export const AutoComplete: FC<Props> = ({
           remainingScroll = document.body.scrollHeight - (viewport.height + viewport.pageTop);
         }
         if (selectDropdownRect) {
-          const dropdownHeight = selectDropdownRect.height;
+          // Decide the direction with the list's maximum height: its content can grow after opening (for example after a search)
+          const listbox = selectDropdownRef?.current?.querySelector<HTMLElement>('[role="listbox"]');
+          const listMaxHeight = listbox ? parseFloat(getComputedStyle(listbox).maxHeight) : NaN;
+          const dropdownHeight = Number.isNaN(listMaxHeight) ? selectDropdownRect.height : listMaxHeight;
           const selectTop = selectRect.top;
           const noSpaceAbove = dropdownHeight >= selectTop + window.scrollY;
-          const openTop =
+          const opensDown =
             (dropdownHeight >= selectTop &&
               (noSpaceAbove || remainingScroll >= dropdownHeight || remainingSpace >= dropdownHeight)) ||
-            (selectTop >= dropdownHeight && remainingSpace >= dropdownHeight)
-              ? top
-              : (viewport ? selectRect.top + viewport.offsetTop : selectRect.y) - dropdownHeight;
+            (selectTop >= dropdownHeight && remainingSpace >= dropdownHeight);
+          // Upward dropdowns are anchored by their bottom edge (translateY below), so they stay attached to the input when their height changes
+          const inputTop = viewport ? selectRect.top + viewport.offsetTop : selectRect.top;
           setDropdownPosition({
             left,
-            top: openTop ?? (viewport ? selectRect.top + viewport.offsetTop : selectRect.top),
+            top: opensDown ? top : inputTop,
+            opensUp: !opensDown,
           });
           setIsPositionCalculated(true);
         }
@@ -148,7 +261,16 @@ export const AutoComplete: FC<Props> = ({
   }
 
   return (
-    <Combobox value={selected} onChange={onSelect} disabled={disable}>
+    <Combobox
+      value={selected}
+      onChange={onSelect}
+      disabled={disable}
+      virtual={
+        virtualOptions
+          ? { options: virtualValues, disabled: (option) => virtualOptions.disabledValues.has(option) }
+          : undefined
+      }
+    >
       {({ open: headlessOpen }) => {
         // Sync Headless UI's open state with our local state and trigger positioning
         if (headlessOpen !== isOpen) {
@@ -210,11 +332,14 @@ export const AutoComplete: FC<Props> = ({
                             width: selectRef.current ? selectRef.current.clientWidth : 'auto',
                             left: dropdownPosition.left,
                             top: dropdownPosition.top,
+                            transform: dropdownPosition.opensUp ? 'translateY(-100%)' : undefined,
 
                             zIndex: 1000,
                           }}
                         >
-                          {children}
+                          <AutoCompleteVirtualContext.Provider value={renderVirtualOption}>
+                            {children}
+                          </AutoCompleteVirtualContext.Provider>
                         </div>
                       </div>
                     )}

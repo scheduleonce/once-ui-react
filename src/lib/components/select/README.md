@@ -138,3 +138,7 @@ return (
 	</>
 );
 ```
+
+## Large option lists
+
+When more than 100 `AutoCompleteOption` elements are rendered inside `AutoCompleteOptions`, `AutoComplete` switches to Headless UI's virtualization, so only the visible options are mounted. It stays virtualized for the lifetime of that `AutoComplete`, because Headless UI cannot switch back in place. No prop is needed. The options are found by walking the `children` props, so options rendered inside a custom component that does not forward `children` are not counted and are rendered without virtualization.
