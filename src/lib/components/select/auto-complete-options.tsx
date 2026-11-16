@@ -19,7 +19,7 @@ export const AutoCompleteOptions: FC<Props> = ({ children, setQuery }) => {
       leaveTo={styles.leaveTo}
       afterLeave={() => setQuery('')}
     >
-      <ComboboxOptions className={styles.autocompleteOptions}>
+      <ComboboxOptions className={styles.autocompleteOptions} data-once-ui-autocomplete-options="">
         {/* An undefined option indicates Headless UI has not activated virtual mode yet. */}
         {renderVirtualOption
           ? (slot: { option?: unknown }) =>
