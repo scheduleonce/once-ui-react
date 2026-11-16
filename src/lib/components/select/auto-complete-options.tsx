@@ -20,9 +20,10 @@ export const AutoCompleteOptions: FC<Props> = ({ children, setQuery }) => {
       afterLeave={() => setQuery('')}
     >
       <ComboboxOptions className={styles.autocompleteOptions}>
-        {/* Headless UI passes `option` only in virtual mode; otherwise it calls the function with its slot */}
+        {/* An undefined option indicates Headless UI has not activated virtual mode yet. */}
         {renderVirtualOption
-          ? (slot: { option?: unknown }) => ('option' in slot ? renderVirtualOption(slot.option, children) : children)
+          ? (slot: { option?: unknown }) =>
+              slot.option !== undefined ? renderVirtualOption(slot.option, children) : children
           : children}
       </ComboboxOptions>
     </Transition>
