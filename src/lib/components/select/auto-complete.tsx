@@ -40,6 +40,15 @@ interface VirtualOptions {
   isEmpty: boolean;
 }
 
+const hasFallbackContent = (content: ReactNode): boolean =>
+  Children.toArray(content).some((child) => {
+    if (typeof child === 'string') return child.trim().length > 0;
+    if (typeof child === 'number') return true;
+    if (!isValidElement(child)) return false;
+    if (child.type === React.Fragment) return hasFallbackContent((child.props as { children?: ReactNode }).children);
+    return true;
+  });
+
 const collectOptionElements = (node: ReactNode, elements: ReactElement<any>[] = []): ReactElement<any>[] => {
   Children.forEach(node, (child) => {
     if (!isValidElement(child)) return;
@@ -95,6 +104,7 @@ export const AutoComplete: FC<Props> = ({
   const inputButton = useRef<HTMLButtonElement>(null);
   const selectRef = useRef<HTMLDivElement>(null);
   const selectDropdownRef = useRef<HTMLDivElement>(null);
+  const wasOpen = useRef(false);
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -104,7 +114,11 @@ export const AutoComplete: FC<Props> = ({
     opensUp: false,
   });
   const [isPositionCalculated, setIsPositionCalculated] = useState(false);
-  const [isVirtualized, setIsVirtualized] = useState(false);
+  // Start virtualized immediately when the initial list already exceeds the threshold, avoiding an extra mount render.
+  // The render-time fallback below still covers options that load asynchronously after mount.
+  const [isVirtualized, setIsVirtualized] = useState(
+    () => collectOptionElements(children).length > VIRTUALIZATION_THRESHOLD,
+  );
   const windowHeight = useRef<number>(0);
   const pageScrollHeight = useRef<number>(0);
 
@@ -127,9 +141,12 @@ export const AutoComplete: FC<Props> = ({
         // Rendered as a disabled option so Headless UI measures its real height. Headless UI updates its option list one
         // commit late, so the empty content is shown only when this render has no options (otherwise the new options would be nested here)
         if (option === EMPTY_VIRTUAL_OPTION) {
+          // The placeholder row stays in the virtual list (Headless UI renders nothing when the list is empty), but
+          // when there is no real empty-state fallback it must not mount a phantom option, so return an inert spacer.
+          if (!virtualOptions.isEmpty || !hasFallbackContent(emptyContent)) return <div aria-hidden="true" />;
           return (
             <AutoCompleteOption value={option} className="" disable={true}>
-              {virtualOptions.isEmpty ? emptyContent : null}
+              {emptyContent}
             </AutoCompleteOption>
           );
         }
@@ -157,8 +174,10 @@ export const AutoComplete: FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    // The list unmounts on close, so its leave transition never resets the search; clear it here to match the input
-    if (!isOpen) setQuery('');
+    // The list unmounts on close, so its leave transition never resets the search; clear it here to match the input.
+    // Guard on a prior open state so this does not fire setQuery('') on initial mount.
+    if (wasOpen.current && !isOpen) setQuery('');
+    wasOpen.current = isOpen;
   }, [isOpen]);
 
   const getDropdownPosition = useCallback(() => {

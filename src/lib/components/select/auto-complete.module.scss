@@ -80,9 +80,10 @@
     background-color: transparent;
   }
 
-  /* Plain options get their hover highlight from the app's global `div[role='listbox'] > div:hover` rule, which does not match virtual rows, so mirror it */
+  /* Match the app's plain-option hover colors; the variables inherit from the listbox. */
   [data-index]:hover {
-    @apply tw-bg-[#EEEEEE] tw-text-[#333333];
+    background-color: var(--once-ui-autocomplete-option-hover-bg, #EEEEEE);
+    color: var(--once-ui-autocomplete-option-hover-color, #333333);
   }
 
   /* Headless UI transition data attributes */
