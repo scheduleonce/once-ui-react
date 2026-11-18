@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.0.0-beta.0](2026-11-18)
+
+- Upgrade Tailwind CSS from v3 to v4 and migrate component styles and utilities to the v4 `tw:` prefix.
+- Update Tailwind and PostCSS configuration for v4.
+
 ## [2.4.1](2026-11-5)
 
 - Update vitest version

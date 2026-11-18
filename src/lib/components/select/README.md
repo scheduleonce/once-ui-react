@@ -47,24 +47,24 @@ return (
 						disable={false}
 						key={option.value}
 						className={({ active }: { active: boolean }) =>
-							`tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
-								active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
+							`tw:relative tw:cursor-default tw:select-none tw:py-2 tw:pl-4 tw:pr-4 ${
+								active ? 'tw:bg-[#EEEEEE] tw:text-[#333333]' : ''
 							}`
 						}
 						value={option}
 					>
 						{({ selected, active }: { selected: boolean; active: boolean }) => (
 							<>
-								<div className="tw-flex tw-items-center">
+								<div className="tw:flex tw:items-center">
 									{option.avatar && (
 										<img
 											src={option.avatar.src}
 											//  src={typeof option.avatar === 'string' ? option.avatar : option.avatar.src}
 											alt=""
-											className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0 tw-rounded-full"
+											className="tw:mr-2 tw:h-5 tw:w-5 tw:shrink-0 tw:rounded-full"
 										/>
 									)}
-									<span className={`tw-block tw-truncate ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>
+									<span className={`tw:block tw:truncate ${selected ? 'tw:font-medium' : 'tw:font-normal'}`}>
 										{option.label}
 									</span>
 								</div>
@@ -99,7 +99,7 @@ return (
 		<AutoComplete selected={selected} onSelect={onSelectDropDown} setQuery={setSearchQuery} disable={false}>
 			<AutoCompleteOptions setQuery={setSearchQuery}>
 				{filteredOptions.length === 0 && searchQuery !== '' ? (
-					<div className="tw-relative tw-cursor-default tw-select-none tw-px-4 tw-py-2 tw-text-[#333333]">
+					<div className="tw:relative tw:cursor-default tw:select-none tw:px-4 tw:py-2 tw:text-[#333333]">
 						Nothing found.
 					</div>
 				) : (
@@ -108,23 +108,23 @@ return (
 							disable={false}
 							key={option.value}
 							className={({ active }: { active: boolean }) =>
-								`tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
-									active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
+								`tw:relative tw:cursor-default tw:select-none tw:py-2 tw:pl-4 tw:pr-4 ${
+									active ? 'tw:bg-[#EEEEEE] tw:text-[#333333]' : ''
 								}`
 							}
 							value={option}
 						>
 							{({ selected, active }: { selected: boolean; active: boolean }) => (
 								<>
-									<div className="tw-flex tw-items-center">
+									<div className="tw:flex tw:items-center">
 										{option.avatar && (
 											<img
 												src={option.avatar.src}
 												alt=""
-												className="tw-mr-2 tw-h-5 tw-w-5 tw-flex-shrink-0 tw-rounded-full"
+												className="tw:mr-2 tw:h-5 tw:w-5 tw:shrink-0 tw:rounded-full"
 											/>
 										)}
-										<span className={`tw-block tw-truncate ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>
+										<span className={`tw:block tw:truncate ${selected ? 'tw:font-medium' : 'tw:font-normal'}`}>
 											{option.label}
 										</span>
 									</div>

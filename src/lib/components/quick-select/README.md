@@ -81,7 +81,7 @@ function App() {
   return (
     <div>
       <h1>Single-Select Quick Option</h1>
-     <h1 className="tw-my-4">Single-Select Quick-option</h1>
+     <h1 className="tw:my-4">Single-Select Quick-option</h1>
     <QuickSelect
     options={options}
     selected={options[1]}

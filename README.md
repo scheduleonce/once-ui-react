@@ -17,7 +17,7 @@ npm install @oncehub/ui-react
 
 - ⚛️ [React 18](https://reactjs.org/)
 - 📚 [Storybook 7](https://storybook.js.org/) - Components preview
-- 🖌️ [Tailwind CSS 3](https://tailwindcss.com/)
+- 🖌️ [Tailwind CSS 4](https://tailwindcss.com/)
 - ⏩ [Vite](https://vitejs.dev/) - Run and build the project blazingly fast!
 - ⚡ [Vitest](https://vitest.dev/) - Components Unit Testing
 - 📐 [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) - Formatting and Linting
@@ -31,6 +31,7 @@ npm install @oncehub/ui-react
 - `dev`: Bootstrap the Storybook preview with Hot Reload.
 - `build`: Builds the static storybook project.
 - `build:lib`: Builds the component library into the **dist** folder.
+- Tailwind CSS v4 utilities use the `tw:` prefix (for example, `tw:flex`).
 - `lint:fix`: Applies linting based on the rules defined in **.eslintrc.js**.
 - `format:prettier`: Formats files using the prettier rules defined in **.prettierrc**.
 - `test`: Runs testing using watch mode.

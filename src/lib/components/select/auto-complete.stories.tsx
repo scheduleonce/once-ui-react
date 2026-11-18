@@ -36,7 +36,7 @@ const meta: Meta<typeof AutoComplete> = {
     onSelect: {
       description:
         'A callback function that gets called when an option is selected. It takes the selected option as an argument.',
-      control: { type: 'function' },
+      control: false,
       table: {
         defaultValue: { summary: '' },
         type: { summary: 'function' },
@@ -54,7 +54,7 @@ const meta: Meta<typeof AutoComplete> = {
       description: 'Disable the dropdown',
       control: { type: 'boolean' },
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
         type: { summary: 'boolean' },
       },
     },
@@ -62,7 +62,7 @@ const meta: Meta<typeof AutoComplete> = {
       description: 'Clear search query',
       control: { type: 'boolean' },
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
         type: { summary: 'boolean' },
       },
     },
@@ -91,7 +91,11 @@ const options: IOption[] = [
   },
 ];
 
-const handleSelectionChange = () => {};
+const StatefulAutoComplete = (props: React.ComponentProps<typeof AutoComplete>) => {
+  const [selected, setSelected] = React.useState(props.selected);
+
+  return <AutoComplete {...props} selected={selected} onSelect={setSelected} />;
+};
 
 const children = (
   <AutoCompleteOptions setQuery={() => {}}>
@@ -100,15 +104,15 @@ const children = (
         disable={false}
         key={option.value}
         className={({ active }: { active: boolean }) =>
-          `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
-            active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
+          `tw:relative tw:cursor-default tw:select-none tw:py-2 tw:pl-4 tw:pr-4 ${
+            active ? 'tw:bg-[#EEEEEE] tw:text-[#333333]' : ''
           }`
         }
         value={option}
       >
         {({ selected }: { selected: boolean; active: boolean }) => (
-          <div className="tw-flex tw-items-center">
-            <span className={`tw-block ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>{option.label}</span>
+          <div className="tw:flex tw:items-center">
+            <span className={`tw:block ${selected ? 'tw:font-medium' : 'tw:font-normal'}`}>{option.label}</span>
           </div>
         )}
       </AutoCompleteOption>
@@ -117,14 +121,16 @@ const children = (
 );
 
 export const WithoutTheme: Story = {
+  render: (args) => <StatefulAutoComplete {...args} />,
   args: {
     selected: options[2],
-    onSelect: handleSelectionChange,
-    children: children,
+    onSelect: () => {},
+    children,
   },
 };
 
 export const WithTheme: Story = {
+  render: (args) => <StatefulAutoComplete {...args} />,
   args: {
     ...WithoutTheme.args,
     themeColor: '#ff0000',
