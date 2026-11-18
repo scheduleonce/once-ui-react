@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.1.0](2026-11-19)
+
+- Add automatic virtual scrolling to `AutoComplete` when it contains more than 100 options, reducing input lag with large option lists. No additional configuration is required.
+
 ## [3.0.0-beta.0](2026-11-18)
 
 - Upgrade Tailwind CSS from v3 to v4 and migrate component styles and utilities to the v4 `tw:` prefix.
