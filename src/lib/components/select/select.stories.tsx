@@ -59,15 +59,15 @@ const children = (
         disable={false}
         key={option.value}
         className={({ active }: { active: boolean }) =>
-          `tw-relative tw-cursor-default tw-select-none tw-py-2 tw-pl-4 tw-pr-4 ${
-            active ? 'tw-bg-[#EEEEEE] tw-text-[#333333]' : ''
+          `tw:relative tw:cursor-default tw:select-none tw:py-2 tw:pl-4 tw:pr-4 ${
+            active ? 'tw:bg-[#EEEEEE] tw:text-[#333333]' : ''
           }`
         }
         value={option}
       >
         {({ selected, active }: { selected: boolean; active: boolean }) => (
-          <div className="tw-flex tw-items-center">
-            <span className={`tw-block tw-truncate ${selected ? 'tw-font-medium' : 'tw-font-normal'}`}>
+          <div className="tw:flex tw:items-center">
+            <span className={`tw:block tw:truncate ${selected ? 'tw:font-medium' : 'tw:font-normal'}`}>
               {option.label}
             </span>
           </div>
