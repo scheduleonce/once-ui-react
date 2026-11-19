@@ -1,6 +1,6 @@
 # Changelog
 
-## [3.1.0](2026-11-19)
+## [3.1.0](https://github.com/scheduleonce/once-ui-react/compare/v3.0.0...v3.1.0) (2026-11-19)
 
 - Add automatic virtual scrolling to `AutoComplete` when it contains more than 100 options, reducing input lag with large option lists. No additional configuration is required.
 
