@@ -71,6 +71,22 @@
   @apply tw:max-h-[210px] tw:w-full tw:overflow-auto tw:bg-white tw:list-none tw:m-0 tw:px-0 tw:py-[10px] tw:text-base tw:shadow-[0_1px_6px_0_rgba(0,0,0,0.5)] tw:sm:text-sm;
   @apply tw:[&::-webkit-scrollbar-thumb]:rounded-md tw:[&::-webkit-scrollbar-thumb]:bg-[#a9a9a9] tw:[&::-webkit-scrollbar]:w-[6px];
 
+  /* Virtualized items are absolutely positioned and need an explicit width */
+  [data-index] {
+    @apply tw:w-full;
+  }
+
+  /* The virtual list wrapper is the listbox's direct child and spans the whole list, so keep it transparent for global hover styles */
+  &[role='listbox'] > div:has(> [data-index]) {
+    background-color: transparent;
+  }
+
+  /* Match the app's plain-option hover colors; the variables inherit from the listbox. */
+  [data-index]:hover {
+    background-color: var(--once-ui-autocomplete-option-hover-bg, #EEEEEE);
+    color: var(--once-ui-autocomplete-option-hover-color, #333333);
+  }
+
   /* Headless UI transition data attributes */
   &[data-transition] {
     @apply tw:transition tw:duration-200 tw:ease-out;
