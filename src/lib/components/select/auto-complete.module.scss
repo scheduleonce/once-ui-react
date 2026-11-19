@@ -73,7 +73,7 @@
 
   /* Virtualized items are absolutely positioned and need an explicit width */
   [data-index] {
-    @apply tw-w-full;
+    @apply tw:w-full;
   }
 
   /* The virtual list wrapper is the listbox's direct child and spans the whole list, so keep it transparent for global hover styles */
