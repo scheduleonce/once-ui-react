@@ -40,8 +40,9 @@
     "fix:prettier": "prettier --write --ignore-unknown \"src/**/*.{ts,tsx,js,mdx}\"",
     "test": "vitest",
     "test:cov": "vitest run --coverage",
+    "preinstall": "npx only-allow pnpm",
     "prepare": "husky",
-    "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies; delete this.packageManager\""
+    "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies; delete this.packageManager; delete this.scripts.preinstall\""
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
