@@ -7,3 +7,20 @@ allowBuilds:
   # install script only runs node-gyp when npm_config_build_from_source=true;
   # otherwise it is a no-op, so it is safe to deny.
   '@parcel/watcher': false
+
+# --- Supply-chain security baseline (OnceHub pnpm standard) ---
+# These match pnpm 12 defaults; they are written out so the policy is explicit
+# and cannot be weakened by a user/global config. See
+# https://pnpm.io/supply-chain-security and https://pnpm.io/settings
+#
+# Do not install versions published less than 24h (1440 minutes) ago.
+# Add narrow, reviewed `minimumReleaseAgeExclude` entries only when an
+# immediate internal release is required.
+minimumReleaseAge: 1440
+# Fail the install when a dependency has an install script not reviewed in
+# allowBuilds above. Never use dangerouslyAllowAllBuilds permanently.
+strictDepBuilds: true
+# Only direct dependencies may come from git/tarball (exotic) sources.
+blockExoticSubdeps: true
+# Re-check store file contents before linking if they were modified.
+verifyStoreIntegrity: true
