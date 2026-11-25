@@ -6,9 +6,21 @@ React component library for Oncehub
 
 ```sh
 npm install @oncehub/ui-react
+# or
+pnpm add @oncehub/ui-react
 ```
 
 ## Development
+
+Prerequisites:
+
+- Node.js version from [`.nvmrc`](.nvmrc) (e.g. `nvm use`).
+- [pnpm](https://pnpm.io/installation). The exact version is pinned in the `packageManager` field of `package.json` and pnpm switches to it automatically. Corepack is not used (it is no longer shipped with Node.js 25+).
+
+```sh
+pnpm install
+pnpm dev
+```
 
 1. Storybook is [automatically deployed](.github/workflows/deploy-storybook.yml) to Github Pages when pushing to main.
 2. Package is automatically pushed to npm when [creating a new release](.github/workflows/npm-publish.yml) on Github. Check out the release section in the repo. Read more about releases [here](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
@@ -27,6 +39,8 @@ npm install @oncehub/ui-react
 - 👷 [Github Actions](https://github.com/features/actions) — Releasing versions to npm
 
 ## Main Scripts
+
+Run with `pnpm <script>` (e.g. `pnpm build:lib`).
 
 - `dev`: Bootstrap the Storybook preview with Hot Reload.
 - `build`: Builds the static storybook project.

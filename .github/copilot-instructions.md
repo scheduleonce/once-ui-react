@@ -79,12 +79,14 @@ Complex components like `MultiSelect` and `AutoComplete` use:
 
 ## Key Development Commands
 
-- **Development**: `npm run dev` - Starts Storybook on port 6006
-- **Build Library**: `npm run build:lib` - Builds to `dist/` folder
-- **Linting**: `npm run lint` - ESLint 9 with flat config
-- **Auto-fix**: `npm run fix:lint` - Auto-fixes linting issues
-- **Testing**: `npm test` - Vitest with coverage via `npm run test:cov`
-- **Publishing**: `npm publish --access public --tag beta` (for prerelease versions)
+- **Package manager**: pnpm (version pinned in `packageManager`); Node.js version from `.nvmrc`. Do not use npm/yarn to install, and do not commit a `package-lock.json`.
+- **Install**: `pnpm install`
+- **Development**: `pnpm dev` - Starts Storybook on port 6006
+- **Build Library**: `pnpm build:lib` - Builds to `dist/` folder
+- **Linting**: `pnpm lint` - ESLint 9 with flat config
+- **Auto-fix**: `pnpm fix:lint` - Auto-fixes linting issues
+- **Testing**: `pnpm test` - Vitest with coverage via `pnpm test:cov`
+- **Publishing**: done by CI with `npm publish --access public --tag beta` (npm CLI kept for npm trusted publishing)
 
 ## Project Structure Conventions
 
