@@ -15,12 +15,14 @@ pnpm add @oncehub/ui-react
 Prerequisites:
 
 - Node.js version from [`.nvmrc`](.nvmrc) (e.g. `nvm use`).
-- [pnpm](https://pnpm.io/installation). The exact version is pinned in the `packageManager` field of `package.json` and pnpm switches to it automatically. Corepack is not used (it is no longer shipped with Node.js 25+).
+- [pnpm](https://pnpm.io/installation). The exact version is pinned in the `packageManager` field of `package.json` and pnpm switches to it automatically. Corepack is not used (it is no longer shipped with Node.js 25+). npm and Yarn are blocked in this repository.
 
 ```sh
 pnpm install
 pnpm dev
 ```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for dependency and security rules, releasing, and rollback steps.
 
 1. Storybook is [automatically deployed](.github/workflows/deploy-storybook.yml) to Github Pages when pushing to main.
 2. Package is automatically pushed to npm when [creating a new release](.github/workflows/npm-publish.yml) on Github. Check out the release section in the repo. Read more about releases [here](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository).

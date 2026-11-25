@@ -79,14 +79,14 @@ Complex components like `MultiSelect` and `AutoComplete` use:
 
 ## Key Development Commands
 
-- **Package manager**: pnpm (version pinned in `packageManager`); Node.js version from `.nvmrc`. Do not use npm/yarn to install, and do not commit a `package-lock.json`.
+- **Package manager**: pnpm (version pinned in `packageManager` and `devEngines.packageManager`); Node.js version from `.nvmrc`. Do not use npm/yarn, and do not commit a `package-lock.json`. Supply-chain policies are in `pnpm-workspace.yaml`.
 - **Install**: `pnpm install`
 - **Development**: `pnpm dev` - Starts Storybook on port 6006
 - **Build Library**: `pnpm build:lib` - Builds to `dist/` folder
 - **Linting**: `pnpm lint` - ESLint 9 with flat config
 - **Auto-fix**: `pnpm fix:lint` - Auto-fixes linting issues
 - **Testing**: `pnpm test` - Vitest with coverage via `pnpm test:cov`
-- **Publishing**: done by CI with `npm publish --access public --tag beta` (npm CLI kept for npm trusted publishing)
+- **Publishing**: done by CI with `pnpm publish --access public --tag beta --no-git-checks` (npm trusted publishing). The npm CLI is blocked in this repo by `devEngines`. See `CONTRIBUTING.md`.
 
 ## Project Structure Conventions
 
