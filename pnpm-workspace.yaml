@@ -24,3 +24,14 @@ strictDepBuilds: true
 blockExoticSubdeps: true
 # Re-check store file contents before linking if they were modified.
 verifyStoreIntegrity: true
+# Fail when a package version has weaker trust evidence (trusted publisher /
+# provenance) than earlier releases: a possible package takeover.
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  # Reviewed 2026-11-25. No ua-parser-js 1.0.x release has ever had provenance
+  # or a trusted publisher; all are published by the same maintainer
+  # (faisalman). The "downgrade" is only relative to the separately released
+  # 2.x line. Without this entry pnpm resolves the older 1.0.39 instead.
+  # Pulled in by react-device-detect (peer dependency). Remove when
+  # react-device-detect moves to ua-parser-js 2.x.
+  - ua-parser-js@1.0.41
