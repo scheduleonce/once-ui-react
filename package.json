@@ -30,6 +30,12 @@
     "node": ">=22"
   },
   "packageManager": "pnpm@12.17.0",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.17.0"
+    }
+  },
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
@@ -42,7 +48,7 @@
     "test:cov": "vitest run --coverage",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky",
-    "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies; delete this.packageManager; delete this.scripts.preinstall\""
+    "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies; delete this.packageManager; delete this.devEngines; delete this.scripts.preinstall\""
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
