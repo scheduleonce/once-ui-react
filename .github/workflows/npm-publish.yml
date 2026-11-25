@@ -36,8 +36,11 @@ jobs:
         uses: pnpm/action-setup@v6
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build:lib
-      # Publishing intentionally stays on the npm CLI: npm trusted publishing
-      # (OIDC) is documented for the npm CLI >= 11.5.1
-      # (https://docs.npmjs.com/trusted-publishers); Node 26 ships npm 11.20.0.
+      # Published with pnpm (the pinned packageManager version). pnpm >= 11.0.7
+      # performs npm trusted publishing (OIDC, needs `id-token: write` above)
+      # like the npm CLI. The npm CLI cannot be used here: devEngines in
+      # package.json pins pnpm, so npm stops with EBADDEVENGINES.
+      # --no-git-checks: releases check out a tag (detached HEAD), which pnpm's
+      # default publish-branch check rejects.
       # scoped packages are private by default so need to add public flag
-      - run: npm publish --access public --tag beta
+      - run: pnpm publish --access public --tag beta --no-git-checks
