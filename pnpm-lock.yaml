@@ -165,22 +165,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@headlessui/react':
-        specifier: ^2.2.0
-        version: 2.2.10(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@heroicons/react':
-        specifier: ^2.0.18
-        version: 2.2.0(react@19.2.6)
-      libphonenumber-js:
-        specifier: ^1.13.15
-        version: 1.13.15
-      react-device-detect:
-        specifier: ^2.2.3
-        version: 2.2.3(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      react-phone-number-input:
-        specifier: ^3.4.11
-        version: 3.4.17(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
     devDependencies:
       '@babel/core':
         specifier: ^7.23.2
@@ -188,6 +172,12 @@ importers:
       '@eslint/js':
         specifier: ^9.39.4
         version: 9.39.4
+      '@headlessui/react':
+        specifier: ^2.2.10
+        version: 2.2.10(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@heroicons/react':
+        specifier: ^2.2.0
+        version: 2.2.0(react@19.2.6)
       '@oncehub/relative-luminance':
         specifier: ^2.1.4
         version: 2.1.6
@@ -263,6 +253,9 @@ importers:
       json:
         specifier: 11.0.0
         version: 11.0.0
+      libphonenumber-js:
+        specifier: ^1.13.15
+        version: 1.13.15
       lint-staged:
         specifier: ^15.0.1
         version: 15.5.2(supports-color@8.1.1)
@@ -278,9 +271,15 @@ importers:
       react:
         specifier: ^19.0.0
         version: 19.2.6
+      react-device-detect:
+        specifier: ^2.2.3
+        version: 2.2.3(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       react-dom:
         specifier: ^19.0.0
         version: 19.2.6(react@19.2.6)
+      react-phone-number-input:
+        specifier: ^3.4.17
+        version: 3.4.17(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       sass:
         specifier: ^1.69.5
         version: 1.100.0
