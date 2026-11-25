@@ -44,7 +44,6 @@
     "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies; delete this.packageManager\""
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
     "@eslint/js": "^9.39.4",
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
