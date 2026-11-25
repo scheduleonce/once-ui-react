@@ -40,7 +40,7 @@
     "fix:prettier": "prettier --write --ignore-unknown \"src/**/*.{ts,tsx,js,mdx}\"",
     "test": "vitest",
     "test:cov": "vitest run --coverage",
-    "prepare": "husky install",
+    "prepare": "husky",
     "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies; delete this.packageManager\""
   },
   "devDependencies": {
@@ -70,7 +70,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-storybook": "10.6.5",
     "globals": "^15.15.0",
-    "husky": "8.0.3",
+    "husky": "9.1.7",
     "jsdom": "^29.0.0",
     "json": "11.0.0",
     "libphonenumber-js": "^1.13.15",
