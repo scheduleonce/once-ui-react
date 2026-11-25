@@ -18,11 +18,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      # Node.js >= 25 Linux binaries link against libatomic (see the Node 26.13.0
+      # release notes); same step as scheduleonce/github-workflows pnpm-check.
+      - name: Install Node.js system dependency
+        run: |
+          if ! ldconfig -p 2>/dev/null | grep -q 'libatomic.so.1'; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends libatomic1
+          fi
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm run build:lib
+      # pnpm version is read from "packageManager" in package.json.
+      # Corepack is not used (no longer shipped with Node.js >= 25).
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build:lib
+      # Publishing intentionally stays on the npm CLI: npm trusted publishing
+      # (OIDC) is documented for the npm CLI >= 11.5.1
+      # (https://docs.npmjs.com/trusted-publishers); Node 26 ships npm 11.20.0.
       # scoped packages are private by default so need to add public flag
       - run: npm publish --access public --tag beta
