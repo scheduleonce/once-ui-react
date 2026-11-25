@@ -52,7 +52,6 @@
     "@storybook/react": "10.6.5",
     "@storybook/react-vite": "10.6.5",
     "@tailwindcss/postcss": "^4.3.5",
-    "@testing-library/react": "16.2.0",
     "@types/node": "^26.6.6",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
