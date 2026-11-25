@@ -3,6 +3,8 @@
 # Security related files
 **/package.json @scheduleonce/security
 **/package-lock.json @scheduleonce/security
+**/pnpm-lock.yaml @scheduleonce/security
+**/pnpm-workspace.yaml @scheduleonce/security
 
 # CI/CD related files
 /.github/workflows/** @scheduleonce/system-devops @scheduleonce/security
