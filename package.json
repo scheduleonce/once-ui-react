@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "3.1.0",
+  "version": "3.1.1-beta.0",
   "type": "module",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     }
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "packageManager": "pnpm@12.17.0",
   "devEngines": {
