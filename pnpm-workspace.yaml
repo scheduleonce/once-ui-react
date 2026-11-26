@@ -1,0 +1,9 @@
+# Dependency build (install/postinstall) scripts. pnpm blocks unreviewed ones
+# by default (strictDepBuilds). See https://pnpm.io/settings/build
+allowBuilds:
+  # postinstall verifies the platform binary and replaces the JS launcher with
+  # the native binary (same behaviour as under npm).
+  esbuild: true
+  # install script only runs node-gyp when npm_config_build_from_source=true;
+  # otherwise it is a no-op, so it is safe to deny.
+  '@parcel/watcher': false

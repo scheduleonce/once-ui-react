@@ -31,12 +31,7 @@ const app = async (): Promise<UserConfigExport> => {
       },
       rollupOptions: {
         external: (id) => {
-          const externals = [
-            ...Object.keys(peerDependencies),
-            'react/jsx-runtime',
-            'prop-types',
-            'react-device-detect',
-          ];
+          const externals = [...Object.keys(peerDependencies), 'react/jsx-runtime', 'react-device-detect'];
 
           return externals.some((dep) => id === dep || id.startsWith(`${dep}/`));
         },

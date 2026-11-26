@@ -1,7 +1,7 @@
 {
   "name": "@oncehub/ui-react",
   "private": false,
-  "version": "3.1.0",
+  "version": "3.1.1-beta.0",
   "type": "module",
   "repository": {
     "type": "git",
@@ -27,7 +27,14 @@
     }
   },
   "engines": {
-    "node": "24"
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@12.17.0",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.17.0"
+    }
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
@@ -39,43 +46,42 @@
     "fix:prettier": "prettier --write --ignore-unknown \"src/**/*.{ts,tsx,js,mdx}\"",
     "test": "vitest",
     "test:cov": "vitest run --coverage",
-    "prepare": "husky install",
-    "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies\""
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky",
+    "prepack": "json -f package.json -I -e \"delete this.devDependencies; delete this.dependencies; delete this.packageManager; delete this.devEngines; delete this.scripts.preinstall\""
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
     "@eslint/js": "^9.39.4",
+    "@headlessui/react": "^2.2.10",
+    "@heroicons/react": "^2.2.0",
     "@oncehub/relative-luminance": "^2.1.4",
     "@storybook/addon-docs": "10.6.5",
     "@storybook/react": "10.6.5",
     "@storybook/react-vite": "10.6.5",
     "@tailwindcss/postcss": "^4.3.5",
-    "@testing-library/react": "16.2.0",
-    "@types/node": "^20.8.9",
+    "@types/node": "^26.6.6",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/coverage-v8": "4.1.12",
-    "babel-loader": "9.1.3",
     "eslint": "^9.39.4",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-storybook": "10.6.5",
     "globals": "^15.15.0",
-    "husky": "8.0.3",
+    "husky": "9.1.7",
     "jsdom": "^29.0.0",
     "json": "11.0.0",
+    "libphonenumber-js": "^1.13.15",
     "lint-staged": "^15.0.1",
     "postcss": "^8.5.23",
     "prettier": "^3.0.3",
-    "prop-types": "15.8.1",
     "react": "^19.0.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0",
+    "react-phone-number-input": "^3.4.17",
     "sass": "^1.69.5",
     "storybook": "10.6.5",
     "tailwindcss": "^4.3.5",
